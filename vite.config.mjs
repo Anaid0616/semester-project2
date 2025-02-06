@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   appType: 'mpa',
-  base: process.env.NODE_ENV === 'production' ? '/repository-name/' : '',
+  base: process.env.NODE_ENV === 'production' ? '/semester-project2/' : '',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
