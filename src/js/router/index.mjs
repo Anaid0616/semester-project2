@@ -5,19 +5,19 @@ export default async function router(pathname = window.location.pathname) {
     case '/':
       await import('./views/home.mjs');
       break;
-    case '/auth/login/':
+    case '/login/':
       await import('./views/login.mjs');
       break;
-    case '/auth/register/':
+    case '/register/':
       await import('./views/register.mjs');
       break;
     case '/post/':
       await import('./views/listing.mjs');
       break;
-    case '/post/edit/':
+    case '/listing/edit/':
       await import('./views/listingEdit.mjs');
       break;
-    case '/post/create/':
+    case '/listing/create/':
       await import('./views/listingCreate.mjs');
       break;
     case '/profile/':

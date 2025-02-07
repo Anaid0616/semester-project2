@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Log in to your Auction House account to track bids, manage listings, and stay updated on exclusive auctions. Enter your credentials and start bidding today!"
+    />
+    <title>Login | Auction House</title>
+
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <script type="module" src="../src/app.mjs"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" sizes="16x16" href="../images/favicon-16x16.png" />
+    <link rel="icon" sizes="32x32" href="../images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+  </head>
+
+  <body>
+    <header></header>
+
+    <main>
+      <div class="flex sm:py-16 justify-center bg-gray-100 pt-4">
+        <div
+          id="alert-container"
+          class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-2 z-50"
+        ></div>
+        <div class="max-w-lg w-full p-6 bg-white shadow-md rounded">
+          <!-- Headline -->
+          <h1
+            class="text-2xl font-semibold text-center text-gray-800 mb-6 text-left"
+          >
+            Login
+          </h1>
+          <!-- Login Form -->
+          <form name="login" method="post" class="flex flex-col gap-6">
+            <fieldset class="flex flex-col gap-6">
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  required
+                  pattern="^[\w\-.]+@(stud\.)?noroff\.no$"
+                  title="Please enter a valid noroff.no or stud.noroff.no address"
+                  class="mt-1 p-2 border rounded w-full"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  required
+                  minlength="8"
+                  class="mt-1 p-2 border rounded w-full"
+                />
+              </div>
+
+              <!-- Text and link -->
+              <div class="text-left">
+                <span class="text-sm text-gray-600"
+                  >Don't have an account?</span
+                >
+                <a
+                  href="/auth/register/"
+                  class="text-sm text-blue-500 hover:underline ml-1"
+                >
+                  Register
+                </a>
+              </div>
+
+              <!-- Login Button -->
+              <button
+                class="w-full py-2 bg-[#C5A880] text-black hover:bg-[#9F8766] font-semibold"
+              >
+                Login
+              </button>
+            </fieldset>
+            <div class="feedback-container hidden"></div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

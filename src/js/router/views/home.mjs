@@ -1,2 +1,3 @@
-import { setupNavigation } from '../../ui/global/navigation.mjs';
-setupNavigation();
+import { loadSharedHeader } from '../../ui/global/sharedHeader.mjs';
+
+loadSharedHeader(); // Load the shared header dynamically
