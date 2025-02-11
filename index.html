@@ -13,6 +13,8 @@
 
     <link rel="stylesheet" href="./src/css/style.css" />
     <script type="module" src="./src/app.mjs"></script>
+    <script src="https://kit.fontawesome.com/e9ab0044c8.js" crossorigin="anonymous"></script>
+
     <!-- Favicon -->
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
     <link rel="icon" sizes="16x16" href="./images/favicon-16x16.png" />
@@ -23,8 +25,151 @@
   <body>
     <header></header>
 
-    <main></main>
-    <footer class="bg-gray-800 text-white p-4 text-center">
+    <main class="bg-[#f5ebe1]">
+      <div class="max-w-6xl mx-auto relative text-left text-white">
+        <img
+          src="./public/images/jeztimmsunsplash.jpg"
+          alt="Background"
+          class="w-full h-52 object-cover"
+        />
+        <div
+          class="max-w-2xl mx-auto absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50"
+        >
+          <h1 class="text-2xl font-semibold">Welcome, Username!</h1>
+          <div
+            class="mt-2 flex items-center bg-white text-black px-4 py-2 rounded-sm shadow-md w-full max-w-2xl"
+          >
+            <input
+              type="text"
+              placeholder="What are you looking for?"
+              class="w-64 outline-none pr-10"
+            />
+            <div class="absolute right-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6 text-gray-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-6xl mx-auto py-6">
+        <h2 class="text-xl font-semibold">All Categories</h2>
+        <div class="flex overflow-x-auto justify-center gap-6 mt-4">
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-bag-shopping text-3xl"></i>
+            </svg>
+            <span>Fashion</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-camera-retro text-3xl"></i>
+            <span>Vintage</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-couch text-3xl"></i>
+            <span>Interiors</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-gem text-3xl"></i>
+            <span>Jewelry</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-palette text-3xl"></i>
+            <span>Art</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer">
+            <i class="fa-solid fa-home text-3xl"></i>
+            <span>Decor</span>
+          </div>
+       
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid fa-stopwatch text-3xl"></i>
+        <span>Watches</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid fa-puzzle-piece text-3xl"></i>
+        <span>Toys</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid 	fa-book-open text-3xl"></i>
+        <span>Books</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid 	fa-football-ball text-3xl"></i>
+        <span>Sports</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid fa-dice text-3xl"></i>
+        <span>Games</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid 	fa-star text-3xl"></i>
+        <span>Collectibles</span>
+      </div>
+
+      <div class="flex flex-col items-center cursor-pointer">
+        <i class="fa-solid 	fa-car text-3xl"></i>
+        <span>Cars</span>
+      </div>
+    </div>
+  </div>
+
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-xl font-semibold">Latest Listings</h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
+        >
+
+          <div class="bg-white p-4 text-center rounded-sm shadow-md">
+            <img
+              src="./public/images/placeholder.jpg"
+              alt="Item"
+              class="w-full h-60 object-cover rounded-sm"
+            />
+            <h3 class="font-semibold mt-2">Item Title</h3>
+            <p>Ends: 12 Feb</p>
+            <div class="flex">
+              <p class="font-bold mr-2">Price: $100</p>
+              <p>Bid Now</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+<a href="/"><img src="./public/images/backtotop.png" class="w-10 m-4"></a>
+      </div>
+
+      <div class="text-center my-6">
+        <button class="px-4 py-2 bg-gray-300 rounded-md">Prev.</button>
+        <span class="px-4 py-2 bg-white border rounded-md">1</span>
+        <button class="px-4 py-2 bg-gray-300 rounded-md">Next</button>
+      </div>
+    </main>
+
+    <footer class="bg-black text-white p-4 text-center">
       &copy; 2025 Auction House
     </footer>
   </body>

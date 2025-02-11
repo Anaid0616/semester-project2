@@ -20,5 +20,65 @@
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
   </head>
 
-  <body></body>
+  <body class="bg-[#f5ebe1] font-sans">
+    <header></header>
+    <main>
+      <div class="max-w-6xl mx-auto p-6">
+        <!-- Profile Header -->
+        <div class="flex items-start gap-6">
+          <img
+            src="../public/images/placeholder.jpg"
+            alt="Avatar"
+            class="w-48 h-48 rounded-sm"
+          />
+          <div>
+            <h1 class="text-2xl font-semibold">Username</h1>
+            <p class="text-gray-600">Bio</p>
+            <div class="mt-4 flex gap-4">
+              <button class="px-4 py-2 bg-black text-white rounded-sm">
+                Update Profile
+              </button>
+              <button class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">
+                Follow
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ads Section -->
+        <div class="mt-10">
+          <h2 class="text-xl font-semibold border-b pb-2">Ads</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+            <div class="bg-white p-4 rounded-sm shadow">
+              <img
+                src="../public/images/placeholder.jpg"
+                alt="Ad"
+                class="w-full h-60 object-cover rounded-sm"
+              />
+              <h3 class="mt-2 font-semibold">Headline</h3>
+              <p class="text-gray-600 text-sm">Time</p>
+              <div class="flex">
+                <p class="font-bold mr-2">Price: $100</p>
+                <p>Bid Now</p>
+              </div>
+            </div>
+            <!-- Repeat for multiple ads -->
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <a href="/"
+          ><img src="../public/images/backtotop.png" class="w-10 m-4"
+        /></a>
+      </div>
+
+      <div class="text-center my-6">
+        <button class="px-4 py-2 bg-gray-300 rounded-md">Prev.</button>
+        <span class="px-4 py-2 bg-white border rounded-md">1</span>
+        <button class="px-4 py-2 bg-gray-300 rounded-md">Next</button>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
 </html>
