@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Update and refine your auction listings on Auction House. Edit item details, adjust prices, and optimize your auction for the best results!"
+    />
+    <title>Edit | Auction House</title>
+
+    <link rel="stylesheet" href="../../src/css/style.css" />
+    <script type="module" src="../../src/app.mjs"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="../../images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" sizes="16x16" href="../../images/favicon-16x16.png" />
+    <link rel="icon" sizes="32x32" href="../../images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png" />
+  </head>
+
+  <body>
+    <header></header>
+    <main class="min-h-screen flex sm:items-center justify-center bg-[#F9F1EC]">
+      <div class="max-w-lg w-full p-6 bg-white shadow-md rounded">
+        <div
+          id="alert-container"
+          class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-2 z-50"
+        ></div>
+        <!-- Headline -->
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-left">
+          Edit Listing
+        </h1>
+
+        <!-- Form -->
+        <form
+          name="editListing"
+          id="editListingForm"
+          class="flex flex-col gap-3"
+        >
+          <fieldset class="flex flex-col gap-3">
+            <!-- Media Gallery -->
+            <label
+              for="imageUrls"
+              class="block text-sm font-medium text-gray-700"
+              >Edit Media Gallery:</label
+            >
+            <div id="imageInputs">
+              <!-- Existing images will be loaded dynamically -->
+            </div>
+
+            <!-- Preview Section -->
+            <div id="imagePreview" class="grid grid-cols-3 gap-2"></div>
+
+            <button
+              type="button"
+              class="addImage px-3 py-1 bg-[#C5A880] text-black hover:bg-[#9F8766] rounded"
+            >
+              + Add New Image
+            </button>
+
+            <label
+              for="media-alt"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Media alt text:
+            </label>
+            <input
+              type="text"
+              id="media-alt"
+              name="mediaAlt"
+              class="mt-1 p-2 border rounded w-full"
+              placeholder="Edit alt text"
+            />
+
+            <!-- Title -->
+            <label for="title" class="block text-sm font-medium text-gray-700">
+              Title:
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              class="mt-1 p-2 border rounded w-full"
+              placeholder="Edit title"
+            />
+
+            <!-- Description -->
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700"
+            >
+              Description:
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              required
+              class="mt-1 p-2 border rounded w-full"
+              placeholder="Edit item description"
+            ></textarea>
+
+            <label for="tags" class="block text-sm font-medium text-gray-700">
+              Tags:
+            </label>
+            <input
+              type="text"
+              id="tags"
+              name="tags"
+              class="mt-1 p-2 border rounded w-full"
+              placeholder="Edit tags"
+            />
+
+            <!-- Deadline -->
+            <label
+              for="deadline"
+              class="block text-sm font-medium text-gray-700"
+              >Auction End Date:</label
+            >
+            <input
+              type="datetime-local"
+              id="deadline"
+              name="deadline"
+              required
+              class="w-full p-2 border rounded"
+            />
+
+            <button
+              type="submit"
+              id="save-listing-button"
+              class="w-full py-2 bg-[#C5A880] text-black hover:bg-[#9F8766]"
+            >
+              Save Changes
+            </button>
+          </fieldset>
+          <div class="feedback-container hidden"></div>
+        </form>
+      </div>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>
