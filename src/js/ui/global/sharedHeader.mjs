@@ -1,15 +1,15 @@
+import { logout } from '../auth/logout.mjs';
+
 export async function loadSharedHeader() {
   try {
     // Fetch the shared header HTML file
     const response = await fetch('/shared/sharedHeader.html');
     const headerHTML = await response.text();
-    console.log('Shared header fetched successfully!'); // Debugging step
 
     // Inject the header into the <header> tag
     const headerElement = document.querySelector('header');
     if (headerElement) {
       headerElement.innerHTML = headerHTML;
-      console.log('Shared header injected into HTML!');
     }
 
     // Call the setup function after the header is loaded
@@ -35,11 +35,8 @@ function setupNavigation() {
   }
 
   // Logout button functionality
-  const logoutBtn = document.getElementById('logout-btn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('user'); // Clear login state
-      window.location.reload(); // Refresh the page
-    });
+  const logoutButton = document.getElementById('logout-button');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', logout); // Call the proper logout function
   }
 }

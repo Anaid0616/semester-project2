@@ -20,28 +20,33 @@
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
   </head>
 
-  <body class="bg-[#F9F1EC] font-sans">
+  <body class="bg-[#F9F1EC]">
     <header></header>
     <main>
       <div class="max-w-6xl mx-auto p-6">
         <!-- Profile Header -->
         <div class="flex items-start gap-6">
           <img
+            id="user-avatar"
             src="../public/images/placeholder.jpg"
             alt="Avatar"
             class="w-48 h-48 rounded-sm"
           />
 
           <div>
-            <h1 class="text-2xl font-semibold">Username</h1>
-            <p class="text-gray-600">Bio</p>
-            <p class="text-lg font-bold mt-2">
+            <h1 id="user-name" class="text-2xl font-semibold">Username</h1>
+            <p id="user-bio" class="text-gray-600">Bio</p>
+            <p id="user-credit" class="text-lg font-bold mt-2">
               Credits: <span class="text-[#D4AF37]">1000</span>
             </p>
             <div class="mt-4 flex gap-4">
-              <button class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">
+              <button
+                id="update-profile-button"
+                class="px-4 py-2 bg-[#C5A880] text-black rounded-sm"
+              >
                 Update Profile
               </button>
+
               <button class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">
                 Follow
               </button>
@@ -49,26 +54,53 @@
           </div>
         </div>
 
-        <!-- Ads Section -->
-        <div class="mt-10">
-          <h2 class="text-xl font-semibold border-b pb-2">Ads</h2>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-            <div class="bg-white p-4 rounded-sm shadow">
-              <a href="/listing/">
-                <img
-                  src="../public/images/placeholder.jpg"
-                  alt="Ad"
-                  class="w-full h-60 object-cover rounded-sm"
-                />
-              </a>
-              <h3 class="mt-2 font-semibold">Headline</h3>
-              <p class="text-gray-600 text-sm">Time</p>
-              <div class="flex">
-                <p class="font-bold mr-2">Price: $100</p>
-                <p>Bid Now</p>
+        <div id="update-profile" style="display: none">
+          <!-- Initially hidden -->
+          <form
+            class="max-w-lg mx-auto flex flex-col gap-4"
+            name="updateProfileForm"
+          >
+            <fieldset class="flex flex-col gap-4">
+              <div class="relative">
+                <!-- Rest of your content -->
               </div>
-            </div>
-            <!-- Repeat for multiple ads -->
+
+              <label for="avatar">Avatar URL:</label>
+              <input
+                type="text"
+                id="avatar"
+                name="avatar"
+                placeholder="Enter new avatar URL"
+                class="p-2 border rounded"
+              />
+
+              <label for="bio">Bio:</label>
+              <textarea
+                id="bio"
+                name="bio"
+                placeholder="Enter a short bio"
+                class="p-2 border rounded"
+              ></textarea>
+
+              <button
+                type="submit"
+                class="px-4 py-2 bg-[#C5A880] text-black rounded hover:bg-[#8E6A52] font-semibold"
+              >
+                Update
+              </button>
+            </fieldset>
+            <div class="feedback-container hidden"></div>
+          </form>
+        </div>
+
+        <!-- Listing Section -->
+        <div class="mt-10">
+          <h2 class="text-xl font-semibold border-b pb-2">Listings</h2>
+          <div
+            id="user-listings-container"
+            class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"
+          >
+            <!-- Listings will be inserted here dynamically -->
           </div>
         </div>
       </div>

@@ -26,6 +26,7 @@
     <header></header>
 
     <main class="bg-[#F9F1EC]">
+      
       <div class="max-w-6xl mx-auto relative text-left text-white">
         <img
           src="./public/images/jeztimmsunsplash.jpg"
@@ -136,39 +137,23 @@
     </div>
   </div>
 
-      <div class="max-w-6xl mx-auto px-6">
+      <div class="max-w-6xl mx-auto">
         <h2 class="text-xl font-semibold">Latest Listings</h2>
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
-        >
+        <!-- Listings Container -->
+    <div id="listings-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"></div>
 
-          <div class="bg-white p-4 text-center rounded-sm shadow-md">
-            <a href="/listing/">
-              <img
-              src="./public/images/placeholder.jpg"
-              alt="Item"
-              class="w-full h-60 object-cover rounded-sm"
-            />
-            </a>
-            <h3 class="font-semibold mt-2">Item Title</h3>
-            <p>Ends: 12 Feb</p>
-            <div class="flex">
-              <p class="font-bold mr-2">Price: $100</p>
-              <p>Bid Now</p>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="flex justify-end">
 <a href="/"><img src="./public/images/backtotop.png" class="w-10 m-4"></a>
       </div>
 
-      <div class="text-center my-6">
-        <button class="px-4 py-2 bg-gray-300 rounded-md">Prev.</button>
-        <span class="px-4 py-2 bg-white border rounded-md">1</span>
-        <button class="px-4 py-2 bg-gray-300 rounded-md">Next</button>
-      </div>
+    <!-- Pagination Controls -->
+    <div class="text-center my-6">
+      <button id="prev-page" class="px-4 py-2 bg-gray-300 rounded-md">Prev</button>
+      <span id="current-page" class="px-4 py-2 bg-white border rounded-md">1</span>
+      <button id="next-page" class="px-4 py-2 bg-gray-300 rounded-md">Next</button>
+  </div>
     </main>
 
     <footer class="bg-black text-white p-4 text-center">
