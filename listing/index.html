@@ -19,39 +19,11 @@
     <header></header>
 
     <main>
-        <div class="max-w-6xl mx-auto p-6">
-            <!-- Listing Content -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Image Section -->
-                <div class="relative">
-                    <img src="../public/images/placeholder.jpg" alt="Item" class="w-full h-96 object-cover rounded-md" />
-                   <button class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">◀</button>
-                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">▶</button>
-                </div>
-    
-                <!-- Item Details -->
-                <div>
-                  <h2 class="font-semibold">USERNAME</h2>
-                    <h3 class="text-2xl font-semibold">Headline about the Item</h3>
-                    <span class="font-bold text-gray-600">Date & Time</span>
-                    <p class="text-lg font-bold mt-2">Price: <span class="text-[#D4AF37]">$XXX</span></p>
-                    <button class="mt-4 px-6 py-2 bg-[#C5A880] text-black rounded-sm w-full">Bid</button>
-                    
-                    <!-- Edit & Delete Buttons (for the seller) -->
-                    <div class="mt-4 flex gap-4">
-                      <a href="/listing/edit/">
-                        <button class="px-4 py-2 bg-black text-white rounded-sm">Edit</button>
-                      </a>
-                        <button class="px-4 py-2 bg-black text-white rounded-sm">Delete</button>
-                    </div>
-                </div>
-
-                   <!-- Description Section -->
-        <div class="mt-6">
-          <h2 class="text-xl font-semibold border-b pb-2">Description</h2>
-          <p class="text-gray-700 mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      <div class="max-w-6xl mx-auto p-6">
+        <div id="listing-container">
+          <!-- Listing details will be injected here by JS -->
+        </div>
       </div>
-            </div>
     </main>
 
     <footer></footer>
