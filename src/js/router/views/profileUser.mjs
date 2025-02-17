@@ -2,75 +2,59 @@ import { API_AUCTION_PROFILES } from '../../api/constants.mjs';
 import { doFetch } from '../../api/doFetch.mjs';
 import { fetchUserCredits } from '../../ui/profile/credits.mjs';
 
-/**
- * Fetch and display user profile information (name, avatar, and bio).
- * - If user data exists in localStorage, it populates the profile directly.
- * - Otherwise, it fetches data from the API and updates both the DOM and localStorage.
- *
- * @async
- * @function fetchAndDisplayProfile
- * @throws {Error} If the API request fails or user is not logged in.
- */
 export async function fetchAndDisplayProfile() {
   try {
-    const user = JSON.parse(localStorage.getItem('user'));
+    // Get username from URL for seller profiles or from localStorage for logged-in user
+    const urlParams = new URLSearchParams(window.location.search);
+    const profileUser = urlParams.get('user'); // fetch seller's profile
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
 
-    if (!user) {
-      alert('You must be logged in to view this page.');
-      window.location.href = '/login/';
-      return;
+    let username;
+
+    if (profileUser) {
+      username = profileUser;
+      console.log('Fetching profile for seller:', username);
+    } else {
+      if (!loggedInUser) {
+        alert('You have to be logged in to view this page.');
+        window.location.href = '/login/';
+        return;
+      }
+      username = loggedInUser.name;
+      console.log('Fetching profile for logged-in user:', username);
     }
 
-    const username = user.name;
-
-    // Use localStorage data first if available
-    if (user.avatar || user.bio) {
-      // Populate UI from localStorage
-      const userAvatar = document.getElementById('user-avatar');
-      const userNameElement = document.getElementById('user-name');
-      const userBioElement = document.getElementById('user-bio');
-      const userCreditsElement = document.getElementById('user-credit');
-
-      userAvatar.src = user.avatar?.url || '/images/placeholder.jpg';
-      userAvatar.alt = user.name || 'User Avatar'; // Set alt text
-      userNameElement.textContent = user.name || 'Unknown User'; // Set username
-      userBioElement.textContent = user.bio || 'No bio available.';
-      userCreditsElement.textContent = await fetchUserCredits(username);
-
-      return; // Stop here if localStorage has data
-    }
-
-    // Fetch the profile information from the API using doFetch
-    const profileData = await doFetch(`${API_AUCTION_PROFILES}/${username}`, {
+    // Fetch profile data from API
+    const response = await doFetch(`${API_AUCTION_PROFILES}/${username}`, {
       method: 'GET',
     });
 
-    if (!profileData) {
+    if (!response || !response.data) {
       throw new Error('Failed to fetch profile information.');
     }
 
-    // Update the HTML with profile info
-    const userAvatar = document.getElementById('user-avatar');
-    const userNameElement = document.getElementById('user-name');
-    const userBioElement = document.getElementById('user-bio');
-    const userCreditElement = document.getElementById('user-credit');
+    console.log('Profile Data Fetched:', response);
 
-    // Populate UI with fetched data
-    userAvatar.src = profileData.avatar?.url || '/images/placeholder.jpg';
-    userAvatar.alt = profileData.name || 'User Avatar'; // Set alt text
-    userNameElement.textContent = profileData.name || 'Unknown User'; // Set username
-    userBioElement.textContent = profileData.bio || 'No bio available.';
+    // Extract user profile data
+    const profileData = response.data;
 
-    // Update localStorage with fetched data
-    const updatedUserData = {
-      ...user,
-      name: updatedProfile.name || user.name,
-      avatar: updatedProfile.avatar || user.avatar,
-      bio: updatedProfile.bio || user.bio,
-      credits: profileData.credits || 0,
-    };
+    // Update the UI with the fetched profile data
+    document.getElementById('user-avatar').src =
+      profileData.avatar?.url || '/images/placeholder.jpg';
+    document.getElementById('user-avatar').alt =
+      profileData.name || 'User Avatar';
+    document.getElementById('user-name').textContent =
+      profileData.name || 'Unknown User';
+    document.getElementById('user-bio').textContent =
+      profileData.bio || 'No bio available.';
+    document.getElementById('user-credit').textContent = await fetchUserCredits(
+      username
+    );
 
-    localStorage.setItem('user', JSON.stringify(updatedUserData));
+    // If the logged-in user is viewing their own profile, store data in localStorage
+    if (!profileUser && loggedInUser) {
+      localStorage.setItem('user', JSON.stringify(profileData));
+    }
   } catch (error) {
     console.error('Error fetching user profile:', error);
   }

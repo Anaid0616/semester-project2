@@ -22,57 +22,56 @@ const userListingsContainer = document.getElementById(
  */
 async function fetchAndDisplayUserListings() {
   try {
-    // Render skeleton loaders before fetching the posts
-    userListingsContainer.innerHTML = `
-      ${Array.from({ length: 6 })
-        .map(
-          () => `
-        <div class="post border border-gray-200 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-          <div class="animate-pulse flex flex-col space-y-4">
-            <div class="w-full h-[250px] bg-gray-200 rounded"></div>
-            <div class="h-4 bg-gray-200 rounded"></div>
-            <div class="h-2 bg-gray-200 rounded"></div>
-          </div>
-        </div>
-        `
-        )
-        .join('')}
-    `;
+    const urlParams = new URLSearchParams(window.location.search);
+    let username = urlParams.get('user'); // Get seller's name from URL
 
-    const user = JSON.parse(localStorage.getItem('user')); // Get logged-in user
-    if (!user) {
-      showAlert('error', 'You must be logged in to view your listings.');
-      setTimeout(() => {
-        window.location.href = '/login/';
-      }, 1500);
-      return;
+    if (!username) {
+      // If no seller is in the URL, use the logged-in user's name
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        console.error('No user found in localStorage');
+        return;
+      }
+      username = user.name;
     }
 
-    const username = user.name; // Get username
+    console.log('Fetching listings for:', username); // Debugging log
 
-    // Use doFetch to fetch profile data with listings
-    const profileData = await doFetch(
-      `${API_AUCTION_PROFILES}/${username}/listings`,
-      { method: 'GET' }
-    );
+    if (!username) {
+      throw new Error('Username is undefined.');
+    }
 
-    const listings = profileData.data || [];
+    const profileListingsUrl = `${API_AUCTION_PROFILES}/${username}/listings`;
+
+    console.log('API Request URL:', profileListingsUrl); // Debugging log
+
+    const profileData = await doFetch(profileListingsUrl, { method: 'GET' });
+
+    if (!profileData || !profileData.data) {
+      throw new Error('No profile data received.');
+    }
+
+    const listings = profileData.data;
 
     if (listings.length === 0) {
       userListingsContainer.innerHTML = `<p>No listings available.</p>`;
       return;
     }
 
-    // Render listings
+    // Render listings without seller details
     userListingsContainer.innerHTML = listings
       .map((listing) => {
-        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg'; // Updated for correct media fetching
+        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg';
         const title = listing.title || 'Untitled Listing';
+        const description = listing.description
+          ? listing.description.substring(0, 100) + '...'
+          : 'No description provided.';
+        const bidCount = listing._count?.bids || 0;
         const endsAt = new Date(listing.endsAt).toLocaleDateString();
 
         return `
-        <div class="post bg-white shadow rounded-sm overflow-hidden">
-           <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
+          <div class="listing bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
+            <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
               <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-md"/>
               <div class="p-2">
                 <h3 class="text-lg font-bold mb-2">${title}</h3>
@@ -88,10 +87,8 @@ async function fetchAndDisplayUserListings() {
               data-listing-id="${listing.id}">
               Place Bid
             </button>
-          
-          </a>
-        </div>
-      `;
+          </div>
+        `;
       })
       .join('');
   } catch (error) {

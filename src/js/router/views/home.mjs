@@ -56,7 +56,6 @@ async function fetchAndDisplayListings(page = 1) {
     const response = await readListings(12, page);
     console.log('API Listings Response:', response.data);
     const listings = response.data;
-    console.log('API Listings Response:', response.data);
 
     // Fallback image URL
     const fallbackImageUrl = '/images/placeholder.jpg';
@@ -83,9 +82,8 @@ async function fetchAndDisplayListings(page = 1) {
     listingsContainer.innerHTML = listings
       .map((listing) => {
         const sellerAvatar =
-          listing.seller && listing.seller.avatar
-            ? listing.seller.avatar
-            : '/images/default-avatar.png';
+          listing.seller?.avatar?.url || '/images/default-avatar.png';
+
         const sellerName =
           listing.seller && listing.seller.name
             ? listing.seller.name
@@ -104,7 +102,9 @@ async function fetchAndDisplayListings(page = 1) {
             <!-- Seller Avatar and Name -->
             <div class="flex items-center space-x-3 mb-3">
               <img src="${sellerAvatar}" alt="${sellerName}" class="w-6 h-6 rounded-full border border-gray-300" />
-              <span class="text-sm font-semibold text-gray-700">${sellerName}</span>
+              <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline">
+        ${sellerName}
+      </a>
             </div>
 
             <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
