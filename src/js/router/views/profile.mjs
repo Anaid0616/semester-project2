@@ -4,6 +4,7 @@ import { doFetch } from '../../api/doFetch.mjs';
 import { fetchAndDisplayProfile } from './profileUser.mjs';
 import '../../ui/profile/updateAvatar.mjs';
 import { showAlert } from '../../utilities/alert.mjs';
+import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
 loadSharedHeader(); // Load shared header dynamically
 
@@ -22,6 +23,10 @@ const userListingsContainer = document.getElementById(
  */
 async function fetchAndDisplayUserListings() {
   try {
+    const userListingsContainer = document.getElementById(
+      'user-listings-container'
+    );
+
     const urlParams = new URLSearchParams(window.location.search);
     let username = urlParams.get('user'); // Get seller's name from URL
 
@@ -32,6 +37,10 @@ async function fetchAndDisplayUserListings() {
         console.error('No user found in localStorage');
         return;
       }
+
+      //  Show skeleton before fetching listings
+      userListingsContainer.innerHTML = generateSkeleton('listings');
+
       username = user.name;
     }
 
@@ -58,7 +67,7 @@ async function fetchAndDisplayUserListings() {
       return;
     }
 
-    // Render listings without seller details
+    // Render listings
     userListingsContainer.innerHTML = listings
       .map((listing) => {
         const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg';
@@ -93,8 +102,6 @@ async function fetchAndDisplayUserListings() {
       .join('');
   } catch (error) {
     console.error('Error fetching user listings:', error);
-    userListingsContainer.innerHTML =
-      '<p>Error loading listings. Please try again.</p>';
   }
 }
 

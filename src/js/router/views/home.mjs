@@ -1,5 +1,6 @@
 import { loadSharedHeader } from '../../ui/global/sharedHeader.mjs';
 import { readListings } from '../../api/listing/read.mjs';
+import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
 loadSharedHeader(); // Load the shared header dynamically
 
@@ -33,24 +34,8 @@ function isValidImageUrl(url) {
  */
 async function fetchAndDisplayListings(page = 1) {
   try {
-    // Render skeleton loaders before fetching listings
-    listingsContainer.innerHTML = `
-      ${Array.from({ length: 12 })
-        .map(
-          () => `
-          <div class="listing bg-white shadow rounded-sm overflow-hidden">
-            <div class="animate-pulse">
-              <div class="w-full h-60 object-cover rounded-sm bg-gray-200"></div>
-              <div class="p-4">
-                <div class="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                <div class="h-3 bg-gray-200 rounded w-1/2"></div>
-              </div>
-            </div>
-          </div>
-        `
-        )
-        .join('')}
-    `;
+    // Show the home page listings skeleton before fetching data
+    listingsContainer.innerHTML = generateSkeleton('listings');
 
     // Fetch listings from API
     const response = await readListings(12, page);

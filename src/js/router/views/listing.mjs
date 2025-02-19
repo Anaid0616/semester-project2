@@ -3,6 +3,7 @@ import { showModal } from '../../utilities/modal.mjs';
 import { readListing } from '../../api/listing/read';
 import { deleteListing } from '../../api/listing/delete';
 import { showAlert } from '../../utilities/alert.mjs';
+import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
 loadSharedHeader(); // Load shared header dynamically
 
@@ -20,24 +21,8 @@ if (!listingId) {
 
 const listingContainer = document.getElementById('listing-container');
 
-/**
- * Generates and displays a skeleton loader before fetching data.
- */
 function showSkeletonLoader() {
-  listingContainer.innerHTML = `
-    <div class="animate-pulse flex flex-col md:flex-row gap-6">
-        <!-- Skeleton for image -->
-        <div class="w-full md:w-1/2 h-96 bg-gray-300 rounded-md"></div>
-
-        <!-- Skeleton for details -->
-        <div class="flex-1 space-y-4">
-            <div class="h-6 bg-gray-300 rounded w-1/3"></div>
-            <div class="h-4 bg-gray-300 rounded w-1/4"></div>
-            <div class="h-4 bg-gray-300 rounded w-1/2"></div>
-            <div class="h-10 bg-gray-300 rounded w-full"></div>
-        </div>
-    </div>
-  `;
+  listingContainer.innerHTML = generateSkeleton('listing');
 }
 
 /**
