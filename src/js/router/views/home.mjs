@@ -65,7 +65,11 @@ async function fetchAndDisplayListings(page = 1, category = null) {
         const sellerAvatar =
           listing.seller?.avatar?.url || '/images/default-avatar.png';
         const sellerName = listing.seller?.name || 'Unknown Seller';
-        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg';
+        const mediaUrl =
+          listing.media && listing.media.length > 0 && listing.media[0].url
+            ? listing.media[0].url
+            : '/images/placeholder.jpg';
+
         const title = listing.title || 'Untitled Listing';
         const description = listing.description
           ? listing.description.substring(0, 100) + '...'
