@@ -2,64 +2,60 @@ import { loadSharedHeader } from '../../ui/global/sharedHeader.mjs';
 import { readListings } from '../../api/listing/read.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
-loadSharedHeader(); // Load the shared header dynamically
+loadSharedHeader();
 
 // Elements
 const listingsContainer = document.getElementById('listings-container');
+const categoryButtons = document.querySelectorAll('.category-btn'); // Select all category buttons
 const prevButton = document.getElementById('prev-page');
 const nextButton = document.getElementById('next-page');
 const currentPageDisplay = document.getElementById('current-page');
 
-// Pagination
+// Pagination & Filters
 let currentPage = 1;
+let selectedCategory = null; // Store selected category
 
 /**
- * Helper function to validate image URLs.
- * @param {string} url - The URL to validate.
- * @returns {Promise<boolean>} - Resolves `true` if valid, `false` otherwise.
- */
-function isValidImageUrl(url) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url;
-  });
-}
-
-/**
- * Fetch and display listings from the API.
+ * Fetch and display listings from the API with optional category filtering.
  * @async
  * @param {number} [page=1] - The page number to fetch.
+ * @param {string|null} [category=null] - The category filter.
  */
-async function fetchAndDisplayListings(page = 1) {
+async function fetchAndDisplayListings(page = 1, category = null) {
   try {
-    // Show the home page listings skeleton before fetching data
     listingsContainer.innerHTML = generateSkeleton('listings');
 
     // Fetch listings from API
-    const response = await readListings(12, page);
-    console.log('API Listings Response:', response.data);
-    const listings = response.data;
+    let response = await readListings(24, page);
+    let listings = response.data;
 
-    // Fallback image URL
-    const fallbackImageUrl = '/images/placeholder.jpg';
-
-    // Filter out listings with missing or invalid image URLs
-    const validListings = [];
-    for (const listing of listings) {
-      const mediaUrl = listing.media?.[0] || fallbackImageUrl; // Use first image if available
-      const isValid = await isValidImageUrl(mediaUrl);
-
-      if (isValid) {
-        validListings.push({ ...listing, mediaUrl });
+    // 🔹 Assign "Other" category to listings without tags
+    listings.forEach((listing) => {
+      if (!listing.tags || listing.tags.length === 0) {
+        listing.tags = ['Other'];
       }
-      if (validListings.length >= 12) break; // Stop after collecting 12 valid listings
+    });
+
+    console.log('Listings with Default Category:', listings); // Debugging
+
+    // Apply category filter if selected
+    if (category) {
+      listings = listings.filter((listing) =>
+        listing.tags?.some(
+          (tag) => tag.toLowerCase() === category.toLowerCase()
+        )
+      );
     }
 
-    // Handle empty state
-    if (validListings.length === 0) {
-      listingsContainer.innerHTML = `<p class="text-center">No listings available.</p>`;
+    // Sort listings by newest first
+    listings.sort(
+      (a, b) =>
+        new Date(b.created || b.updated || b.endsAt) -
+        new Date(a.created || a.updated || a.endsAt)
+    );
+
+    if (listings.length === 0) {
+      listingsContainer.innerHTML = `<p class="text-center">No listings found in this category.</p>`;
       return;
     }
 
@@ -68,13 +64,8 @@ async function fetchAndDisplayListings(page = 1) {
       .map((listing) => {
         const sellerAvatar =
           listing.seller?.avatar?.url || '/images/default-avatar.png';
-
-        const sellerName =
-          listing.seller && listing.seller.name
-            ? listing.seller.name
-            : 'Unknown Seller';
-
-        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg'; // Use fallback
+        const sellerName = listing.seller?.name || 'Unknown Seller';
+        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg';
         const title = listing.title || 'Untitled Listing';
         const description = listing.description
           ? listing.description.substring(0, 100) + '...'
@@ -84,12 +75,11 @@ async function fetchAndDisplayListings(page = 1) {
 
         return `
           <div class="listing bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
-            <!-- Seller Avatar and Name -->
             <div class="flex items-center space-x-3 mb-3">
               <img src="${sellerAvatar}" alt="${sellerName}" class="w-6 h-6 rounded-full border border-gray-300" />
               <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline">
-        ${sellerName}
-      </a>
+                ${sellerName}
+              </a>
             </div>
 
             <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
@@ -102,7 +92,6 @@ async function fetchAndDisplayListings(page = 1) {
               </div>
             </a>
 
-            <!-- Bid Button -->
             <button 
               class="w-full py-2 mt-3 text-black font-semibold rounded-sm bg-[#C5A880] hover:bg-[#A88B6D] transition"
               data-listing-id="${listing.id}">
@@ -113,7 +102,6 @@ async function fetchAndDisplayListings(page = 1) {
       })
       .join('');
 
-    // Update pagination display
     currentPageDisplay.textContent = `Page ${page}`;
   } catch (error) {
     console.error('Error fetching listings:', error);
@@ -122,17 +110,26 @@ async function fetchAndDisplayListings(page = 1) {
   }
 }
 
+// Attach event listeners to category buttons
+categoryButtons.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    selectedCategory = event.target.innerText.trim(); // Get category name
+    currentPage = 1; // Reset to first page
+    fetchAndDisplayListings(currentPage, selectedCategory);
+  });
+});
+
 // Pagination controls
 prevButton.addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
-    fetchAndDisplayListings(currentPage);
+    fetchAndDisplayListings(currentPage, selectedCategory);
   }
 });
 
 nextButton.addEventListener('click', () => {
   currentPage++;
-  fetchAndDisplayListings(currentPage);
+  fetchAndDisplayListings(currentPage, selectedCategory);
 });
 
 // Initial fetch

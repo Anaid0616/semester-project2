@@ -74,7 +74,7 @@ export async function fetchAndDisplayProfile() {
     }
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    document.querySelector('.flex.items-start.gap-6').innerHTML =
+    document.querySelector('#profile-container').innerHTML =
       '<p class="text-red-500">Error loading profile. Please try again.</p>';
   }
 }

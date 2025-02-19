@@ -13,7 +13,10 @@
 
     <link rel="stylesheet" href="./src/css/style.css" />
     <script type="module" src="./src/app.mjs"></script>
-    <script src="https://kit.fontawesome.com/e9ab0044c8.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/e9ab0044c8.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Favicon -->
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
@@ -26,7 +29,6 @@
     <header></header>
 
     <main class="bg-[#F9F1EC]">
-      
       <div class="max-w-6xl mx-auto relative text-left text-white">
         <img
           src="./public/images/jeztimmsunsplash.jpg"
@@ -68,94 +70,105 @@
       <div class="max-w-6xl mx-auto py-6">
         <h2 class="text-xl font-semibold">All Categories</h2>
         <div class="flex overflow-x-auto justify-center gap-6 mt-4">
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-bag-shopping text-3xl"></i>
-            </svg>
             <span>Fashion</span>
           </div>
 
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-camera-retro text-3xl"></i>
             <span>Vintage</span>
           </div>
 
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-couch text-3xl"></i>
             <span>Interiors</span>
           </div>
 
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-gem text-3xl"></i>
             <span>Jewelry</span>
           </div>
 
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-palette text-3xl"></i>
             <span>Art</span>
           </div>
 
-          <div class="flex flex-col items-center cursor-pointer">
+          <div class="flex flex-col items-center cursor-pointer category-btn">
             <i class="fa-solid fa-home text-3xl"></i>
             <span>Decor</span>
           </div>
-       
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid fa-stopwatch text-3xl"></i>
-        <span>Watches</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-stopwatch text-3xl"></i>
+            <span>Watches</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid fa-puzzle-piece text-3xl"></i>
-        <span>Toys</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-puzzle-piece text-3xl"></i>
+            <span>Toys</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid 	fa-book-open text-3xl"></i>
-        <span>Books</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-book-open text-3xl"></i>
+            <span>Books</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid 	fa-football-ball text-3xl"></i>
-        <span>Sports</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-football-ball text-3xl"></i>
+            <span>Sports</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid fa-dice text-3xl"></i>
-        <span>Games</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-dice text-3xl"></i>
+            <span>Games</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid 	fa-star text-3xl"></i>
-        <span>Collectibles</span>
-      </div>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-star text-3xl"></i>
+            <span>Collectibles</span>
+          </div>
 
-      <div class="flex flex-col items-center cursor-pointer">
-        <i class="fa-solid 	fa-car text-3xl"></i>
-        <span>Cars</span>
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-car text-3xl"></i>
+            <span>Cars</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer category-btn">
+            <i class="fa-solid fa-box text-3xl"></i>
+            <span>Other</span>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
       <div class="max-w-6xl mx-auto">
         <h2 class="text-xl font-semibold">Latest Listings</h2>
         <!-- Listings Container -->
-    <div id="listings-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"></div>
-
+        <div
+          id="listings-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
+        ></div>
       </div>
 
       <div class="flex justify-end">
         <a href="#" id="back-to-top">
-          <img src="./public/images/backtotop.png" class="w-10 m-4">
+          <img src="./public/images/backtotop.png" class="w-10 m-4" />
         </a>
       </div>
 
-    <!-- Pagination Controls -->
-    <div class="text-center my-6">
-      <button id="prev-page" class="px-4 py-2 bg-gray-300 rounded-md">Prev</button>
-      <span id="current-page" class="px-4 py-2 bg-white border rounded-md">1</span>
-      <button id="next-page" class="px-4 py-2 bg-gray-300 rounded-md">Next</button>
-  </div>
+      <!-- Pagination Controls -->
+      <div class="text-center my-6">
+        <button id="prev-page" class="px-4 py-2 bg-gray-300 rounded-md">
+          Prev
+        </button>
+        <span id="current-page" class="px-4 py-2 bg-white border rounded-md"
+          >1</span
+        >
+        <button id="next-page" class="px-4 py-2 bg-gray-300 rounded-md">
+          Next
+        </button>
+      </div>
     </main>
 
     <footer class="bg-black text-white p-4 text-center">

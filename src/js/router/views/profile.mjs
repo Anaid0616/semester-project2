@@ -44,7 +44,7 @@ async function fetchAndDisplayUserListings() {
       username = user.name;
     }
 
-    console.log('Fetching listings for:', username); // Debugging log
+    console.log('Fetching listings for:', username);
 
     if (!username) {
       throw new Error('Username is undefined.');
@@ -110,6 +110,9 @@ const updateProfileButton = document.getElementById('update-profile-button');
 if (updateProfileButton) {
   updateProfileButton.addEventListener('click', () => {
     const updateProfileForm = document.getElementById('update-profile');
+
+    console.log(updateProfileForm);
+
     if (updateProfileForm) {
       if (updateProfileForm.style.display === 'none') {
         updateProfileForm.style.display = 'block';
