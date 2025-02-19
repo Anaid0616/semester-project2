@@ -59,10 +59,18 @@ async function fetchAndRenderListing() {
     // Image carousel logic
     let currentImageIndex = 0;
     const images =
-      media.length > 0 ? media : ['../public/images/placeholder.jpg'];
+      media.length > 0
+        ? media.map((image) => image.url)
+        : ['/images/placeholder.jpg'];
 
+    // Update displayed image
     function updateImage(index) {
       document.getElementById('main-image').src = images[index];
+      document
+        .querySelectorAll('.thumbnail')
+        .forEach((thumb, i) =>
+          thumb.classList.toggle('border-gray-800', i === index)
+        );
     }
 
     // Seller avatar fallback
@@ -70,16 +78,43 @@ async function fetchAndRenderListing() {
       seller?.avatar?.url || '../public/images/default-avatar.png';
 
     // Render listing details in the container
-    // Replace the part inside listingContainer.innerHTML with this:
+
     listingContainer.innerHTML = `
 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
     <!-- Image Section with Carousel -->
     <div class="relative">
-        <img id="main-image" src="${
-          images[0]
-        }" alt="Listing Image" class="w-full h-96 object-cover rounded-lg shadow-md"/>
-        <button id="prev-image" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">◀</button>
-        <button id="next-image" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">▶</button>
+   <!-- Image Carousel -->
+<div class="relative">
+    <img id="main-image" src="${
+      images[0]
+    }" alt="Listing Image" class="w-full h-96 object-cover rounded-lg shadow-md"/>
+
+    <!-- Navigation Buttons -->
+<!-- Previous Button -->
+<button id="prev-image" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-transparent text-gray-700 p-2 rounded-sm hover:bg-gray-200 transition">
+    <i class="fa-solid fa-chevron-left text-2xl"></i>
+</button>
+
+<!-- Next Button -->
+<button id="next-image" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent text-gray-700 p-2 rounded-sm hover:bg-gray-200 transition">
+    <i class="fa-solid fa-chevron-right text-2xl"></i>
+</button>
+
+
+</div>
+
+<!-- Thumbnails for extra images -->
+<div class="flex gap-2 mt-4">
+    ${images
+      .map(
+        (img, index) => `
+        <img src="${img}" data-index="${index}" class="thumbnail w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400">
+    `
+      )
+      .join('')}
+</div>
+
+
     </div>
 
     <!-- Item Details -->
@@ -132,15 +167,25 @@ async function fetchAndRenderListing() {
 `;
 
     // Set up event listeners for image carousel
+    // Handle next image
+    document.getElementById('next-image').addEventListener('click', () => {
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      updateImage(currentImageIndex);
+    });
+
+    // Handle previous image
     document.getElementById('prev-image').addEventListener('click', () => {
       currentImageIndex =
         (currentImageIndex - 1 + images.length) % images.length;
       updateImage(currentImageIndex);
     });
 
-    document.getElementById('next-image').addEventListener('click', () => {
-      currentImageIndex = (currentImageIndex + 1) % images.length;
-      updateImage(currentImageIndex);
+    // Handle thumbnail click
+    document.querySelectorAll('.thumbnail').forEach((thumb) => {
+      thumb.addEventListener('click', (event) => {
+        currentImageIndex = Number(event.target.getAttribute('data-index'));
+        updateImage(currentImageIndex);
+      });
     });
 
     // Edit & Delete buttons (Only for the seller)

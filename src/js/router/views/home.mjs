@@ -29,7 +29,7 @@ async function fetchAndDisplayListings(page = 1, category = null) {
     let response = await readListings(24, page);
     let listings = response.data;
 
-    // 🔹 Assign "Other" category to listings without tags
+    // Assign "Other" category to listings without tags
     listings.forEach((listing) => {
       if (!listing.tags || listing.tags.length === 0) {
         listing.tags = ['Other'];
