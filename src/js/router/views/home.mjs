@@ -26,21 +26,44 @@ async function fetchAndDisplayListings(page = 1, category = null) {
     listingsContainer.innerHTML = generateSkeleton('listings');
 
     // Fetch listings from API
-    let response = await readListings(24, page);
-    let listings = response.data;
+    let validListings = [];
+    let currentPage = page;
 
-    // Assign "Other" category to listings without tags
-    listings.forEach((listing) => {
-      if (!listing.tags || listing.tags.length === 0) {
-        listing.tags = ['Other'];
+    // Fetch listings until we have at least 24 valid ones
+    while (validListings.length < 24) {
+      let response = await readListings(24, currentPage);
+      let listings = response.data;
+
+      if (!listings || listings.length === 0) break;
+
+      // Filter out listings with broken or missing images
+      listings = listings.filter((listing) => {
+        const mediaUrl = listing.media?.[0]?.url;
+        return mediaUrl && mediaUrl.startsWith('http');
+      });
+
+      // Assign "Other" category to listings without tags
+      listings.forEach((listing) => {
+        if (!listing.tags || listing.tags.length === 0) {
+          listing.tags = ['Other'];
+        }
+      });
+
+      validListings.push(...listings);
+
+      // Fetch next page if not enough listings yet
+      if (validListings.length < 24) {
+        currentPage++;
+      } else {
+        break;
       }
-    });
+    }
 
-    console.log('Listings with Default Category:', listings); // Debugging
+    console.log('Valid Listings:', validListings); // Debugging
 
     // Apply category filter if selected
     if (category) {
-      listings = listings.filter((listing) =>
+      validListings = validListings.filter((listing) =>
         listing.tags?.some(
           (tag) => tag.toLowerCase() === category.toLowerCase()
         )
@@ -48,19 +71,22 @@ async function fetchAndDisplayListings(page = 1, category = null) {
     }
 
     // Sort listings by newest first
-    listings.sort(
+    validListings.sort(
       (a, b) =>
         new Date(b.created || b.updated || b.endsAt) -
         new Date(a.created || a.updated || a.endsAt)
     );
 
-    if (listings.length === 0) {
+    if (validListings.length === 0) {
       listingsContainer.innerHTML = `<p class="text-center">No listings found in this category.</p>`;
       return;
     }
 
+    // Limit to exactly 24 listings
+    validListings = validListings.slice(0, 24);
+
     // Render Listings
-    listingsContainer.innerHTML = listings
+    listingsContainer.innerHTML = validListings
       .map((listing) => {
         const sellerAvatar =
           listing.seller?.avatar?.url || '/images/default-avatar.png';
