@@ -69,93 +69,48 @@
 
       <div class="max-w-6xl mx-auto py-6">
         <h2 class="text-xl font-semibold">All Categories</h2>
-        <div class="flex overflow-x-auto justify-center gap-6 mt-4">
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-bag-shopping text-3xl"></i>
-            <span>Fashion</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-camera-retro text-3xl"></i>
-            <span>Vintage</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-couch text-3xl"></i>
-            <span>Interiors</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-gem text-3xl"></i>
-            <span>Jewelry</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-palette text-3xl"></i>
-            <span>Art</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-home text-3xl"></i>
-            <span>Decor</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-stopwatch text-3xl"></i>
-            <span>Watches</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-puzzle-piece text-3xl"></i>
-            <span>Toys</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-book-open text-3xl"></i>
-            <span>Books</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-football-ball text-3xl"></i>
-            <span>Sports</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-dice text-3xl"></i>
-            <span>Games</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-star text-3xl"></i>
-            <span>Collectibles</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-car text-3xl"></i>
-            <span>Cars</span>
-          </div>
-
-          <div class="flex flex-col items-center cursor-pointer category-btn">
-            <i class="fa-solid fa-box text-3xl"></i>
-            <span>Other</span>
-          </div>
-        </div>
+        <div class="flex overflow-x-auto gap-6 mt-4 relative mx-10">
+          <div class="relative flex items-center max-w-6xl mx-auto overflow-hidden py-10">
+            <!-- Left Arrow -->
+            <button
+                id="prev-category"
+                class="absolute left-0 z-10 p-2 bg-[#C5A880] bg-opacity-80 rounded-full shadow-md hover:bg-opacity-100 transition"
+            >
+                <i class="fa-solid fa-chevron-left text-white"></i>
+            </button>
+    
+            <!-- Category Carousel -->
+            <div
+                id="category-carousel"
+                class="flex overflow-x-auto no-scrollbar gap-10 w-full scroll-smooth"
+            >
+                <!-- Categories will be rendered here by JavaScript -->
+            </div>
+    
+            <!-- Right Arrow -->
+            <button
+                id="next-category"
+                class="absolute right-0 z-10 p-2 bg-[#C5A880] bg-opacity-80 rounded-full shadow-md hover:bg-opacity-100 transition"
+            >
+                <i class="fa-solid fa-chevron-right text-white"></i>
+            </button>
+        </div>    
       </div>
 
       <div class="max-w-6xl mx-auto">
-        <h2 class="text-xl font-semibold">Latest Listings</h2>
+        <h2 class="py-4 text-xl font-semibold">Latest Listings</h2>
         <div class="flex gap-4 mb-4">
           <button
             id="filter-all"
             class="py-2 px-4 bg-[#C5A880] text-black rounded-sm hover:bg-[#A88B6D] transition"
           >
-            Show All Listings
+            All Listings
           </button>
           <button
             id="filter-active"
             class="py-2 px-4 bg-[#C5A880] text-black rounded-sm hover:bg-[#A88B6D] transition"
           >
-            Show Only Active Listings
+            Active Listings
           </button>
         </div>
 
