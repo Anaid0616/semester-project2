@@ -20,17 +20,32 @@ export async function readListing(id) {
 }
 
 /**
- * Reads multiple listings with optional pagination.
+ * Reads multiple listings with optional pagination and filtering.
  *
  * @param {number} [limit=24] - The maximum number of listings to return.
  * @param {number} [page=1] - The page number for pagination.
+ * @param {string|null} [tag=null] - The tag to filter listings by category.
+ * @param {boolean} [activeOnly=false] - Whether to filter only active listings.
  * @returns {Promise<Object>} An object containing an array of listings in the `data` field, and information in a `meta` field.
  * @throws {Error} If the API request fails.
  */
-export async function readListings(limit = 24, page = 1) {
-  const url = `${API_AUCTION_LISTINGS}?limit=${limit}&page=${page}&_seller=true`;
+export async function readListings(
+  limit = 24,
+  page = 1,
+  tag = null,
+  activeOnly = false
+) {
+  let url = `${API_AUCTION_LISTINGS}?limit=${limit}&page=${page}&_seller=true`;
+
+  if (tag) {
+    url += `&_tag=${encodeURIComponent(tag)}`;
+  }
+
+  if (activeOnly) {
+    url += `&_active=true`;
+  }
+
   try {
-    // Use doFetch with `GET` method and auth headers
     return await doFetch(url, { method: 'GET' }, true);
   } catch (error) {
     console.error('Error reading posts:', error);
