@@ -26,10 +26,10 @@
   </head>
 
   <body>
-    <header></header>
+    <header class="sticky top-0 z-50"></header>
 
     <main class="bg-[#F9F1EC]">
-      <div class="max-w-6xl mx-auto relative text-left text-white">
+      <div class="max-w-6xl mx-auto relative text-left text-white" id="welcome-section">
         <img
           src="./images/jeztimmsunsplash.jpg"
           alt="Background"
@@ -38,7 +38,7 @@
         <div
           class="max-w-2xl mx-auto absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50"
         >
-          <h1 class="text-2xl font-semibold">Welcome, Username!</h1>
+          <h1 class="text-2xl font-semibold" id="welcome-text">Welcome, Username!</h1>
           <div
             class="mt-2 flex items-center bg-white text-black px-4 py-2 rounded-sm shadow-md w-full max-w-2xl"
           >
@@ -48,6 +48,8 @@
               class="w-64 outline-none pr-10"
             />
             <div class="absolute right-4">
+              <button class="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center"
+              >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -62,6 +64,7 @@
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                 />
               </svg>
+            </button>
             </div>
           </div>
         </div>
@@ -144,5 +147,6 @@
     <footer class="bg-black text-white p-4 text-center">
       &copy; 2025 Auction House
     </footer>
+
   </body>
 </html>

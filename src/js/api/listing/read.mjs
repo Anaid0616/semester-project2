@@ -33,7 +33,8 @@ export async function readListings(
   limit = 24,
   page = 1,
   tag = null,
-  activeOnly = false
+  activeOnly = false,
+  query = null
 ) {
   let url = `${API_AUCTION_LISTINGS}?limit=${limit}&page=${page}&_seller=true`;
 
@@ -43,6 +44,10 @@ export async function readListings(
 
   if (activeOnly) {
     url += `&_active=true`;
+  }
+
+  if (query) {
+    url = `${API_AUCTION_LISTINGS}/search?q=${encodeURIComponent(query)}`;
   }
 
   try {

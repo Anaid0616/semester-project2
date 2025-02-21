@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Search for exclusive items at Auction House! Discover rare finds, unique collectibles, and unbeatable deals at our auctions."
+    />
+    <title>Search Results | Auction House</title>
+
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <script type="module" src="../src/app.mjs"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" sizes="16x16" href="../images/favicon-16x16.png" />
+    <link rel="icon" sizes="32x32" href="../images/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+  </head>
+
+  <body>
+    <!-- Shared Header (Loaded via sharedHeader.mjs) -->
+    <header class="sticky top-0 z-50"></header>
+
+    <main class="bg-[#F9F1EC] min-h-screen">
+      <div class="max-w-6xl mx-auto py-6">
+        <h2 id="search-query" class="text-xl font-semibold">Search Results</h2>
+
+        <!-- Listings Container -->
+        <div
+          id="listings-container"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
+        ></div>
+      </div>
+    </main>
+
+    <footer></footer>
+
+    <!-- Import Search Logic -->
+    <script type="module" src="../src/js/utilities/search.mjs"></script>
+  </body>
+</html>

@@ -5,36 +5,44 @@
       <img src="/images/Logo.png" alt="Logo" class="h-14" />
     </a>
   </div>
+
   <div
     id="alert-container"
     class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-2 z-50"
   ></div>
-  <!-- Search Bar -->
-  <div class="flex-grow mx-4 max-w-xl relative">
-    <input
-      type="text"
-      placeholder="What are you looking for?"
-      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-[#D4AF37]"
-    />
 
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="absolute top-1/2 right-4 transform -translate-y-1/2 h-5 w-5 text-gray-500"
+  <!-- Search Bar -->
+  <div class="flex-1 flex justify-center">
+    <div
+      class="flex-grow max-w-xl mx-2 relative opacity-0 pointer-events-none transition-opacity duration-300"
+      id="header-search-bar"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+      <input
+        type="text"
+        placeholder="What are you looking for?"
+        class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-[#D4AF37]"
       />
-    </svg>
+      <button class="absolute top-1/2 right-4 transform -translate-y-1/2" type="button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 h-5 w-5 text-gray-500"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+        />
+      </svg>
+      <button class="absolute top-1/2 right-4 transform -translate-y-1/2" type="button"></button>
+    </div>
   </div>
 
   <!-- Navigation -->
-  <nav class="flex space-x-4 items-center flex-grow justify-end">
+  <nav class="flex space-x-4 items-center">
     <div id="logged-out" class="hidden">
       <a href="/register/" class="text-gray-800 hover:underline">Register</a>
       <a
@@ -60,27 +68,19 @@
           />
         </svg>
 
-        New Ad
+        New Listing
       </a>
-      <a
-        href="/profile/"
+      
+      <a id="profile-link" href="/profile/"
         class="flex items-center text-gray-800 hover:underline"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-          />
-        </svg>
-        My Profile</a
+      <img
+      id="profile-icon"
+      src="/images/default-avatar.png"
+      alt="Profile Icon"
+      class="w-8 h-8 rounded-full mr-2 border border-gray-300"
+  />
+  <span id="profile-name">My Profile</span></a
       >
       <button
         id="logout-button"

@@ -1,4 +1,15 @@
-/* Add this to your tailwind.css or global CSS file */
+/* header, Smooth transition for showing and hiding the search bar */
+#header-search-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#header-search-bar.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* index Category carousel */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

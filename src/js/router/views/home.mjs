@@ -8,16 +8,42 @@ import {
   handleCategoryClick,
   categories,
 } from '../../utilities/categoryCarousel.mjs';
+import { handleSearchInput } from '../views/search.mjs';
+import { getUserName } from '../../utilities/getUserName.mjs';
 
 loadSharedHeader();
 
-// Check if the category-carousel element exists
-// Immediately initialize the category carousel
+console.log('Home page script loaded');
+
+// Set the welcome text directly without DOMContentLoaded
+const welcomeText = document.getElementById('welcome-text');
+if (welcomeText) {
+  const userName = getUserName();
+  welcomeText.textContent = `Welcome, ${userName}!`;
+} else {
+  console.error('Could not find the #welcome-text element in the DOM.');
+}
+
+// Index page search bar
+const mainSearchBarInput = document.querySelector('#welcome-section input');
+const mainSearchButton = document.querySelector('#welcome-section button');
+handleSearchInput(mainSearchBarInput, mainSearchButton);
+
+// Add an event listener for the search input on the index page
+mainSearchBarInput?.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    const query = mainSearchBarInput.value.trim();
+    if (query) {
+      window.location.href = `/search/?q=${encodeURIComponent(query)}`;
+    }
+  }
+});
+
+// Category carousel
 const carouselContainer = document.getElementById('category-carousel');
 if (!carouselContainer) {
   console.error('Element #category-carousel not found!');
 } else {
-  console.log('Creating category carousel...');
   createCategoryCarousel(categories);
   setupCarouselNavigation();
 }
@@ -52,11 +78,6 @@ async function fetchAndDisplayListings(
     const response = await readListings(24, page, category, activeOnly);
     let listings = response.data;
 
-    console.log(
-      `Page ${page} fetched with ${listings.length} listings from API`
-    );
-    console.log(`Active filter applied: ${activeOnly}`);
-
     if (!listings || listings.length === 0) {
       listingsContainer.innerHTML = `<p class="text-center">No listings found.</p>`;
       return;
@@ -64,7 +85,6 @@ async function fetchAndDisplayListings(
 
     // Filter out listings with invalid images
     listings = await filterValidImageListings(listings);
-    console.log(`Listings after image validation: ${listings.length}`);
 
     // If filtered listings are fewer than the limit, fetch more to maintain the page size
     while (listings.length < 24) {
@@ -78,15 +98,11 @@ async function fetchAndDisplayListings(
       let additionalListings = additionalResponse.data;
 
       if (!additionalListings || additionalListings.length === 0) {
-        console.log('No more listings available to fill the page.');
         break;
       }
 
       additionalListings = await filterValidImageListings(additionalListings);
       listings = listings.concat(additionalListings).slice(0, 24);
-      console.log(
-        `Filled listings to maintain 24 per page: ${listings.length}`
-      );
     }
 
     listings.sort(
@@ -144,7 +160,7 @@ async function fetchAndDisplayListings(
   }
 }
 
-// Make function accessible to categoryCarousel.mjs without breaking initial load
+// Make function accessible to categoryCarousel.mjs
 window.fetchAndDisplayListings = (page = 1, category = null) => {
   fetchAndDisplayListings(page, category, showActiveOnly);
 };
@@ -185,12 +201,12 @@ filterActiveButton.addEventListener('click', () => {
 function setActiveButtonStyle(activeButton) {
   // Reset styles for both buttons
   [filterAllButton, filterActiveButton].forEach((button) => {
-    button.classList.remove('bg-[#A88B6D]', 'font-bold', 'text-black');
+    button.classList.remove('bg-[#A88B6D]', 'font-semibold', 'text-black');
     button.classList.add('bg-[#C5A880]');
   });
 
   // Apply active styles to the clicked button
-  activeButton.classList.add('bg-[#A88B6D]', 'font-bold', 'text-black');
+  activeButton.classList.add('bg-[#A88B6D]', 'font-semibold', 'text-black');
 }
 
 // Pagination Controls
