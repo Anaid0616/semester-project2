@@ -5,8 +5,10 @@ import { deleteListing } from '../../api/listing/delete';
 import { showAlert } from '../../utilities/alert.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 import { placeBid } from '../../api/listing/placeBid';
+import { loadSharedFooter } from '../../ui/global/sharedFooter.mjs';
 
 loadSharedHeader(); // Load shared header dynamically
+loadSharedFooter();
 
 // Get listing ID from URL
 const queryString = window.location.search;
@@ -156,7 +158,7 @@ async function fetchAndRenderListing() {
           
             <p class="text-gray-700">Bids: ${bidCount}</p>
          
-           <p class="text-lg font-bold text-gray-800">Highest Bid: $${highestBid} by ${highestBidder}</p>
+           <p class="text-lg font-semibold text-gray-800">Highest Bid: $${highestBid} by ${highestBidder}</p>
         </div>
 
 

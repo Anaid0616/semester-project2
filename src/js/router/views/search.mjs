@@ -2,9 +2,10 @@ import { readListings } from '../../api/listing/read.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 import { loadSharedHeader } from '../../ui/global/sharedHeader.mjs';
 import { filterValidImageListings } from '../../utilities/validateImage.mjs';
+import { loadSharedFooter } from '../../ui/global/sharedFooter.mjs';
 
-// Load shared header
-loadSharedHeader();
+loadSharedHeader(); // Load the shared header dynamically
+loadSharedFooter(); // Load shared footer
 
 // Elements
 const listingsContainer = document.getElementById('listings-container');

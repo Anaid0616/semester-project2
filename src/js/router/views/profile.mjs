@@ -4,8 +4,10 @@ import { doFetch } from '../../api/doFetch.mjs';
 import { fetchAndDisplayProfile } from './profileUser.mjs';
 import '../../ui/profile/updateAvatar.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
+import { loadSharedFooter } from '../../ui/global/sharedFooter.mjs';
 
-loadSharedHeader(); // Load shared header dynamically
+loadSharedHeader(); // Load the shared header dynamically
+loadSharedFooter(); // Load shared footer
 
 const userListingsContainer = document.getElementById('listings-container');
 
@@ -23,15 +25,11 @@ async function fetchAndDisplayUserListings() {
       userListingsContainer.innerHTML = generateSkeleton('listings');
     }
 
-    console.log('Fetching listings for:', username);
-
     if (!username) {
       throw new Error('Username is undefined.');
     }
 
     const profileListingsUrl = `${API_AUCTION_PROFILES}/${username}/listings`;
-
-    console.log('API Request URL:', profileListingsUrl);
 
     const profileData = await doFetch(profileListingsUrl, { method: 'GET' });
 

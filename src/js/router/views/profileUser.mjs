@@ -16,9 +16,6 @@ export async function fetchAndDisplayProfile() {
     const profileUser = urlParams.get('user') || null;
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
 
-    console.log('Profile User:', profileUser);
-    console.log('Logged-In User:', loggedInUser);
-
     const username = profileUser ? profileUser : loggedInUser?.name;
 
     if (!username) {
@@ -80,7 +77,6 @@ export async function fetchAndDisplayProfile() {
 
     if (updateProfileButton) {
       updateProfileButton.onclick = () => {
-        console.log('Update Profile button clicked');
         if (updateProfileFormContainer) {
           const isHidden = updateProfileFormContainer.style.display === 'none';
           updateProfileFormContainer.style.display = isHidden
@@ -96,7 +92,6 @@ export async function fetchAndDisplayProfile() {
           "form[name='updateProfileForm']"
         );
         if (updateProfileForm) {
-          console.log('Triggering form event listener setup.');
           updateProfileForm.removeEventListener('submit', onUpdateProfile);
           updateProfileForm.addEventListener('submit', onUpdateProfile);
         } else {
