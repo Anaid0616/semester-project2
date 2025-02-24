@@ -58,7 +58,7 @@ async function fetchAndDisplayUserListings() {
     // Render listings
     userListingsContainer.innerHTML = listings
       .map((listing) => {
-        const mediaUrl = listing.media?.[0] || '/images/placeholder.jpg';
+        const mediaUrl = listing.media?.[0]?.url || '/images/placeholder.jpg';
         const title = listing.title || 'Untitled Listing';
         const description = listing.description
           ? listing.description.substring(0, 100) + '...'
@@ -102,29 +102,50 @@ async function fetchAndDisplayProfileWithButtonHandler() {
 
   // Add functionality for the "Update Profile" button
   const updateProfileButton = document.getElementById('update-profile-button');
-  if (updateProfileButton) {
-    console.log('Update Profile button found. Attaching click handler.');
-    updateProfileButton.addEventListener('click', () => {
-      console.log('Update Profile button clicked');
-      const updateProfileForm = document.getElementById('update-profile');
+  const updateProfileForm = document.getElementById('update-profile');
 
-      if (updateProfileForm) {
-        if (
-          updateProfileForm.style.display === 'none' ||
-          !updateProfileForm.style.display
-        ) {
-          updateProfileForm.style.display = 'block';
-          updateProfileButton.textContent = 'Cancel Update';
-          console.log('Profile form shown');
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileUser = urlParams.get('user'); // Get the profile user from the URL
+  const loggedInUser = JSON.parse(localStorage.getItem('user'))?.name; // Get the logged-in user
+
+  // Ensure the update form is hidden by default
+  if (updateProfileForm) {
+    updateProfileForm.style.display = 'none';
+  }
+
+  // Check if the profile belongs to the logged-in user
+  if (updateProfileButton) {
+    console.log('Profile User:', profileUser);
+    console.log('Logged-In User:', loggedInUser);
+
+    if (profileUser && profileUser !== loggedInUser) {
+      console.log("Viewing another user's profile. Hiding update button.");
+      // Viewing another user's profile, hide the update button and form
+      updateProfileButton.style.display = 'none';
+      if (updateProfileForm) updateProfileForm.style.display = 'none';
+    } else if (!profileUser || profileUser === loggedInUser) {
+      console.log('Viewing own profile. Showing update button.');
+      // Viewing own profile, show the update button
+      updateProfileButton.style.display = 'block';
+
+      updateProfileButton.addEventListener('click', () => {
+        console.log('Update Profile button clicked');
+        if (updateProfileForm) {
+          const isHidden = updateProfileForm.style.display === 'none';
+          updateProfileForm.style.display = isHidden ? 'block' : 'none';
+          updateProfileButton.textContent = isHidden
+            ? 'Cancel Update'
+            : 'Update Profile';
+          console.log(`Profile form ${isHidden ? 'shown' : 'hidden'}`);
         } else {
-          updateProfileForm.style.display = 'none';
-          updateProfileButton.textContent = 'Update Profile';
-          console.log('Profile form hidden');
+          console.warn('Update profile form not found in DOM.');
         }
-      }
-    });
+      });
+    } else {
+      console.warn('Unknown state for profile and logged-in user.');
+    }
   } else {
-    console.error('Update Profile button not found in the DOM');
+    console.error('Update Profile button not found in the DOM.');
   }
 }
 
