@@ -104,10 +104,8 @@ function setupStickySearchBar() {
         welcomeSection?.getBoundingClientRect().bottom;
 
       if (welcomeSectionBottom < 0) {
-        console.log('Showing header search bar');
         headerSearchBar.classList.add('visible');
       } else {
-        console.log('Hiding header search bar');
         headerSearchBar.classList.remove('visible');
       }
     });

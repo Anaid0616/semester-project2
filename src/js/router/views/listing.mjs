@@ -160,7 +160,7 @@ async function fetchAndRenderListing() {
     <p class="text-gray-700 mt-4">${
       description || 'No Description Available'
     }</p>
-    <p class="text-sm text-gray-500 mt-6 border-t pt-2">Published: ${new Date(
+    <p class="text-sm text-gray-500 mt-6 border-t pt-2">Created: ${new Date(
       created
     ).toLocaleDateString()}</p>
 </div>

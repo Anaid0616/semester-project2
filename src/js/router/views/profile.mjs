@@ -8,9 +8,7 @@ import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
 loadSharedHeader(); // Load shared header dynamically
 
-const userListingsContainer = document.getElementById(
-  'user-listings-container'
-);
+const userListingsContainer = document.getElementById('listings-container');
 
 /**
  * Fetch and display listings for the logged-in user.
@@ -23,9 +21,7 @@ const userListingsContainer = document.getElementById(
  */
 async function fetchAndDisplayUserListings() {
   try {
-    const userListingsContainer = document.getElementById(
-      'user-listings-container'
-    );
+    const userListingsContainer = document.getElementById('listings-container');
 
     const urlParams = new URLSearchParams(window.location.search);
     let username = urlParams.get('user'); // Get seller's name from URL

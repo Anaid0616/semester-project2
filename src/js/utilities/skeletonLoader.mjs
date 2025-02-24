@@ -16,12 +16,12 @@ export function generateSkeleton(type) {
   }
 
   if (type === 'listings') {
+    // Remove the inner grid container, keep only grid items
     return `
- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     ${Array.from({ length: 12 })
       .map(
         () => `
-          <div class="bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
+          <div class="bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between animate-pulse">
             <!-- Seller Avatar & Name Skeleton -->
             <div class="flex items-center space-x-3 mb-3">
               <div class="w-6 h-6 bg-gray-300 rounded-full border border-gray-300"></div>
@@ -49,8 +49,7 @@ export function generateSkeleton(type) {
         `
       )
       .join('')}
-  </div>
-`;
+    `;
   }
 
   return '';

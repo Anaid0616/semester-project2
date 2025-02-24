@@ -36,7 +36,7 @@ export async function readListings(
   activeOnly = false,
   query = null
 ) {
-  let url = `${API_AUCTION_LISTINGS}?limit=${limit}&page=${page}&_seller=true`;
+  let url = `${API_AUCTION_LISTINGS}?limit=${limit}&page=${page}&_seller=true&_sort=created&_order=desc`;
 
   if (tag) {
     url += `&_tag=${encodeURIComponent(tag)}`;

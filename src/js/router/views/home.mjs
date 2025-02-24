@@ -65,7 +65,6 @@ let selectedCategory = null;
 let showActiveOnly = false;
 
 // Fetch and display listings
-// Fetch and display listings
 async function fetchAndDisplayListings(
   page = 1,
   category = null,
@@ -86,15 +85,25 @@ async function fetchAndDisplayListings(
     // Filter out listings with invalid images
     listings = await filterValidImageListings(listings);
 
+    // Initialize additionalPage before the while loop
+    let additionalPage = page;
+
     // If filtered listings are fewer than the limit, fetch more to maintain the page size
     while (listings.length < 24) {
-      page++;
+      additionalPage++; // Only increment additionalPage, not currentPage
+
       const additionalResponse = await readListings(
         24,
-        page,
+        additionalPage,
         category,
         activeOnly
       );
+
+      if (!additionalResponse || !additionalResponse.data) {
+        console.error('Failed to fetch additional listings.');
+        break;
+      }
+
       let additionalListings = additionalResponse.data;
 
       if (!additionalListings || additionalListings.length === 0) {
@@ -105,9 +114,12 @@ async function fetchAndDisplayListings(
       listings = listings.concat(additionalListings).slice(0, 24);
     }
 
-    listings.sort(
-      (a, b) =>
-        new Date(b.created || b.endsAt) - new Date(a.created || a.endsAt)
+    // Sort listings by created date in descending order (newest first)
+    listings.sort((a, b) => new Date(b.created) - new Date(a.created));
+
+    console.log(
+      'Sorted Listings by Created Date:',
+      listings.map((item) => item.created)
     );
 
     listingsContainer.innerHTML = listings
@@ -208,19 +220,6 @@ function setActiveButtonStyle(activeButton) {
   // Apply active styles to the clicked button
   activeButton.classList.add('bg-[#A88B6D]', 'font-semibold', 'text-black');
 }
-
-// Pagination Controls
-prevButton.addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
-    fetchAndDisplayListings(currentPage, selectedCategory);
-  }
-});
-
-nextButton.addEventListener('click', () => {
-  currentPage++;
-  fetchAndDisplayListings(currentPage, selectedCategory);
-});
 
 // Initial Fetch
 fetchAndDisplayListings(currentPage);

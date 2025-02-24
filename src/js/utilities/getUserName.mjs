@@ -6,7 +6,6 @@
  */
 export function getUserName() {
   const userData = localStorage.getItem('user');
-  console.log(' Fetching user data from localStorage:', userData);
 
   if (userData) {
     try {
@@ -14,7 +13,6 @@ export function getUserName() {
       console.log(' Parsed user object:', user);
 
       if (user && user.name) {
-        console.log('User name found:', user.name);
         return user.name;
       } else {
         console.warn('User object does not contain a "name" property.');
