@@ -4,6 +4,7 @@ import { readListing } from '../../api/listing/read';
 import { deleteListing } from '../../api/listing/delete';
 import { showAlert } from '../../utilities/alert.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
+import { placeBid } from '../../api/listing/placeBid';
 
 loadSharedHeader(); // Load shared header dynamically
 
@@ -49,7 +50,7 @@ async function fetchAndRenderListing() {
       _count,
       price,
       created,
-      bids,
+      bids = [],
     } = listing;
 
     // Bids data
@@ -77,8 +78,16 @@ async function fetchAndRenderListing() {
     const sellerAvatar =
       seller?.avatar?.url || '../public/images/default-avatar.png';
 
-    // Render listing details in the container
+    // Render bids list
+    const bidsListHtml =
+      bids
+        .map(
+          (bid) =>
+            `<li class="flex justify-between"><span>${bid.bidderName}</span><span>$${bid.amount}</span></li>`
+        )
+        .join('') || '<p>No bids available.</p>';
 
+    // Render listing details in the container
     listingContainer.innerHTML = `
 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
     <!-- Image Section with Carousel -->
@@ -147,10 +156,21 @@ async function fetchAndRenderListing() {
             <p class="text-lg font-bold text-gray-800">Total Price: ${finalPrice}</p>
         </div>
 
-        <!-- Bid Button -->
-        <button class="w-full py-3 bg-[#C5A880] text-black font-semibold rounded-sm hover:bg-[#af8a64] transition-all shadow-md">
-            Place Bid
-        </button>
+
+        <!-- Bid Form -->
+        <form id="bid-form" class="mt-4">
+            <input type="number" id="bid-amount" placeholder="Enter your bid amount" class="w-full p-2 border rounded-md mb-2" />
+            <button type="submit" class="w-full py-3 bg-[#C5A880] text-black font-semibold rounded-sm hover:bg-[#af8a64] transition-all shadow-md">
+                Place Bid
+            </button>
+        </form>
+        
+           <div class="space-y-2">
+            <h4 class="text-xl font-semibold">Bids:</h4>
+            <ul class="border p-4 rounded-md bg-white shadow-sm">
+                ${bidsListHtml}
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -165,6 +185,30 @@ async function fetchAndRenderListing() {
     ).toLocaleDateString()}</p>
 </div>
 `;
+
+    // Add event listener for bidding form submission
+    document
+      .getElementById('bid-form')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const bidAmount = parseFloat(
+          document.getElementById('bid-amount').value
+        );
+
+        if (isNaN(bidAmount) || bidAmount <= 0) {
+          showAlert('error', 'Please enter a valid bid amount.');
+          return;
+        }
+
+        try {
+          await placeBid(listingId, bidAmount);
+          showAlert('success', 'Bid placed successfully!');
+          await fetchAndRenderListing(); // Refresh the listing with the new bid
+        } catch (error) {
+          console.error('Failed to place bid:', error);
+          showAlert('error', 'Failed to place bid. Please try again.');
+        }
+      });
 
     // Set up event listeners for image carousel
     // Handle next image
