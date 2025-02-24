@@ -36,7 +36,6 @@ export async function onUpdateProfile(event) {
     console.log('API Response Status:', updatedProfile?.status);
     console.log('API Response JSON:', updatedProfile);
 
-    // Check if the response includes a status or if meta is present
     if (!updatedProfile || !updatedProfile?.meta) {
       console.error(
         'Profile update failed or meta not found:',
@@ -50,7 +49,7 @@ export async function onUpdateProfile(event) {
     // Update localStorage with the new profile data
     const updatedUserData = {
       ...user,
-      name: updatedProfile.name || user.name,
+      name: updatedProfile.data.name || user.name,
       avatar: updatedProfile.data.avatar || user.avatar,
       bio: updatedProfile.data.bio || user.bio,
     };
@@ -61,8 +60,19 @@ export async function onUpdateProfile(event) {
     await fetchAndDisplayProfile();
 
     console.log('Profile updated successfully!');
-
     showAlert('success', 'Profile updated successfully!');
+
+    // 🆕 Close the form and reset button text
+    const updateProfileForm = document.getElementById('update-profile');
+    const updateProfileButton = document.getElementById(
+      'update-profile-button'
+    );
+
+    if (updateProfileForm && updateProfileButton) {
+      updateProfileForm.style.display = 'none';
+      updateProfileButton.textContent = 'Update Profile';
+      console.log('Form closed and button text reset to "Update Profile".');
+    }
   } catch (error) {
     console.error('Error updating profile:', error);
     showAlert('error', 'Failed to update profile. Please try again.');
