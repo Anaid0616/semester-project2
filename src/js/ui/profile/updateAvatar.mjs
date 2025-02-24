@@ -36,14 +36,15 @@ export async function onUpdateProfile(event) {
     console.log('API Response Status:', updatedProfile?.status);
     console.log('API Response JSON:', updatedProfile);
 
-    // Check if the response includes a status
-    if (!updatedProfile || updatedProfile?.status !== 200) {
+    // Check if the response includes a status or if meta is present
+    if (!updatedProfile || !updatedProfile?.meta) {
       console.error(
-        'Profile update failed or status undefined:',
-        updatedProfile?.status
+        'Profile update failed or meta not found:',
+        updatedProfile?.status,
+        updatedProfile?.meta
       );
-    } else {
-      console.log('Profile updated successfully!');
+      showAlert('error', 'Failed to update profile. Please try again.');
+      return;
     }
 
     // Update localStorage with the new profile data
@@ -53,6 +54,7 @@ export async function onUpdateProfile(event) {
       avatar: updatedProfile.data.avatar || user.avatar,
       bio: updatedProfile.data.bio || user.bio,
     };
+
     localStorage.setItem('user', JSON.stringify(updatedUserData));
 
     // Dynamically update the DOM using fetchAndDisplayProfile

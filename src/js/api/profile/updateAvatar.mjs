@@ -41,9 +41,18 @@ export async function updateProfile(username, data) {
     console.log('API Response Status:', response.status);
     console.log('API Response JSON:', response);
 
-    return response; // Return the response to the caller
+    if (!response) {
+      throw new Error('No response received from the API.');
+    }
+
+    if (response.errors) {
+      console.error('API Error:', response.errors);
+      throw new Error(response.errors[0]?.message || 'Unknown API error.');
+    }
+
+    return response;
   } catch (error) {
     console.error('Error updating profile:', error);
-    throw error; // Propagate the error to the UI layer
+    throw error;
   }
 }

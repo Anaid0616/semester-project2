@@ -15,21 +15,12 @@ const userListingsContainer = document.getElementById('listings-container');
 async function fetchAndDisplayUserListings() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    let username = urlParams.get('user'); // Get seller's name from URL
+    let username =
+      urlParams.get('user') || JSON.parse(localStorage.getItem('user'))?.name;
 
     // Always show skeletons first, regardless of which profile is being viewed
     if (userListingsContainer) {
       userListingsContainer.innerHTML = generateSkeleton('listings');
-    }
-
-    if (!username) {
-      // If no seller is in the URL, use the logged-in user's name
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user) {
-        console.error('No user found in localStorage');
-        return;
-      }
-      username = user.name;
     }
 
     console.log('Fetching listings for:', username);
@@ -40,7 +31,7 @@ async function fetchAndDisplayUserListings() {
 
     const profileListingsUrl = `${API_AUCTION_PROFILES}/${username}/listings`;
 
-    console.log('API Request URL:', profileListingsUrl); // Debugging log
+    console.log('API Request URL:', profileListingsUrl);
 
     const profileData = await doFetch(profileListingsUrl, { method: 'GET' });
 
@@ -77,13 +68,6 @@ async function fetchAndDisplayUserListings() {
                 <p class="text-sm text-gray-500">Ends: ${endsAt}</p>
               </div>
             </a>
-
-            <!-- Bid Button -->
-            <button 
-              class="w-full py-2 mt-3 text-black font-semibold rounded-sm bg-[#C5A880] hover:bg-[#A88B6D] transition"
-              data-listing-id="${listing.id}">
-              Place Bid
-            </button>
           </div>
         `;
       })
@@ -97,61 +81,61 @@ async function fetchAndDisplayUserListings() {
   }
 }
 
+/**
+ * Fetch and display profile with correct update button handling.
+ */
 async function fetchAndDisplayProfileWithButtonHandler() {
-  await fetchAndDisplayProfile(); // Wait for the profile to render
+  await fetchAndDisplayProfile();
 
-  // Add functionality for the "Update Profile" button
   const updateProfileButton = document.getElementById('update-profile-button');
   const updateProfileForm = document.getElementById('update-profile');
 
   const urlParams = new URLSearchParams(window.location.search);
-  const profileUser = urlParams.get('user'); // Get the profile user from the URL
-  const loggedInUser = JSON.parse(localStorage.getItem('user'))?.name; // Get the logged-in user
+  const profileUser =
+    urlParams.get('user') || JSON.parse(localStorage.getItem('user'))?.name;
+  console.log('Profile User:', profileUser);
+  const loggedInUser = JSON.parse(localStorage.getItem('user'))?.name;
+  console.log('Logged-In User:', loggedInUser);
 
-  // Ensure the update form is hidden by default
   if (updateProfileForm) {
     updateProfileForm.style.display = 'none';
   }
 
-  // Check if the profile belongs to the logged-in user
   if (updateProfileButton) {
-    console.log('Profile User:', profileUser);
-    console.log('Logged-In User:', loggedInUser);
-
     if (profileUser && profileUser !== loggedInUser) {
       console.log("Viewing another user's profile. Hiding update button.");
-      // Viewing another user's profile, hide the update button and form
       updateProfileButton.style.display = 'none';
       if (updateProfileForm) updateProfileForm.style.display = 'none';
-    } else if (!profileUser || profileUser === loggedInUser) {
+    } else {
       console.log('Viewing own profile. Showing update button.');
-      // Viewing own profile, show the update button
       updateProfileButton.style.display = 'block';
 
-      updateProfileButton.addEventListener('click', () => {
+      updateProfileButton.onclick = () => {
         console.log('Update Profile button clicked');
         if (updateProfileForm) {
+          console.log('Update profile form found in DOM.');
           const isHidden = updateProfileForm.style.display === 'none';
           updateProfileForm.style.display = isHidden ? 'block' : 'none';
-          updateProfileButton.textContent = isHidden
-            ? 'Cancel Update'
-            : 'Update Profile';
+
+          // Explicitly update the button text
+          if (isHidden) {
+            updateProfileButton.textContent = 'Cancel Update';
+            console.log('Button text changed to: Cancel Update');
+          } else {
+            updateProfileButton.textContent = 'Update Profile';
+            console.log('Button text changed to: Update Profile');
+          }
+
           console.log(`Profile form ${isHidden ? 'shown' : 'hidden'}`);
         } else {
           console.warn('Update profile form not found in DOM.');
         }
-      });
-    } else {
-      console.warn('Unknown state for profile and logged-in user.');
+      };
     }
   } else {
     console.error('Update Profile button not found in the DOM.');
   }
 }
-
-// Call the function when the page loads
+// Load profile and listings when the page loads
 fetchAndDisplayProfileWithButtonHandler();
-
-// Call the function when the page loads
-fetchAndDisplayProfile(); // Load user profile info
-fetchAndDisplayUserListings(); // Fetch and display user's listings
+fetchAndDisplayUserListings();
