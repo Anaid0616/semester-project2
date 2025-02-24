@@ -3,7 +3,6 @@ import { API_AUCTION_PROFILES } from '../../api/constants.mjs';
 import { doFetch } from '../../api/doFetch.mjs';
 import { fetchAndDisplayProfile } from './profileUser.mjs';
 import '../../ui/profile/updateAvatar.mjs';
-import { showAlert } from '../../utilities/alert.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 
 loadSharedHeader(); // Load shared header dynamically
@@ -11,20 +10,17 @@ loadSharedHeader(); // Load shared header dynamically
 const userListingsContainer = document.getElementById('listings-container');
 
 /**
- * Fetch and display listings for the logged-in user.
- * - Retrieves listings from the API and renders them in the `userListingsContainer`.
- * - If no listings are found, displays a "No listings available" message.
- *
- * @async
- * @function fetchAndDisplayUserListings
- * @throws {Error} If the API request fails or the user is not logged in.
+ * Fetch and display listings for the logged-in user or any other user.
  */
 async function fetchAndDisplayUserListings() {
   try {
-    const userListingsContainer = document.getElementById('listings-container');
-
     const urlParams = new URLSearchParams(window.location.search);
     let username = urlParams.get('user'); // Get seller's name from URL
+
+    // Always show skeletons first, regardless of which profile is being viewed
+    if (userListingsContainer) {
+      userListingsContainer.innerHTML = generateSkeleton('listings');
+    }
 
     if (!username) {
       // If no seller is in the URL, use the logged-in user's name
@@ -33,10 +29,6 @@ async function fetchAndDisplayUserListings() {
         console.error('No user found in localStorage');
         return;
       }
-
-      //  Show skeleton before fetching listings
-      userListingsContainer.innerHTML = generateSkeleton('listings');
-
       username = user.name;
     }
 
@@ -98,28 +90,46 @@ async function fetchAndDisplayUserListings() {
       .join('');
   } catch (error) {
     console.error('Error fetching user listings:', error);
+    if (userListingsContainer) {
+      userListingsContainer.innerHTML =
+        '<p>Error loading listings. Please try again.</p>';
+    }
   }
 }
 
-// Add functionality for the "Update Profile" button
-const updateProfileButton = document.getElementById('update-profile-button');
-if (updateProfileButton) {
-  updateProfileButton.addEventListener('click', () => {
-    const updateProfileForm = document.getElementById('update-profile');
+async function fetchAndDisplayProfileWithButtonHandler() {
+  await fetchAndDisplayProfile(); // Wait for the profile to render
 
-    console.log(updateProfileForm);
+  // Add functionality for the "Update Profile" button
+  const updateProfileButton = document.getElementById('update-profile-button');
+  if (updateProfileButton) {
+    console.log('Update Profile button found. Attaching click handler.');
+    updateProfileButton.addEventListener('click', () => {
+      console.log('Update Profile button clicked');
+      const updateProfileForm = document.getElementById('update-profile');
 
-    if (updateProfileForm) {
-      if (updateProfileForm.style.display === 'none') {
-        updateProfileForm.style.display = 'block';
-        updateProfileButton.textContent = 'Cancel Update';
-      } else {
-        updateProfileForm.style.display = 'none';
-        updateProfileButton.textContent = 'Update Profile';
+      if (updateProfileForm) {
+        if (
+          updateProfileForm.style.display === 'none' ||
+          !updateProfileForm.style.display
+        ) {
+          updateProfileForm.style.display = 'block';
+          updateProfileButton.textContent = 'Cancel Update';
+          console.log('Profile form shown');
+        } else {
+          updateProfileForm.style.display = 'none';
+          updateProfileButton.textContent = 'Update Profile';
+          console.log('Profile form hidden');
+        }
       }
-    }
-  });
+    });
+  } else {
+    console.error('Update Profile button not found in the DOM');
+  }
 }
+
+// Call the function when the page loads
+fetchAndDisplayProfileWithButtonHandler();
 
 // Call the function when the page loads
 fetchAndDisplayProfile(); // Load user profile info

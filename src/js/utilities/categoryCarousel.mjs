@@ -2,7 +2,7 @@
 export const categories = [
   { name: 'Fashion', icon: 'fa-bag-shopping' },
   { name: 'Vintage', icon: 'fa-camera-retro' },
-  { name: 'Interiors', icon: 'fa-couch' },
+  { name: 'Interior', icon: 'fa-couch' },
   { name: 'Jewelry', icon: 'fa-gem' },
   { name: 'Art', icon: 'fa-palette' },
   { name: 'Decor', icon: 'fa-home' },
