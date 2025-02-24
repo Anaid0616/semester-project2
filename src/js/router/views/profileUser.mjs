@@ -1,6 +1,7 @@
 import { API_AUCTION_PROFILES } from '../../api/constants.mjs';
 import { doFetch } from '../../api/doFetch.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
+import { onUpdateProfile } from '../../ui/profile/updateAvatar.mjs';
 
 export async function fetchAndDisplayProfile() {
   try {
@@ -12,21 +13,19 @@ export async function fetchAndDisplayProfile() {
 
     // Get username from URL or localStorage
     const urlParams = new URLSearchParams(window.location.search);
-    const profileUser = urlParams.get('user');
+    const profileUser = urlParams.get('user') || null;
     const loggedInUser = JSON.parse(localStorage.getItem('user'));
 
-    let username;
-    if (profileUser) {
-      username = profileUser;
-    } else {
-      if (!loggedInUser) {
-        alert('You have to be logged in to view this page.');
-        window.location.href = '/login/';
-        return;
-      }
-      username = loggedInUser.name;
-    }
+    console.log('Profile User:', profileUser);
+    console.log('Logged-In User:', loggedInUser);
 
+    const username = profileUser ? profileUser : loggedInUser?.name;
+
+    if (!username) {
+      alert('You have to be logged in to view this page.');
+      window.location.href = '/login/';
+      return;
+    }
     // Fetch profile data from API
     const response = await doFetch(`${API_AUCTION_PROFILES}/${username}`, {
       method: 'GET',
@@ -60,17 +59,52 @@ export async function fetchAndDisplayProfile() {
           }</span>
         </p>
         <div class="mt-4 flex gap-4">
-          <button id="update-profile-button" class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">
-            Update Profile
-          </button>
-          <button class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">Follow</button>
-        </div>
+         ${
+           !profileUser || profileData.name === loggedInUser?.name
+             ? `<button id="update-profile-button" class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">Update Profile</button>`
+             : ''
+         }
+      </div>
       </div>
     `;
 
-    // Store data in localStorage if it's the logged-in user
-    if (!profileUser && loggedInUser) {
-      localStorage.setItem('user', JSON.stringify(profileData));
+    const updateProfileButton = document.getElementById(
+      'update-profile-button'
+    );
+    const updateProfileFormContainer =
+      document.getElementById('update-profile');
+
+    if (updateProfileFormContainer) {
+      updateProfileFormContainer.style.display = 'none';
+    }
+
+    if (updateProfileButton) {
+      updateProfileButton.onclick = () => {
+        console.log('Update Profile button clicked');
+        if (updateProfileFormContainer) {
+          const isHidden = updateProfileFormContainer.style.display === 'none';
+          updateProfileFormContainer.style.display = isHidden
+            ? 'block'
+            : 'none';
+          updateProfileButton.textContent = isHidden
+            ? 'Cancel Update'
+            : 'Update Profile';
+        }
+
+        // Manually trigger the form event listener setup from updateAvatar.mjs
+        const updateProfileForm = document.querySelector(
+          "form[name='updateProfileForm']"
+        );
+        if (updateProfileForm) {
+          console.log('Triggering form event listener setup.');
+          updateProfileForm.removeEventListener('submit', onUpdateProfile);
+          updateProfileForm.addEventListener('submit', onUpdateProfile);
+        } else {
+          console.error('Update profile form not found in DOM.');
+        }
+      };
+    } else {
+      console.error('Update Profile button not found in the DOM.');
     }
   } catch (error) {
     console.error('Error fetching user profile:', error);
@@ -78,6 +112,5 @@ export async function fetchAndDisplayProfile() {
       '<p class="text-red-500">Error loading profile. Please try again.</p>';
   }
 }
-
 // Call function to fetch and display profile data
 fetchAndDisplayProfile();

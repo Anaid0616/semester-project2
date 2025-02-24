@@ -8,12 +8,10 @@ import {
   handleCategoryClick,
   categories,
 } from '../../utilities/categoryCarousel.mjs';
-import { handleSearchInput } from '../views/search.mjs';
+import { handleSearchInput } from '../../router/views/search.mjs';
 import { getUserName } from '../../utilities/getUserName.mjs';
 
 loadSharedHeader();
-
-console.log('Home page script loaded');
 
 // Set the welcome text directly without DOMContentLoaded
 const welcomeText = document.getElementById('welcome-text');
@@ -117,11 +115,6 @@ async function fetchAndDisplayListings(
     // Sort listings by created date in descending order (newest first)
     listings.sort((a, b) => new Date(b.created) - new Date(a.created));
 
-    console.log(
-      'Sorted Listings by Created Date:',
-      listings.map((item) => item.created)
-    );
-
     listingsContainer.innerHTML = listings
       .map((listing) => {
         const sellerAvatar =
@@ -147,18 +140,22 @@ async function fetchAndDisplayListings(
                       <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
                           <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-md"/>
                           <div class="p-2">
-                              <h3 class="text-lg font-bold mb-2">${title}</h3>
-                              <p class="text-gray-600">${description}</p>
+                              <h3 class="text-lg font-bold mb-2 truncate overflow-hidden whitespace-nowrap">${title}</h3>
+                              <p class="text-gray-600 truncate overflow-hidden whitespace-nowrap">${description}</p>
+
                               <p class="text-sm text-gray-500">Bids: ${bidCount}</p>
                               <p class="text-sm text-gray-500">Ends: ${endsAt}</p>
                           </div>
                       </a>
                       
+                        <a 
+              href="/listing/?id=${listing.id}" >
                       <button 
                           class="w-full py-2 mt-3 text-black font-semibold rounded-sm bg-[#C5A880] hover:bg-[#A88B6D] transition"
                           data-listing-id="${listing.id}">
                           Place Bid
                       </button>
+                      </a>
                   </div>
               `;
       })

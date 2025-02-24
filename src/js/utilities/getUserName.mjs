@@ -10,7 +10,6 @@ export function getUserName() {
   if (userData) {
     try {
       const user = JSON.parse(userData);
-      console.log(' Parsed user object:', user);
 
       if (user && user.name) {
         return user.name;

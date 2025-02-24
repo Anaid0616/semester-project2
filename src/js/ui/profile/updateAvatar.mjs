@@ -62,7 +62,7 @@ export async function onUpdateProfile(event) {
     console.log('Profile updated successfully!');
     showAlert('success', 'Profile updated successfully!');
 
-    // 🆕 Close the form and reset button text
+    //  Close the form and reset button text
     const updateProfileForm = document.getElementById('update-profile');
     const updateProfileButton = document.getElementById(
       'update-profile-button'

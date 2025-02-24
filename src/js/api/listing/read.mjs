@@ -9,7 +9,7 @@ import { doFetch } from '../../api/doFetch.mjs';
  * @throws {Error} If the API request fails.
  */
 export async function readListing(id) {
-  const url = `${API_AUCTION_LISTINGS}/${id}?_seller=true`;
+  const url = `${API_AUCTION_LISTINGS}/${id}?_seller=true&_bids=true`;
   try {
     // Use doFetch with `GET` method and auth headers
     return await doFetch(url, { method: 'GET' }, true);
@@ -47,7 +47,9 @@ export async function readListings(
   }
 
   if (query) {
-    url = `${API_AUCTION_LISTINGS}/search?q=${encodeURIComponent(query)}`;
+    url = `${API_AUCTION_LISTINGS}/search?q=${encodeURIComponent(
+      query
+    )}&limit=${limit}&page=${page}&_seller=true&_sort=endsAt&sortOrder=asc`;
   }
 
   try {

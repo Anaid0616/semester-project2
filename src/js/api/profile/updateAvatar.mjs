@@ -1,6 +1,6 @@
 import { API_AUCTION_PROFILES } from '../constants.mjs';
 import { doFetch } from '../../api/doFetch.mjs';
-// Import the form handler
+
 import { initializeFormHandler } from '../../utilities/formHandler.mjs';
 
 // Call the function to attach the form submission logic

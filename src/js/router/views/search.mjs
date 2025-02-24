@@ -38,6 +38,7 @@ async function fetchAndDisplaySearchResults(query) {
         const sellerAvatar =
           listing.seller?.avatar?.url || '/images/default-avatar.png';
         const sellerName = listing.seller?.name || 'Unknown Seller';
+
         const mediaUrl = listing.media?.[0]?.url || '/images/placeholder.jpg';
         const title = listing.title || 'Untitled Listing';
         const description = listing.description
@@ -58,12 +59,20 @@ async function fetchAndDisplaySearchResults(query) {
                         <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
                             <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-md"/>
                             <div class="p-2">
-                                <h3 class="text-lg font-bold mb-2">${title}</h3>
-                                <p class="text-gray-600">${description}</p>
+                               <h3 class="text-lg font-bold mb-2 truncate overflow-hidden whitespace-nowrap">${title}</h3>
+                              <p class="text-gray-600 truncate overflow-hidden whitespace-nowrap">${description}</p>
                                 <p class="text-sm text-gray-500">Bids: ${bidCount}</p>
                                 <p class="text-sm text-gray-500">Ends: ${endsAt}</p>
                             </div>
                         </a>
+                             <a 
+              href="/listing/?id=${listing.id}" >
+                      <button 
+                          class="w-full py-2 mt-3 text-black font-semibold rounded-sm bg-[#C5A880] hover:bg-[#A88B6D] transition"
+                          data-listing-id="${listing.id}">
+                          Place Bid
+                      </button>
+                      </a>
                     </div>
                 `;
       })
@@ -83,7 +92,7 @@ const searchButton = document.getElementById('search-button');
 export function handleSearchInput(inputElement, buttonElement) {
   const handleSearch = () => {
     const query = inputElement.value.trim();
-    console.log('Search triggered with query:', query); // Debugging output
+
     if (query) {
       window.location.href = `/search/?q=${encodeURIComponent(query)}`;
     }

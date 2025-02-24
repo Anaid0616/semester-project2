@@ -81,61 +81,6 @@ async function fetchAndDisplayUserListings() {
   }
 }
 
-/**
- * Fetch and display profile with correct update button handling.
- */
-async function fetchAndDisplayProfileWithButtonHandler() {
-  await fetchAndDisplayProfile();
-
-  const updateProfileButton = document.getElementById('update-profile-button');
-  const updateProfileForm = document.getElementById('update-profile');
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const profileUser =
-    urlParams.get('user') || JSON.parse(localStorage.getItem('user'))?.name;
-  console.log('Profile User:', profileUser);
-  const loggedInUser = JSON.parse(localStorage.getItem('user'))?.name;
-  console.log('Logged-In User:', loggedInUser);
-
-  if (updateProfileForm) {
-    updateProfileForm.style.display = 'none';
-  }
-
-  if (updateProfileButton) {
-    if (profileUser && profileUser !== loggedInUser) {
-      console.log("Viewing another user's profile. Hiding update button.");
-      updateProfileButton.style.display = 'none';
-      if (updateProfileForm) updateProfileForm.style.display = 'none';
-    } else {
-      console.log('Viewing own profile. Showing update button.');
-      updateProfileButton.style.display = 'block';
-
-      updateProfileButton.onclick = () => {
-        console.log('Update Profile button clicked');
-        if (updateProfileForm) {
-          console.log('Update profile form found in DOM.');
-          const isHidden = updateProfileForm.style.display === 'none';
-          updateProfileForm.style.display = isHidden ? 'block' : 'none';
-
-          // Explicitly update the button text
-          if (isHidden) {
-            updateProfileButton.textContent = 'Cancel Update';
-            console.log('Button text changed to: Cancel Update');
-          } else {
-            updateProfileButton.textContent = 'Update Profile';
-            console.log('Button text changed to: Update Profile');
-          }
-
-          console.log(`Profile form ${isHidden ? 'shown' : 'hidden'}`);
-        } else {
-          console.warn('Update profile form not found in DOM.');
-        }
-      };
-    }
-  } else {
-    console.error('Update Profile button not found in the DOM.');
-  }
-}
 // Load profile and listings when the page loads
-fetchAndDisplayProfileWithButtonHandler();
+
 fetchAndDisplayUserListings();

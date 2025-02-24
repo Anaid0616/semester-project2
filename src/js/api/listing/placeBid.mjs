@@ -1,4 +1,4 @@
-import { API_AUCTION_PROFILES } from '../constants.mjs';
+import { API_AUCTION_LISTINGS } from '../constants.mjs';
 import { doFetch } from '../../api/doFetch.mjs';
 
 /**
@@ -9,11 +9,12 @@ import { doFetch } from '../../api/doFetch.mjs';
  * @returns {Promise<object>} - The updated listing data.
  */
 export async function placeBid(listingId, bidAmount) {
-  const url = `${API_AUCTION_PROFILES}/${listingId}/bids`;
+  const url = `${API_AUCTION_LISTINGS}/${listingId}/bids`;
+
   const options = {
     method: 'POST',
     body: JSON.stringify({ amount: bidAmount }),
   };
 
-  return await doFetch(url, options);
+  return await doFetch(url, options, true);
 }

@@ -55,7 +55,11 @@ async function fetchAndRenderListing() {
 
     // Bids data
     const bidCount = _count?.bids ?? 0;
-    const finalPrice = bids?.length ? `$${bids[bids.length - 1].amount}` : '0';
+    const highestBid = bids.length
+      ? Math.max(...bids.map((bid) => bid.amount))
+      : 0;
+    const highestBidder =
+      bids.find((bid) => bid.amount === highestBid)?.bidder?.name || 'None';
 
     // Image carousel logic
     let currentImageIndex = 0;
@@ -79,13 +83,14 @@ async function fetchAndRenderListing() {
       seller?.avatar?.url || '../public/images/default-avatar.png';
 
     // Render bids list
-    const bidsListHtml =
-      bids
-        .map(
-          (bid) =>
-            `<li class="flex justify-between"><span>${bid.bidderName}</span><span>$${bid.amount}</span></li>`
-        )
-        .join('') || '<p>No bids available.</p>';
+    const bidsListHtml = bids.length
+      ? bids
+          .map(
+            (bid) =>
+              `<li class="flex justify-between"><span>${bid.bidder?.name}</span><span>$${bid.amount}</span></li>`
+          )
+          .join('')
+      : '<p>No bids available.</p>';
 
     // Render listing details in the container
     listingContainer.innerHTML = `
@@ -148,12 +153,10 @@ async function fetchAndRenderListing() {
         <p class="text-gray-700">Ends At: ${new Date(
           endsAt
         ).toLocaleDateString()}</p> 
-           <p class="text-gray-700">Asking Price: ${
-             price ? `$${price}` : 'N/A'
-           }</p>
+          
             <p class="text-gray-700">Bids: ${bidCount}</p>
          
-            <p class="text-lg font-bold text-gray-800">Total Price: ${finalPrice}</p>
+           <p class="text-lg font-bold text-gray-800">Highest Bid: $${highestBid} by ${highestBidder}</p>
         </div>
 
 
