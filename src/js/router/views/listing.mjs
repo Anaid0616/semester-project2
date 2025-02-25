@@ -50,7 +50,7 @@ async function fetchAndRenderListing() {
       seller,
       endsAt,
       _count,
-      price,
+
       created,
       bids = [],
     } = listing;

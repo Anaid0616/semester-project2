@@ -34,7 +34,7 @@
         <!-- Form -->
         <form
           name="createListing"
-          id="createListingForm"
+          id="create-listing-form"
           class="flex flex-col gap-3"
         >
           <fieldset class="flex flex-col gap-3">
@@ -49,8 +49,10 @@
                 <input
                   type="url"
                   class="image-url w-full p-2 border rounded"
-                  placeholder="Enter image URL"
+                  placeholder="Enter image URL (must start with http:// or https://)"
+                  pattern="https?://.+"
                 />
+
                 <button
                   type="button"
                   class="addImage px-3 py-1 bg-[#C5A880] text-black hover:bg-[#9F8766] rounded"
