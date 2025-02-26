@@ -37,7 +37,7 @@ async function fetchAndDisplaySearchResults(query) {
     listingsContainer.innerHTML = listings
       .map((listing) => {
         const sellerAvatar =
-          listing.seller?.avatar?.url || '/images/default-avatar.png';
+          listing.seller?.avatar?.url || '/images/placeholder.jpg';
         const sellerName = listing.seller?.name || 'Unknown Seller';
 
         const mediaUrl = listing.media?.[0]?.url || '/images/placeholder.jpg';

@@ -3,7 +3,6 @@ import { createListing } from '../../api/listing/create';
 import { showAlert } from '../../utilities/alert.mjs';
 import { initializeFormHandler } from '../../utilities/formHandler.mjs';
 
-console.log('Initializing Media Gallery Setup');
 setupMediaGallery('imageInputs', 'imagePreview', 'addImage');
 
 // Call the function to attach the form submission logic

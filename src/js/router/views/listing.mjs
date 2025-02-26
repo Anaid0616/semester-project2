@@ -49,8 +49,7 @@ async function fetchAndRenderListing() {
 
     const imageCarouselHtml = renderImageCarousel(images);
 
-    const sellerAvatar =
-      seller?.avatar?.url || '../public/images/default-avatar.png';
+    const sellerAvatar = seller?.avatar?.url || '../images/placeholder.jpg';
 
     const bidSectionHtml = renderBidSection(
       listing,

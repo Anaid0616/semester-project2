@@ -21,8 +21,5 @@ export function getUserName() {
       console.error('Error parsing user data:', error);
       return 'Guest';
     }
-  } else {
-    console.warn('No user data found in localStorage.');
-    return 'Guest';
   }
 }

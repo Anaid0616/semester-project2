@@ -94,12 +94,8 @@ export async function fetchAndDisplayProfile() {
         if (updateProfileForm) {
           updateProfileForm.removeEventListener('submit', onUpdateProfile);
           updateProfileForm.addEventListener('submit', onUpdateProfile);
-        } else {
-          console.error('Update profile form not found in DOM.');
         }
       };
-    } else {
-      console.error('Update Profile button not found in the DOM.');
     }
   } catch (error) {
     console.error('Error fetching user profile:', error);
@@ -107,5 +103,6 @@ export async function fetchAndDisplayProfile() {
       '<p class="text-red-500">Error loading profile. Please try again.</p>';
   }
 }
+
 // Call function to fetch and display profile data
 fetchAndDisplayProfile();

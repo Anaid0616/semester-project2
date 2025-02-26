@@ -1,6 +1,7 @@
 import { logout } from '../auth/logout.mjs';
 import { handleSearchInput } from '../../router/views/search.mjs';
 import { getUserName } from '../../utilities/getUserName.mjs';
+import { setupHamburgerMenu } from '../../utilities/hamburger.mjs';
 
 export async function loadSharedHeader() {
   try {
@@ -14,6 +15,8 @@ export async function loadSharedHeader() {
       headerElement.innerHTML = headerHTML;
     }
 
+    setupHamburgerMenu();
+
     // Now handle the profile link and icon
     const profileLink = document.getElementById('profile-link');
     const profileName = document.getElementById('profile-name');
@@ -24,7 +27,7 @@ export async function loadSharedHeader() {
       if (userData) {
         const user = JSON.parse(userData);
         const userName = user?.name || 'My Profile';
-        const avatarUrl = user?.avatar?.url || '/images/default-avatar.png';
+        const avatarUrl = user?.avatar?.url || '/images/placeholder.jpg';
 
         profileName.textContent = userName;
         profileIcon.src = avatarUrl;

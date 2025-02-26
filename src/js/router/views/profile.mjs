@@ -80,5 +80,5 @@ async function fetchAndDisplayUserListings() {
 }
 
 // Load profile and listings when the page loads
-
+fetchAndDisplayProfile();
 fetchAndDisplayUserListings();
