@@ -153,7 +153,7 @@ async function fetchAndDisplayListings(
                         <a 
               href="/listing/?id=${listing.id}" >
                       <button 
-                          class="w-full py-2 mt-3 text-black font-semibold rounded-sm bg-[#C5A880] hover:bg-[#A88B6D] transition"
+                          class="w-full py-2 mt-3 font-semibold rounded-sm bg-[#C5A880] text-black hover:bg-[#A88B6D] transition"
                           data-listing-id="${listing.id}">
                           Place Bid
                       </button>

@@ -58,7 +58,7 @@ export async function fetchAndDisplayProfile() {
         <div class="mt-4 flex gap-4">
          ${
            !profileUser || profileData.name === loggedInUser?.name
-             ? `<button id="update-profile-button" class="px-4 py-2 bg-[#C5A880] text-black rounded-sm">Update Profile</button>`
+             ? `<button id="update-profile-button" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm font-semibold">Update Profile</button>`
              : ''
          }
       </div>
