@@ -58,17 +58,6 @@ async function fetchAndRenderListing() {
       user
     );
 
-    const editDeleteButtonsHtml =
-      user?.name === seller?.name
-        ? `
-        <div id="listing-buttons" class="mt-4 flex gap-4">
-          <a href="/listing/edit/?id=${listingId}">
-            <button class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Edit</button>
-          </a>
-          <button id="delete-listing-button" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Delete</button>
-        </div>`
-        : '';
-
     listingContainer.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
             <div class="relative">
@@ -101,7 +90,7 @@ async function fetchAndRenderListing() {
             <p class="text-gray-700 mt-4">${
               description || 'No Description Available'
             }</p>
-            ${editDeleteButtonsHtml}
+          
             <p class="text-sm text-gray-500 mt-6 border-t pt-2">Created: ${new Date(
               created
             ).toLocaleDateString()}</p>

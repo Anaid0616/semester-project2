@@ -35,6 +35,17 @@ export function renderBidSection(
   // Safely check if the auction is expired
   const isExpired = endsAt ? new Date(endsAt) < new Date() : false;
 
+  const editDeleteButtonsHtml =
+    user?.name === seller?.name
+      ? `
+    <div id="listing-buttons" class="mt-4 flex gap-4">
+      <a href="/listing/edit/?id=${listingId}">
+        <button class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Edit</button>
+      </a>
+      <button id="delete-listing-button" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Delete</button>
+    </div>`
+      : '';
+
   // Determine what to show in the bid form
   let bidFormHtml = '';
 
@@ -55,10 +66,7 @@ export function renderBidSection(
       </div>`;
   } else if (user?.name === seller?.name) {
     // User is the seller
-    bidFormHtml = `
-      <div class="p-4 my-4 bg-yellow-100 text-yellow-700 rounded-md">
-        You cannot bid on your own auction.
-      </div>`;
+    bidFormHtml = editDeleteButtonsHtml;
   } else {
     // Active auction and user is logged in
     bidFormHtml = `
@@ -74,15 +82,16 @@ export function renderBidSection(
   return `
     <div>
         <div>
+           ${
+             endsAt
+               ? `<p class="text-md my-2 text-gray-600">Ends At: ${new Date(
+                   endsAt
+                 ).toLocaleString()}</p>`
+               : '<p class="text-md text-gray-600">End date not available</p>'
+           }
             <p class="text-l my-2 font-semibold text-gray-700">Bids: ${bidCount}</p>
             <p class="text-lg my-2 font-semibold text-gray-800">Highest Bid: $${highestBid} by ${highestBidder}</p>
-            ${
-              endsAt
-                ? `<p class="text-md my-2 text-gray-600">Ends At: ${new Date(
-                    endsAt
-                  ).toLocaleString()}</p>`
-                : '<p class="text-md text-gray-600">End date not available</p>'
-            }
+         
         </div>
         
         ${bidFormHtml}
