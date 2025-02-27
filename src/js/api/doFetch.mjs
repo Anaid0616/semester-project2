@@ -1,5 +1,7 @@
 import { headers } from '../api/headers.mjs';
+import { showAlert } from '../utilities/alert.mjs';
 
+let unauthorizedAlertShown = false;
 /**
  * A reusable fetch function.
  *
@@ -30,6 +32,25 @@ export async function doFetch(url, options = {}, useAuth = true) {
 
     // Check for unsuccessful responses
     if (!response.ok) {
+      if (response.status === 401) {
+        console.warn('Unauthorized access. User may not be logged in.');
+
+        // Only show alert if it hasn't been shown already
+        if (!unauthorizedAlertShown) {
+          showAlert(
+            'error',
+            'You need to be logged in to access this page. Redirecting to login...'
+          );
+          unauthorizedAlertShown = true;
+
+          setTimeout(() => {
+            window.location.href = '/login/';
+            unauthorizedAlertShown = false; // Reset after redirect
+          }, 3000);
+        }
+        return null; // Prevent further execution
+      }
+
       const errorData = await response.json();
       throw new Error(errorData.message || 'An error occurred');
     }

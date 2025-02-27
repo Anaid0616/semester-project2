@@ -74,7 +74,7 @@ async function fetchAndDisplayUserListings() {
     console.error('Error fetching user listings:', error);
     if (userListingsContainer) {
       userListingsContainer.innerHTML =
-        '<p>Error loading listings. Please try again.</p>';
+        '<p>Only registered users can view listings. Please log in to continue.</p>';
     }
   }
 }

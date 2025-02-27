@@ -18,11 +18,6 @@ export async function fetchAndDisplayProfile() {
 
     const username = profileUser ? profileUser : loggedInUser?.name;
 
-    if (!username) {
-      alert('You have to be logged in to view this page.');
-      window.location.href = '/login/';
-      return;
-    }
     // Fetch profile data from API
     const response = await doFetch(`${API_AUCTION_PROFILES}/${username}`, {
       method: 'GET',
@@ -100,7 +95,7 @@ export async function fetchAndDisplayProfile() {
   } catch (error) {
     console.error('Error fetching user profile:', error);
     document.querySelector('#profile-container').innerHTML =
-      '<p class="text-red-500">Error loading profile. Please try again.</p>';
+      '<p class="text-black">You need to be logged in to view user profiles. Please log in or create an account.</p>';
   }
 }
 
