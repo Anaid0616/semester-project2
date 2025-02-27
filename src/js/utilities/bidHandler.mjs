@@ -39,7 +39,7 @@ export function renderBidSection(
     user?.name === seller?.name
       ? `
     <div id="listing-buttons" class="mt-4 flex gap-4">
-      <a href="/listing/edit/?id=${listingId}">
+      <a href="/listing/edit/?id=${listingId}" aria-label="Go to Edit">
         <button class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Edit</button>
       </a>
       <button id="delete-listing-button" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#9E7B63] rounded-sm font-semibold">Delete</button>
@@ -54,9 +54,9 @@ export function renderBidSection(
     bidFormHtml = `
       <div class="p-4 my-4 bg-[#C5A880] text-black rounded-md">
         You need to be logged in to place a bid.
-        <a href="/login/" class="text-black underline ml-2">Log in</a>
+        <a href="/login/" class="text-black underline ml-2" aria-label="Go to Login">Log in</a>
         or
-        <a href="/register/" class="text-black underline ml-2">Register</a>
+        <a href="/register/" class="text-black underline ml-2" aria-label="Go to Register">Register</a>
       </div>`;
   } else if (isExpired) {
     // Auction expired
@@ -71,6 +71,9 @@ export function renderBidSection(
     // Active auction and user is logged in
     bidFormHtml = `
       <form id="bid-form" class="mt-4">
+        <label for="bid-amount" class="block text-sm font-medium text-gray-700">
+        Enter Bid Amount:
+    </label>
           <input type="number" id="bid-amount" placeholder="Enter your bid amount" 
               class="w-full p-2 border rounded-md mb-2" min="1" step="1" required />
           <button type="submit" class="w-full py-3 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition font-semibold rounded-sm">
@@ -97,7 +100,7 @@ export function renderBidSection(
         ${bidFormHtml}
 
         <div class="space-y-2 mt-4">
-            <h4 class="text-xl font-semibold">Bids:</h4>
+            <h2 class="text-xl font-semibold">Bids:</h2>
             <ul class="border p-4 rounded-md bg-white shadow-sm">
                 ${bidsListHtml}
             </ul>

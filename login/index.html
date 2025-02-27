@@ -11,6 +11,10 @@
 
     <link rel="stylesheet" href="../src/css/style.css" />
     <script type="module" src="../src/app.mjs"></script>
+    <script
+      src="https://kit.fontawesome.com/e9ab0044c8.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- Favicon -->
     <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
     <link rel="icon" sizes="16x16" href="../images/favicon-16x16.png" />
@@ -37,6 +41,7 @@
           <!-- Login Form -->
           <form name="login" method="post" class="flex flex-col gap-6">
             <fieldset class="flex flex-col gap-6">
+              <legend class="hidden">Login form</legend>
               <div>
                 <label
                   for="email"
@@ -79,7 +84,7 @@
                 >
                 <a
                   href="/auth/register/"
-                  class="text-sm text-blue-500 hover:underline ml-1"
+                  class="text-sm text-blue-600 hover:underline ml-1"
                 >
                   Register
                 </a>
@@ -88,6 +93,8 @@
               <!-- Login Button -->
               <button
                 class="w-full py-2 bg-[#C5A880] text-black hover:bg-[#9F8766] font-semibold"
+                type="submit"
+                aria-label="login"
               >
                 Login
               </button>

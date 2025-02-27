@@ -59,10 +59,11 @@ async function loadListingData() {
       listing.media.forEach((mediaItem) => {
         const div = document.createElement('div');
         div.classList.add('flex', 'gap-2', 'mb-2');
-        div.innerHTML = `
-          <input type="url" class="image-url w-full p-2 border rounded" placeholder="Enter image URL" value="${mediaItem.url}" />
+        div.innerHTML = ` 
+          <input id="imageUrls"
+           type="url" class="image-url w-full p-2 border rounded" placeholder="Enter image URL" value="${mediaItem.url}" />
          
-          <button type="button" class="removeImage px-3 py-1 bg-red-500 text-white rounded">-</button>
+          <button type="button" class="removeImage px-3 py-1 bg-[#C5A880] text-black hover:bg-[#9F8766] rounded">-</button>
         `;
         mediaInputsContainer.appendChild(div);
 

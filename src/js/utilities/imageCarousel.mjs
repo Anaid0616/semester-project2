@@ -1,22 +1,28 @@
 // imageCarousel
 
 // Function to render the image carousel HTML
-export function renderImageCarousel(images) {
+export function renderImageCarousel(images, alts = []) {
   return `
       <div class="relative">
-          <img id="main-image" src="${images[0]}" alt="Listing Image" 
+          <img id="main-image" src="${images[0]}" alt="${
+    alts[0] || 'Listing Image'
+  }"
                class="w-full h-96 object-cover rounded-lg shadow-md"/>
                
           <!-- Navigation Buttons -->
           <!-- Previous Button -->
 <button id="prev-image" 
-    class="absolute left-2 top-1/2 -translate-y-[90%] bg-white bg-opacity-70 p-2 rounded-sm shadow-md z-10">
+    class="absolute left-2 top-1/2 -translate-y-[90%] bg-white bg-opacity-70 p-2 rounded-sm shadow-md z-10"
+      type="button"
+                aria-label="Previous Category">
     <i class="fa-solid fa-chevron-left text-2xl"></i>
 </button>
 
 <!-- Next Button -->
 <button id="next-image" 
-    class="absolute right-2 top-1/2 -translate-y-[90%] bg-white bg-opacity-70 p-2 rounded-sm shadow-sm z-10">
+    class="absolute right-2 top-1/2 -translate-y-[90%] bg-white bg-opacity-70 p-2 rounded-sm shadow-sm z-10" 
+     type="button"
+                aria-label="Next Category">
     <i class="fa-solid fa-chevron-right text-2xl"></i>
 </button>
 
@@ -27,7 +33,8 @@ export function renderImageCarousel(images) {
                 .map(
                   (img, index) => `
                   <img src="${img}" data-index="${index}" 
-                       class="thumbnail w-16 h-16 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400">
+                   alt="${alts[index] || 'Thumbnail Image'}"
+                       class="thumbnail w-24 h-24 object-cover rounded cursor-pointer border-2 border-transparent hover:border-gray-400">
               `
                 )
                 .join('')}

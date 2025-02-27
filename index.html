@@ -38,18 +38,27 @@
         <div
           class="max-w-2xl mx-auto absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50"
         >
-          <h1 class="text-2xl font-semibold" id="welcome-text">Welcome, Username!</h1>
+          <h1 class="text-3xl font-medium" id="welcome-text">Welcome, Username!</h1>
           <div
             class="mt-2 flex items-center bg-white text-black px-4 py-2 rounded-sm shadow-md w-full max-w-2xl"
           >
-            <input
-              type="text"
-              placeholder="What are you looking for?"
-              class="w-64 outline-none pr-10"
-            />
-            <div class="absolute right-4">
-              <button class="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center"
-              >
+        <!-- Accessible Label for the Input -->
+<label for="search-input-index" class="sr-only">Search on index</label>
+<!-- Input Field (Properly Associated with the Label) -->
+<input
+    id="search-input-index"
+    type="text"
+    placeholder="What are you looking for?"
+    class="w-64 outline-none pr-10"
+/>
+
+<!-- Button with Accessible Label -->
+<div class="absolute right-4">
+    <button
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 flex items-center justify-center"
+        type="button"
+        aria-label="Search"
+    >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -71,13 +80,15 @@
       </div>
 
       <div class="max-w-6xl mx-auto py-6">
-        <h2 class="text-xl font-semibold">All Categories</h2>
+        <h2 class="text-2xl font-semibold">All Categories</h2>
         <div class="flex overflow-x-auto gap-6 mt-4 relative mx-10">
           <div class="relative flex items-center max-w-6xl mx-auto overflow-hidden py-10">
             <!-- Left Arrow -->
             <button
                 id="prev-category"
                 class="absolute left-0 z-10 p-2 bg-[#C5A880] bg-opacity-80 rounded-full shadow-md hover:bg-opacity-100 transition"
+                type="button"
+                aria-label="Previous Category"
             >
                 <i class="fa-solid fa-chevron-left text-white"></i>
             </button>
@@ -94,6 +105,8 @@
             <button
                 id="next-category"
                 class="absolute right-0 z-10 p-2 bg-[#C5A880] bg-opacity-80 rounded-full shadow-md hover:bg-opacity-100 transition"
+                type="button"
+                aria-label="Next Category"
             >
                 <i class="fa-solid fa-chevron-right text-white"></i>
             </button>
@@ -101,19 +114,23 @@
       </div>
 
       <div class="max-w-6xl mx-auto">
-        <h2 class="py-4 text-xl font-semibold">Latest Listings</h2>
+        <h2 class="py-4 text-2xl font-semibold">Latest Listings</h2>
         <div class="flex gap-4 mb-4">
           <button
             id="filter-all"
+            type="button"
+            aria-label="Filter all"
             class="py-1 px-4 h-8 text-center bg-[#C5A880] text-black rounded-sm hover:bg-[#A88B6D] transition"
           >
-            All Listings
+            All 
           </button>
           <button
             id="filter-active"
+            type="button"
+            aria-label="Filter active"
             class="py-1 px-4 h-8 bg-[#C5A880] text-black rounded-sm hover:bg-[#A88B6D] transition"
           >
-            Active Listings
+            Active
           </button>
         </div>
 
@@ -125,20 +142,24 @@
       </div>
 
       <div class="flex justify-end">
-        <a href="#" id="back-to-top">
-          <img src="./images/backtotop.png" class="w-10 m-4" />
+        <a href="#" aria-label="back to top" id="back-to-top">
+          <img src="./images/backtotop.png" alt="back to top icon" class="w-10 m-4" />
         </a>
       </div>
 
       <!-- Pagination Controls -->
       <div class="text-center my-6">
-        <button id="prev-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitio rounded-sm">
+        <button id="prev-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitio rounded-sm"
+        type="button"
+        aria-label="prev-page">
           Prev
         </button>
         <span id="current-page" class="px-4 py-2 bg-white border rounded-md"
           >1</span
         >
-        <button id="next-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitiorounded-sm">
+        <button id="next-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitiorounded-sm"
+        type="button"
+        aria-label="next-page">
           Next
         </button>
       </div>

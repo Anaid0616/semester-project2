@@ -142,15 +142,15 @@ async function fetchAndDisplayListings(
                   <div class="listing bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
                       <div class="flex items-center space-x-3 mb-3">
                           <img src="${sellerAvatar}" alt="${sellerName}" class="w-6 h-6 rounded-full border border-gray-300" />
-                          <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline">
+                          <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline" aria-label="Go to Seller">
                               ${sellerName}
                           </a>
                       </div>
 
-                      <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
+                      <a href="/listing/?id=${listing.id}" class="block hover:opacity-90" aria-label="Go Listing">
                           <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-md"/>
                           <div class="p-2">
-                              <h3 class="text-lg font-semibold mb-2 truncate overflow-hidden whitespace-nowrap">${title}</h3>
+                              <h3 class="text-xl font-semibold mb-2 truncate overflow-hidden whitespace-nowrap">${title}</h3>
                               <p class="text-gray-600 truncate overflow-hidden whitespace-nowrap">${description}</p>
 
                               <p class="text-sm text-gray-500">Bids: ${bidCount}</p>
@@ -159,12 +159,11 @@ async function fetchAndDisplayListings(
                       </a>
                       
                         <a 
-              href="/listing/?id=${listing.id}" >
-                      <button 
-                          class="w-full py-2 mt-3 font-semibold rounded-sm bg-[#C5A880] text-black hover:bg-[#A88B6D] transition"
+              href="/listing/?id=${listing.id}" 
+                          class="w-full py-2 mt-3 text-center font-semibold rounded-sm bg-[#C5A880] text-black hover:bg-[#A88B6D] transition"
                           data-listing-id="${listing.id}">
                           Place Bid
-                      </button>
+                      
                       </a>
                   </div>
               `;

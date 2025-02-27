@@ -57,7 +57,7 @@ async function fetchAndDisplayUserListings() {
 
         return `
           <div class="listing bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
-            <a href="/listing/?id=${listing.id}" class="block hover:opacity-90">
+            <a href="/listing/?id=${listing.id}" class="block hover:opacity-90" aria-label="Go to Listing">
               <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-md"/>
               <div class="p-2">
                 <h3 class="text-lg font-bold mb-2">${title}</h3>

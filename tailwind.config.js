@@ -2,9 +2,14 @@
 
 module.exports = {
   content: ['./**/*.{html,js,ts,mjs}', '!./node_modules/**/*'],
-
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Lato', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+      },
+    },
+
     plugins: [require('@tailwindcss/aspect-ratio')],
   },
 };

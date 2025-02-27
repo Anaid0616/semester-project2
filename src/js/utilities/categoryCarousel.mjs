@@ -28,24 +28,28 @@ export function createCategoryCarousel(categories) {
   carouselContainer.innerHTML = '';
 
   categories.forEach((category) => {
-    const categoryElement = document.createElement('div');
+    const categoryElement = document.createElement('button'); // Changed to <button> for accessibility
     categoryElement.className =
       'flex flex-col items-center cursor-pointer group transition-all hover:scale-105 min-w-[100px] flex-shrink-0';
     categoryElement.dataset.category = category.name.toLowerCase();
 
+    categoryElement.setAttribute('aria-label', `${category.name} Category`);
+    categoryElement.setAttribute('type', 'button');
+
     categoryElement.innerHTML = `
-            <i class="fa-solid ${category.icon} text-3xl group-hover:text-[#A88B6D] transition-colors"></i>
-            <span class="group-hover:text-[#A88B6D] transition-colors">${category.name}</span>
-        `;
+        <i class="fa-solid ${category.icon} text-3xl group-hover:text-[#A88B6D] transition-colors" 
+           aria-hidden="true"></i>
+        <span class="group-hover:text-[#A88B6D] transition-colors">${category.name}</span>
+    `;
 
     // Properly bind the click event to handleCategoryClick
     categoryElement.addEventListener('click', () =>
       handleCategoryClick(categoryElement)
     );
+
     carouselContainer.appendChild(categoryElement);
   });
 }
-
 // Carousel navigation setup
 export function setupCarouselNavigation() {
   const prevButton = document.getElementById('prev-category');

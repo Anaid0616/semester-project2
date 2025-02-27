@@ -1,3 +1,17 @@
+/* Apply fonts globally */
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Playfair Display', serif;
+}
+
 /* header, Smooth transition for showing and hiding the search bar */
 #header-search-bar {
   opacity: 0;

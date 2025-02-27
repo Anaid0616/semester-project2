@@ -38,7 +38,7 @@ async function fetchAndRenderListing() {
 
     if (!listing) throw new Error('Listing not found');
 
-    const { media, title, description, seller, endsAt, created } = listing;
+    const { media, title, description, seller, created } = listing;
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -46,8 +46,9 @@ async function fetchAndRenderListing() {
       media.length > 0
         ? media.map((image) => image.url)
         : ['/images/placeholder.jpg'];
+    const alts = media.map((image) => image.alt) || ['No alt text provided'];
 
-    const imageCarouselHtml = renderImageCarousel(images);
+    const imageCarouselHtml = renderImageCarousel(images, alts);
 
     const sellerAvatar = seller?.avatar?.url || '../images/placeholder.jpg';
 
@@ -69,32 +70,31 @@ async function fetchAndRenderListing() {
                     <img src="${sellerAvatar}" alt="Seller Avatar" class="w-12 h-12 rounded-full border border-gray-300 shadow-md"/>
                     <a href="/profile/?user=${
                       seller?.name
-                    }" class="font-semibold text-lg text-gray-700 hover:underline">
+                    }" class="font-semibold text-lg text-gray-700 hover:underline" aria-label="Go to Seller">
                         ${seller?.name || 'Anonymous'}
                     </a>
                 </div>
     
-                <h3 class="text-2xl font-semibold text-gray-900 border-t border-gray-300 pt-4 space-y-2">
+                <h1 class="text-2xl font-semibold text-gray-900 border-t border-gray-300 pt-4 space-y-2">
                     ${title || 'No Title'}
-                </h3>
+                </h1>
 
-            
-                ${bidSectionHtml}
+               <div> ${bidSectionHtml}</div>
                 
-               
             </div>
-        </div>
+          </div>
     
-        <div class="max-w-4xl mt-10">
-            <h2 class="text-2xl font-semibold border-b pb-3">Description</h2>
-            <p class="text-gray-700 mt-4">${
+        <div class="max-w-4xl mt-0">
+            <h2 class="text-2xl font-semibold border-b mt-6 pb-3">Description</h2>
+            <p class="text-gray-800 mt-4">${
               description || 'No Description Available'
             }</p>
           
-            <p class="text-sm text-gray-500 mt-6 border-t pt-2">Created: ${new Date(
+            <p class="text-sm text-gray-600 my-6 border-t pt-2">Created: ${new Date(
               created
             ).toLocaleDateString()}</p>
         </div>
+      
         `;
 
     setupImageCarouselListeners(images);

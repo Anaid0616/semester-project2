@@ -11,6 +11,10 @@
 
     <link rel="stylesheet" href="../../src/css/style.css" />
     <script type="module" src="../../src/app.mjs"></script>
+    <script
+      src="https://kit.fontawesome.com/e9ab0044c8.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- Favicon -->
     <link rel="icon" href="../../images/favicon.ico" type="image/x-icon" />
     <link rel="icon" sizes="16x16" href="../../images/favicon-16x16.png" />
@@ -40,6 +44,7 @@
           class="flex flex-col gap-3"
         >
           <fieldset class="flex flex-col gap-3">
+            <legend class="hidden">Edit form</legend>
             <!-- Media Gallery -->
             <label
               for="imageUrls"
@@ -54,8 +59,9 @@
             <div id="imagePreview" class="grid grid-cols-3 gap-2"></div>
 
             <button
-              type="button"
               class="addImage px-3 py-1 bg-[#C5A880] text-black hover:bg-[#9F8766] rounded"
+              type="button"
+              aria-label="Edit image"
             >
               + Add New Image
             </button>
@@ -128,9 +134,10 @@
             />
 
             <button
-              type="submit"
               id="save-listing-button"
               class="w-full py-2 bg-[#C5A880] text-black hover:bg-[#9F8766]"
+              type="submit"
+              aria-label="Save changes"
             >
               Save Changes
             </button>

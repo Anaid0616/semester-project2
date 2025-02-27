@@ -43,11 +43,11 @@ export async function fetchAndDisplayProfile() {
           profileData.name || 'Unknown User'
         }</h1>
            <p id="user-credit" class="text-l font-semibold mt-2">
-          Credits: <span class="text-[#D4AF37] font-bold">${
-            profileData.credits !== undefined ? profileData.credits : '0'
-          }</span>
+         <span class="italic"> Credits:</span> <span class="text-black bg-[#C5A880] px-2 py-1 rounded-full font-semibold">${
+           profileData.credits !== undefined ? profileData.credits : '0'
+         }</span>
         </p>
-        <p id="user-bio" class="py-2 text-gray-600">${
+        <p id="user-bio" class="py-2 text-gray-700">${
           profileData.bio || 'No bio available.'
         }</p>
      

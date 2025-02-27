@@ -52,7 +52,7 @@ async function fetchAndDisplaySearchResults(query) {
                     <div class="listing bg-white shadow rounded-sm overflow-hidden p-4 flex flex-col justify-between">
                         <div class="flex items-center space-x-3 mb-3">
                             <img src="${sellerAvatar}" alt="${sellerName}" class="w-6 h-6 rounded-full border border-gray-300" />
-                            <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline">
+                            <a href="/profile/?user=${listing.seller?.name}" class="text-sm font-semibold text-gray-700 hover:underline" aria-label="Go to Seller">
                                 ${sellerName}
                             </a>
                         </div>
