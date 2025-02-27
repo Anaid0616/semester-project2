@@ -2,13 +2,14 @@
 
 **Diana Bergelin**
 
-![image](![alt text]())
+![![Auction House](https://github.com/user-attachments/assets/5522c6f4-9d97-4ba1-b0b7-22ad311fa0da)
+
 
 ## Auction Website
 
 A functional, responsive auction website built as part of the Front-End Development (FED2) program at Noroff School of Technology and Digital Media. The project showcases the implementation of skills acquired over three semesters, focusing on front-end development, user experience, and API integration.
 
-[Live Site Auction House]()
+[Live Site Auction House](https://semester-project2-diana.netlify.app/)
 
 ---
 
