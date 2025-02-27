@@ -89,10 +89,7 @@ async function fetchAndRenderListing() {
                     ${title || 'No Title'}
                 </h3>
 
-                 <p class="text-gray-700">Ends At: ${new Date(
-                   endsAt
-                 ).toLocaleDateString()}</p>
-                 ${editDeleteButtonsHtml}
+            
                 ${bidSectionHtml}
                 
                
@@ -104,6 +101,7 @@ async function fetchAndRenderListing() {
             <p class="text-gray-700 mt-4">${
               description || 'No Description Available'
             }</p>
+            ${editDeleteButtonsHtml}
             <p class="text-sm text-gray-500 mt-6 border-t pt-2">Created: ${new Date(
               created
             ).toLocaleDateString()}</p>
