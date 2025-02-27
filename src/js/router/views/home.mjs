@@ -15,11 +15,19 @@ import { loadSharedFooter } from '../../ui/global/sharedFooter.mjs';
 loadSharedHeader(); // Load the shared header dynamically
 loadSharedFooter(); // Load shared footer
 
-// Set the welcome text directly without DOMContentLoaded
+// Get the welcome text element
 const welcomeText = document.getElementById('welcome-text');
+
+// Check if the element exists
 if (welcomeText) {
-  const userName = getUserName();
-  welcomeText.textContent = `Welcome, ${userName}!`;
+  const userName = getUserName(); // Fetch the username (could be null or undefined)
+
+  // Display "Welcome" if the username is empty, otherwise "Welcome, [username]!"
+  if (userName && userName !== 'undefined') {
+    welcomeText.textContent = `Welcome, ${userName}!`;
+  } else {
+    welcomeText.textContent = 'Welcome!';
+  }
 } else {
   console.error('Could not find the #welcome-text element in the DOM.');
 }
