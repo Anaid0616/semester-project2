@@ -4,14 +4,11 @@ import { showAlert } from '../../utilities/alert.mjs';
 
 export async function onUpdateProfile(event) {
   event.preventDefault(); // Prevent default form submission
-  console.log('Profile update form submitted');
 
   // Retrieve form values
   const form = event.target;
   const avatar = form.avatar.value.trim();
   const bio = form.bio.value.trim();
-
-  console.log('Form Values:', { avatar, bio });
 
   // Get the current user's data from localStorage
   const user = JSON.parse(localStorage.getItem('user'));
@@ -28,13 +25,8 @@ export async function onUpdateProfile(event) {
     if (avatar) updateData.avatar = { url: avatar };
     if (bio) updateData.bio = bio;
 
-    console.log('Sending Update Data:', updateData);
-
     // Call the API to update the profile
     const updatedProfile = await updateProfile(username, updateData);
-
-    console.log('API Response Status:', updatedProfile?.status);
-    console.log('API Response JSON:', updatedProfile);
 
     if (!updatedProfile || !updatedProfile?.meta) {
       console.error(
@@ -59,7 +51,6 @@ export async function onUpdateProfile(event) {
     // Dynamically update the DOM using fetchAndDisplayProfile
     await fetchAndDisplayProfile();
 
-    console.log('Profile updated successfully!');
     showAlert('success', 'Profile updated successfully!');
 
     //  Close the form and reset button text

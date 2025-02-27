@@ -1,5 +1,5 @@
 <header
-  class="bg-[#F9F1EC] shadow-md p-4 flex items-center justify-between relative"
+  class="bg-[#F9F1EC] md:shadow-sm p-4 flex items-center justify-between relative"
 >
   <!-- Logo Section -->
   <div class="flex items-center">
@@ -13,13 +13,71 @@
     class="absolute top-0 left-1/2 transform -translate-x-1/2 mt-2 z-50"
   ></div>
 
-  <!-- Search Bar (Always Visible) -->
-  <div class="flex-1 flex justify-center">
-    <div class="flex-grow max-w-xl mx-2 relative" id="header-search-bar">
+  <!-- Search Bar (Transforms into a Dropdown on Small Screens) -->
+  <div class="flex-1 flex justify-center relative">
+    <div
+      class="flex-grow max-w-xl mx-2 relative bg-[#F9F1EC] p-4 rounded-sm z-50 md:block hidden"
+      id="header-search-bar"
+      style="top: 100%; left: 0; width: 100%"
+    >
       <input
         type="text"
         placeholder="What are you looking for?"
-        class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-[#D4AF37]"
+        class="w-full px-4 py-2 border rounded-sm focus:outline-none focus:ring focus:ring-[#D4AF37]"
+      />
+
+      <!-- Magnifying Glass Icon (Inside Search Bar) -->
+      <button
+        id="search-bar-button"
+        class="absolute top-1/2 right-7 transform -translate-y-1/2"
+        type="button"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="h-5 w-5 text-gray-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Search Button (Hidden on Desktop) -->
+  <button id="mobile-search-toggle" class="md:hidden p-2 z-50" type="button">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="h-6 w-6 text-gray-800"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+      />
+    </svg>
+  </button>
+
+  <!-- Mobile Search Bar (Dropdown) -->
+  <div
+    class="absolute top-full left-0 right-0 bg-[#F9F1EC] shadow-md p-4 z-50 hidden md:hidden"
+    id="mobile-search-bar"
+  >
+    <div class="max-w-xl mx-auto relative">
+      <input
+        type="text"
+        placeholder="What are you looking for?"
+        class="w-full px-4 py-2 border rounded-sm focus:outline-none focus:ring focus:ring-[#D4AF37]"
       />
       <button
         class="absolute top-1/2 right-4 transform -translate-y-1/2"
@@ -43,7 +101,6 @@
     </div>
   </div>
 
-  <!-- Navigation (Shared for Desktop and Mobile) -->
   <!-- Navigation Menu (Shared for Desktop and Mobile) -->
   <nav
     id="nav-container"

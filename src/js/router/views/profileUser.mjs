@@ -42,18 +42,19 @@ export async function fetchAndDisplayProfile() {
         <h1 id="user-name" class="text-2xl font-semibold">${
           profileData.name || 'Unknown User'
         }</h1>
-        <p id="user-bio" class="text-gray-600">${
-          profileData.bio || 'No bio available.'
-        }</p>
-        <p id="user-credit" class="text-lg font-bold mt-2">
-          Credits: <span class="text-[#D4AF37]">${
+           <p id="user-credit" class="text-l font-semibold mt-2">
+          Credits: <span class="text-[#D4AF37] font-bold">${
             profileData.credits !== undefined ? profileData.credits : '0'
           }</span>
         </p>
+        <p id="user-bio" class="py-2 text-gray-600">${
+          profileData.bio || 'No bio available.'
+        }</p>
+     
         <div class="mt-4 flex gap-4">
          ${
            !profileUser || profileData.name === loggedInUser?.name
-             ? `<button id="update-profile-button" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm font-semibold">Update Profile</button>`
+             ? `<button id="update-profile-button" class="px-4 py-1 h-8 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm ">Update Profile</button>`
              : ''
          }
       </div>

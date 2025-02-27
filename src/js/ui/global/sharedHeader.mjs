@@ -17,7 +17,7 @@ export async function loadSharedHeader() {
 
     setupHamburgerMenu();
 
-    // Now handle the profile link and icon
+    // Handle the profile link and icon
     const profileLink = document.getElementById('profile-link');
     const profileName = document.getElementById('profile-name');
     const profileIcon = document.getElementById('profile-icon');
@@ -35,42 +35,72 @@ export async function loadSharedHeader() {
     } else {
       console.error('Could not find the profile elements in the DOM.');
     }
-    // Call the setup function after the header is loaded
+
     setupNavigation();
-
-    // Initialize sticky search bar behavior after header is loaded
     setupStickySearchBar();
+    setupSearchDropdown(); // 👈 Add this to handle dropdown behavior
 
-    // Element References
+    // Desktop Search Elements
     const headerSearchBarInput = document.querySelector(
       '#header-search-bar input'
     );
     const headerSearchButton = document.querySelector(
       '#header-search-bar button'
     );
-    handleSearchInput(headerSearchBarInput, headerSearchButton);
 
-    // Add an event listener for the search input in the header
+    // Mobile Search Elements
+    const mobileSearchBarInput = document.querySelector(
+      '#mobile-search-bar input'
+    );
+    const mobileSearchButton = document.querySelector(
+      '#mobile-search-bar button'
+    );
+
+    // Common function to handle search redirect
+    function handleSearch(query) {
+      if (query) {
+        window.location.href = `/search/?q=${encodeURIComponent(query)}`;
+      }
+    }
+
+    // Search on Enter key press (Desktop)
     headerSearchBarInput?.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
         const query = headerSearchBarInput.value.trim();
-        if (query) {
-          window.location.href = `/search/?q=${encodeURIComponent(query)}`;
-        }
+        handleSearch(query);
       }
+    });
+
+    // Search on Enter key press (Mobile)
+    mobileSearchBarInput?.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        const query = mobileSearchBarInput.value.trim();
+        handleSearch(query);
+      }
+    });
+
+    // Search on Button Click (Desktop)
+    headerSearchButton?.addEventListener('click', () => {
+      const query = headerSearchBarInput.value.trim();
+      handleSearch(query);
+    });
+
+    // Search on Button Click (Mobile)
+    mobileSearchButton?.addEventListener('click', () => {
+      const query = mobileSearchBarInput.value.trim();
+      handleSearch(query);
     });
   } catch (error) {
     console.error('Error loading shared header:', error);
   }
 }
 
-// Navigation logic (previously in navigation.mjs)
+// Navigation logic
 function setupNavigation() {
   const loggedInNav = document.getElementById('logged-in');
   const loggedOutNav = document.getElementById('logged-out');
   const isLoggedIn = localStorage.getItem('user');
 
-  // Show or hide sections based on login state
   if (isLoggedIn) {
     loggedInNav.classList.remove('hidden');
     loggedOutNav.classList.add('hidden');
@@ -79,28 +109,22 @@ function setupNavigation() {
     loggedOutNav.classList.remove('hidden');
   }
 
-  // Logout button functionality
   const logoutButton = document.getElementById('logout-button');
   if (logoutButton) {
-    logoutButton.addEventListener('click', logout); // Call the proper logout function
+    logoutButton.addEventListener('click', logout);
   }
 }
 
 // Sticky Search Bar Logic
 function setupStickySearchBar() {
-  // Element References
   const headerSearchBar = document.getElementById('header-search-bar');
-
-  // Check if the current page is the index page
   const isIndexPage =
     window.location.pathname === '/' ||
     window.location.pathname.includes('index.html');
 
   if (!isIndexPage) {
-    // If not on the index page, always show the search bar
     headerSearchBar.classList.add('visible');
   } else {
-    // Handle scroll-based visibility on the index page
     window.addEventListener('scroll', () => {
       const welcomeSection = document.getElementById('welcome-section');
       const welcomeSectionBottom =
@@ -113,4 +137,37 @@ function setupStickySearchBar() {
       }
     });
   }
+}
+// Dropdown Search for Mobile
+function setupSearchDropdown() {
+  const searchButton = document.getElementById('mobile-search-toggle');
+  const searchBar = document.getElementById('mobile-search-bar');
+  const searchInput = searchBar?.querySelector('input');
+
+  if (!searchButton || !searchBar) {
+    console.error('Search bar or button not found.');
+    return;
+  }
+
+  searchButton.addEventListener('click', () => {
+    console.log('Mobile search button clicked!');
+    if (window.innerWidth < 768) {
+      searchBar.classList.toggle('hidden');
+      searchBar.classList.toggle('block');
+      searchInput?.focus();
+    }
+  });
+
+  // Close the search bar when clicking outside
+  document.addEventListener('click', (event) => {
+    if (
+      !searchBar.contains(event.target) &&
+      !searchButton.contains(event.target) &&
+      window.innerWidth < 768
+    ) {
+      console.log('Clicked outside search bar. Hiding search input.');
+      searchBar.classList.add('hidden');
+      searchBar.classList.remove('block');
+    }
+  });
 }
