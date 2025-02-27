@@ -22,15 +22,29 @@ export async function loadSharedHeader() {
     const profileName = document.getElementById('profile-name');
     const profileIcon = document.getElementById('profile-icon');
 
-    if (profileLink && profileName && profileIcon) {
+    // Mobile elements
+    const mobileProfileLink = document.getElementById('mobile-profile-link');
+    const mobileProfileIcon = document.getElementById('mobile-profile-icon');
+
+    if (
+      profileLink &&
+      profileName &&
+      profileIcon &&
+      mobileProfileLink &&
+      mobileProfileIcon
+    ) {
       const userData = localStorage.getItem('user');
       if (userData) {
         const user = JSON.parse(userData);
         const userName = user?.name || 'My Profile';
         const avatarUrl = user?.avatar?.url || '/images/placeholder.jpg';
 
+        // Set desktop profile elements
         profileName.textContent = userName;
         profileIcon.src = avatarUrl;
+
+        // Set mobile profile elements
+        mobileProfileIcon.src = avatarUrl;
       }
     } else {
       console.error('Could not find the profile elements in the DOM.');
