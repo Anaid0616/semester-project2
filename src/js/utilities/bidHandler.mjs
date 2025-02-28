@@ -126,13 +126,28 @@ export function setupBidEventListeners(listingId, fetchAndRenderListing) {
     e.preventDefault();
     const bidAmount = parseFloat(document.getElementById('bid-amount').value);
 
+    // Get the current highest bid from the DOM
+    const highestBidElement = document.querySelector(
+      '.text-lg.font-semibold.text-gray-800'
+    );
+    const highestBid = parseFloat(
+      highestBidElement?.textContent.replace(/[^0-9.]/g, '') || '0'
+    );
+
     if (isNaN(bidAmount) || bidAmount <= 0) {
       showAlert('error', 'Please enter a valid positive bid amount.');
       return;
     }
 
+    if (bidAmount <= highestBid) {
+      showAlert(
+        'error',
+        `Your bid must be higher than the current highest bid of $${highestBid}.`
+      );
+      return;
+    }
+
     try {
-      console.log('Placing bid with ID:', listingId);
       await placeBid(listingId, bidAmount);
       showAlert('success', 'Bid placed successfully!');
 

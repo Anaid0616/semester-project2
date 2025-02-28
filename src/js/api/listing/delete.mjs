@@ -18,13 +18,12 @@ export async function deleteListing(id) {
 
     // Check if the response status is 204 (No Content) or a successful status
     if (response && response.status === 204) {
-      console.log('Listing deleted successfully');
       return true; // Indicate success
     }
 
     // Handle unexpected responses
     const result = await response.json(); // Attempt to parse any other response
-    console.log('Delete response:', result);
+
     return result; // Return the result if it exists
   } catch (error) {
     console.error('Error deleting listing:', error);

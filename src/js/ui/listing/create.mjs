@@ -58,7 +58,6 @@ export async function onCreateListing(event) {
       tags,
       endsAt,
     };
-    console.log('Creating listing with data:', listingData);
 
     const newListing = await createListing(listingData);
 

@@ -72,10 +72,8 @@ export function setupCarouselNavigation() {
 }
 
 // Handle category click
-// Handle category click
 export function handleCategoryClick(categoryElement) {
   const selectedCategory = categoryElement.dataset.category;
-  console.log('Category clicked:', selectedCategory);
 
   // Highlight the selected category
   document.querySelectorAll('#category-carousel div').forEach((el) => {

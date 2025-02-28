@@ -36,7 +36,9 @@ export async function doFetch(url, options = {}, useAuth = true) {
         console.warn('Unauthorized access. User may not be logged in.');
 
         // Only show alert if it hasn't been shown already
-        if (!unauthorizedAlertShown) {
+        // Check if on the login page
+        const isOnLoginPage = window.location.pathname === '/login/';
+        if (!unauthorizedAlertShown && !isOnLoginPage) {
           showAlert(
             'error',
             'You need to be logged in to access this page. Redirecting to login...'

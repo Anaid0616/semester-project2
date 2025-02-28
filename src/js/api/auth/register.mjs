@@ -40,7 +40,6 @@ export async function register({ name, email, password, bio, avatar, banner }) {
       }),
     };
 
-    console.log('Payload sent to API:', options);
     // Use doFetch with API_AUTH_REGISTER and pass `false` for no auth headers
     const response = await doFetch(API_AUTH_REGISTER, options, false);
 

@@ -8,8 +8,6 @@ import { setupMediaGallery } from '../../ui/listing/mediaGallery.mjs';
 loadSharedHeader(); // Load the shared header dynamically
 loadSharedFooter(); // Load shared footer
 
-console.log('Initializing Edit Listing Page');
-
 // Extract the listing ID from the URL query parameters
 const listingId = new URLSearchParams(window.location.search).get('id');
 if (!listingId) {
@@ -103,8 +101,6 @@ form.addEventListener('submit', async (event) => {
     }))
     .filter((item) => item.url !== ''); // Filter out empty URLs
 
-  console.log('Media Data Before Saving:', media);
-
   const updatedListing = {
     media,
     title: titleInput.value,
@@ -112,8 +108,6 @@ form.addEventListener('submit', async (event) => {
     tags: tagsInput.value.split(',').map((tag) => tag.trim()),
     endsAt: deadlineInput.value,
   };
-
-  console.log('Updated Listing Data to Submit:', updatedListing);
 
   try {
     await updateListing(listingId, updatedListing);

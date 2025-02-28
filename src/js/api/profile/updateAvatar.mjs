@@ -38,9 +38,6 @@ export async function updateProfile(username, data) {
       options
     );
 
-    console.log('API Response Status:', response.status);
-    console.log('API Response JSON:', response);
-
     if (!response) {
       throw new Error('No response received from the API.');
     }
