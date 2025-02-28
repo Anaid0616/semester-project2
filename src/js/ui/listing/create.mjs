@@ -29,13 +29,16 @@ export async function onCreateListing(event) {
 
   // Collect all media URLs and their alt texts
   const mediaInputs = document.querySelectorAll('.image-url');
-  const altInputs = document.querySelectorAll('.image-alt');
+  // Get the alt text from the single alt input field
+  const unifiedAltText =
+    document.getElementById('media-alt')?.value.trim() ||
+    'Image of the listed item';
 
   // Create an array of media objects with both URL and alt text
   const media = Array.from(mediaInputs)
     .map((input, index) => ({
       url: input.value.trim(),
-      alt: altInputs[index]?.value.trim() || 'No alt text provided',
+      alt: unifiedAltText,
     }))
     .filter(
       (item) =>

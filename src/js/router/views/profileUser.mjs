@@ -36,7 +36,7 @@ export async function fetchAndDisplayProfile() {
         profileData.avatar?.url || '/images/placeholder.jpg'
       }" alt="${
       profileData.name || 'User Avatar'
-    }" class="w-48 h-48 rounded-sm" />
+    }"class="w-40 h-40 sm:w-48 sm:h-48 aspect-square rounded-sm object-cover" />
 
       <div>
         <h1 id="user-name" class="text-2xl font-semibold">${
@@ -54,7 +54,7 @@ export async function fetchAndDisplayProfile() {
         <div class="mt-4 flex gap-4">
          ${
            !profileUser || profileData.name === loggedInUser?.name
-             ? `<button id="update-profile-button" class="px-4 py-1 h-8 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm ">Update Profile</button>`
+             ? `<button id="update-profile-button" class="px-4 py-1 h-8 text-xs sm:text-base font-semibold sm:font-medium bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm ">Update</button>`
              : ''
          }
       </div>
@@ -80,7 +80,7 @@ export async function fetchAndDisplayProfile() {
             : 'none';
           updateProfileButton.textContent = isHidden
             ? 'Cancel Update'
-            : 'Update Profile';
+            : 'Update';
         }
 
         // Manually trigger the form event listener setup from updateAvatar.mjs

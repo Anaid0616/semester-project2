@@ -61,17 +61,13 @@ export async function onUpdateProfile(event) {
 
     if (updateProfileForm && updateProfileButton) {
       updateProfileForm.style.display = 'none';
-      updateProfileButton.textContent = 'Update Profile';
-      console.log('Form closed and button text reset to "Update Profile".');
+      updateProfileButton.textContent = 'Update';
 
       // Reattach click event to update profile button
       updateProfileButton.onclick = () => {
         const isHidden = updateProfileForm.style.display === 'none';
         updateProfileForm.style.display = isHidden ? 'block' : 'none';
-        updateProfileButton.textContent = isHidden
-          ? 'Cancel Update'
-          : 'Update Profile';
-        console.log(`Profile form ${isHidden ? 'shown' : 'hidden'}`);
+        updateProfileButton.textContent = isHidden ? 'Cancel Update' : 'Update';
       };
     }
   } catch (error) {

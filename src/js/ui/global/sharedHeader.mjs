@@ -1,5 +1,4 @@
 import { logout } from '../auth/logout.mjs';
-import { handleSearchInput } from '../../router/views/search.mjs';
 import { getUserName } from '../../utilities/getUserName.mjs';
 import { setupHamburgerMenu } from '../../utilities/hamburger.mjs';
 

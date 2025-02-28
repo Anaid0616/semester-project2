@@ -93,13 +93,13 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const mediaInputs = document.querySelectorAll('.image-url');
-  const altText = document.getElementById('media-alt').value.trim();
+  const unifiedAltText = altInput.value.trim() || 'Image of the listed item';
 
-  // Create an array of media objects with both URL and alt text
+  // Create an array of media objects with the same alt text
   const media = Array.from(mediaInputs)
-    .map((input, index) => ({
+    .map((input) => ({
       url: input.value.trim(),
-      alt: altText || 'No alt text provided',
+      alt: unifiedAltText,
     }))
     .filter((item) => item.url !== ''); // Filter out empty URLs
 

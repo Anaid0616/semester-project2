@@ -29,7 +29,7 @@
     <header class="sticky top-0 z-50"></header>
 
     <main class="bg-[#F9F1EC] flex-grow">
-      <div class="max-w-6xl mx-auto relative text-left text-white" id="welcome-section">
+      <div class="max-w-6xl overflow-hidden mx-auto w-full relative text-left text-white" id="welcome-section">
         <img
           src="./images/jeztimmsunsplash.jpg"
           alt="Background"
@@ -38,9 +38,9 @@
         <div
           class="max-w-2xl mx-auto absolute inset-0 flex flex-col justify-center items-start bg-black bg-opacity-50"
         >
-          <h1 class="text-3xl font-medium" id="welcome-text">Welcome, Username!</h1>
+          <h1 class="text-3xl font-medium px-4 md:px-0" id="welcome-text">Welcome, Username!</h1>
           <div
-            class="mt-2 flex items-center bg-white text-black px-4 py-2 rounded-sm shadow-md w-full max-w-2xl"
+            class="mt-2 mx-4 md:mx-0 flex items-center bg-white text-black px-4 py-2 rounded-sm shadow-md w-full max-w-2xl mr-4"
           >
         <!-- Accessible Label for the Input -->
 <label for="search-input-index" class="sr-only">Search on index</label>
@@ -80,9 +80,9 @@
       </div>
 
       <div class="max-w-6xl mx-auto py-6">
-        <h2 class="text-2xl font-semibold">All Categories</h2>
+        <h2 class="text-2xl font-semibold px-4 xl:px-0">All Categories</h2>
         <div class="flex overflow-x-auto gap-6 mt-4 relative mx-10">
-          <div class="relative flex items-center max-w-6xl mx-auto overflow-hidden py-10">
+          <div class="relative flex items-center max-w-6xl mx-auto overflow-hidden pt-5 pb-10">
             <!-- Left Arrow -->
             <button
                 id="prev-category"
@@ -114,8 +114,8 @@
       </div>
 
       <div class="max-w-6xl mx-auto">
-        <h2 class="py-4 text-2xl font-semibold">Latest Listings</h2>
-        <div class="flex gap-4 mb-4">
+        <h2 class="px-4 pb-2 text-2xl font-semibold xl:px-0">Latest Listings</h2>
+        <div class="flex gap-4 my-4 mx-4 xl:mx-0">
           <button
             id="filter-all"
             type="button"
@@ -137,7 +137,7 @@
         <!-- Listings Container -->
         <div
           id="listings-container"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
         ></div>
       </div>
 
