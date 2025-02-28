@@ -126,7 +126,7 @@ npm run dev
 
 ---
 
-## Future improvemnts
+## Future improvements
 
 **Notifications System:** Alert users when winning bid, they are outbid or when auctions are ending.
 
