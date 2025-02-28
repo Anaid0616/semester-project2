@@ -112,14 +112,17 @@ export async function loadSharedHeader() {
 function setupNavigation() {
   const loggedInNav = document.getElementById('logged-in');
   const loggedOutNav = document.getElementById('logged-out');
+  const loggedInMobile = document.getElementById('logged-in-mobile');
   const isLoggedIn = localStorage.getItem('user');
 
   if (isLoggedIn) {
     loggedInNav.classList.remove('hidden');
     loggedOutNav.classList.add('hidden');
+    loggedInMobile.classList.remove('hidden'); // Show mobile elements
   } else {
     loggedInNav.classList.add('hidden');
     loggedOutNav.classList.remove('hidden');
+    loggedInMobile.classList.add('hidden'); // Hide mobile elements
   }
 
   const logoutButton = document.getElementById('logout-button');

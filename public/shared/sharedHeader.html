@@ -117,7 +117,11 @@
   </div>
 
   <!-- Profile Avatar & Pen Icon (Always Visible on Mobile) -->
-  <div class="flex items-center space-x-1 md:hidden">
+  <!-- Profile Avatar & Pen Icon (Only Visible When Logged In) -->
+  <div
+    id="logged-in-mobile"
+    class="flex items-center space-x-1 md:hidden hidden"
+  >
     <!-- New Listing Icon (Mobile) -->
     <a
       href="/listing/create/"
