@@ -8,7 +8,7 @@
 
 A functional, responsive auction website built as part of the Front-End Development (FED2) program at Noroff School of Technology and Digital Media. The project showcases the implementation of skills acquired over three semesters, focusing on front-end development, user experience, and API integration.
 
-[Live Site Auction House](https://semester-project2-diana.netlify.app/)
+[Live Site Auction House](https://sp2-auctionhouse.netlify.app/)
 
 ---
 
