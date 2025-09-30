@@ -4,9 +4,7 @@ import { placeBid } from '../api/listing/placeBid';
 /**
  * Renders the bidding section including the bid form and bid list.
  */
-/**
- * Renders the bidding section including the bid form and bid list.
- */
+
 export function renderBidSection(
   listing,
   listingId,

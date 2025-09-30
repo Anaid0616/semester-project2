@@ -23,11 +23,30 @@ const listingId = urlParams.get('id');
 
 const listingContainer = document.getElementById('listing-container');
 
+/**
+ * Replace the listing container with a skeleton loader while data is fetched.
+ * @returns {void}
+ */
 function showSkeletonLoader() {
   listingContainer.innerHTML = generateSkeleton('listing');
 }
+
 /**
- * Render listings
+ * Fetch the listing by id and render the detail view.
+ *
+ * Side effects:
+ * - Manipulates the DOM inside `#listing-container`.
+ * - Reads from localStorage key `user`.
+ * - Binds click handlers for carousel, bidding, and delete actions.
+ * - On successful delete, navigates to `/profile/` after a short delay.
+ *
+ * Error handling:
+ * - Shows an error alert if the listing fails to load.
+ * - Throws if the API does not return a listing.
+ *
+ * @async
+ * @returns {Promise<void>}
+ * @throws {Error} If the listing is not found.
  */
 async function fetchAndRenderListing() {
   try {
@@ -49,12 +68,12 @@ async function fetchAndRenderListing() {
     const alts = media.map((image) => image.alt) || ['No alt text provided'];
 
     const imageCarouselHtml = renderImageCarousel(images, alts);
-
+    /** Seller avatar with placeholder fallback. */
     const sellerAvatar = seller?.avatar?.url || '../images/placeholder.jpg';
 
     const bidSectionHtml = renderBidSection(
       listing,
-      listingId,
+      /** @type {string} */ listingId,
       fetchAndRenderListing,
       user
     );
@@ -100,6 +119,7 @@ async function fetchAndRenderListing() {
     setupImageCarouselListeners(images);
     setupBidEventListeners(listingId, fetchAndRenderListing);
 
+    // Delete button (if present) — guarded optional chaining to avoid errors.
     document
       .getElementById('delete-listing-button')
       ?.addEventListener('click', async () => {
@@ -117,4 +137,5 @@ async function fetchAndRenderListing() {
   }
 }
 
+// Kick off initial render
 fetchAndRenderListing();

@@ -3,6 +3,43 @@ import { doFetch } from '../../api/doFetch.mjs';
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 import { onUpdateProfile } from '../../ui/profile/updateAvatar.mjs';
 
+/**
+ * User profile model returned by the API.
+ * @typedef {Object} Profile
+ * @property {string} [name]
+ * @property {{ url?: string }} [avatar]
+ * @property {string} [bio]
+ * @property {number} [credits]
+ */
+
+/**
+ * Generic API response envelope.
+ * @typedef {Object} ApiResponse
+ * @property {Profile} [data]
+ */
+
+/**
+ * Fetch profile data and render the profile page.
+ *
+ * Behavior:
+ * - Shows a skeleton in `#profile-container` while loading.
+ * - Resolves the username from `?user=` or `localStorage.user.name`.
+ * - GETs the profile from `${API_AUCTION_PROFILES}/${username}`.
+ * - Renders avatar, name, credits, bio and an Update button (only for owner).
+ * - Toggles visibility of the update form and (re)binds its submit handler.
+ *
+ * Side effects:
+ * - Mutates DOM under `#profile-container` and `#update-profile`.
+ * - Registers/updates click & submit handlers.
+ * - Reads from `localStorage.user`.
+ *
+ * Error handling:
+ * - On API/DOM errors, logs to console and renders a friendly login prompt.
+ *
+ * @async
+ * @returns {Promise<void>}
+ * @throws {Error} If profile info cannot be fetched.
+ */
 export async function fetchAndDisplayProfile() {
   try {
     // Get profile container

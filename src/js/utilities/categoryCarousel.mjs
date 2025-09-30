@@ -16,7 +16,21 @@ export const categories = [
   { name: 'Other', icon: 'fa-box' },
 ];
 
-// Function to create the category carousel
+/**
+ * Create and render category buttons inside `#category-carousel`.
+ *
+ * Behavior:
+ * - Clears the carousel container and appends a button per category.
+ * - Each button gets an icon, label, ARIA attributes, and click handler.
+ * - Clicks delegate to {@link handleCategoryClick}.
+ *
+ * Side effects:
+ * - Mutates the DOM under `#category-carousel`.
+ * - Registers click handlers on each rendered button.
+ *
+ * @param {Category[]} categories - List of categories to render.
+ * @returns {void}
+ */
 export function createCategoryCarousel(categories) {
   const carouselContainer = document.getElementById('category-carousel');
 
@@ -50,7 +64,15 @@ export function createCategoryCarousel(categories) {
     carouselContainer.appendChild(categoryElement);
   });
 }
-// Carousel navigation setup
+
+/**
+ * Wire previous/next buttons to scroll the category carousel horizontally.
+ *
+ * Side effects:
+ * - Adds click listeners to `#prev-category` and `#next-category` to scroll `#category-carousel`.
+ *
+ * @returns {void}
+ */
 export function setupCarouselNavigation() {
   const prevButton = document.getElementById('prev-category');
   const nextButton = document.getElementById('next-category');
@@ -71,7 +93,19 @@ export function setupCarouselNavigation() {
   });
 }
 
-// Handle category click
+/**
+ * Handle a category selection: update visuals and request filtered listings.
+ *
+ * Behavior:
+ * - Reads the selected category from the element's `data-category`.
+ * - Highlights the clicked button (bold + underline), removes highlight from others.
+ * - Stores the selection on `window.selectedCategory`.
+ * - If present, calls `window.fetchAndDisplayListings(1, selectedCategory)` to refresh results.
+ * - Scrolls the selected element into view.
+ *
+ * @param {HTMLElement} categoryElement - The clicked category button.
+ * @returns {void}
+ */
 export function handleCategoryClick(categoryElement) {
   const selectedCategory = categoryElement.dataset.category;
 

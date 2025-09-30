@@ -30,7 +30,20 @@ const altInput = document.getElementById('media-alt');
 // Initialize media gallery for adding/removing image inputs
 setupMediaGallery('imageInputs', 'imagePreview', 'addImage');
 
-// Function to load listing data into the form
+/**
+ * Load existing listing data from the API and populate the form fields.
+ *
+ * Side effects:
+ * - Reads listing from API using `readListing`.
+ * - Fills inputs for alt, title, description, tags, deadline.
+ * - Dynamically renders media input fields and preview images.
+ * - Adds remove button listeners for each media item.
+ * - On failure, shows an error alert and redirects to home.
+ *
+ * @async
+ * @returns {Promise<void>}
+ * @throws {Error} If listing data is not found.
+ */
 async function loadListingData() {
   try {
     const response = await readListing(listingId);
@@ -86,7 +99,18 @@ async function loadListingData() {
   }
 }
 
-// Save the updated listing data
+/**
+ * Handle form submission to save updated listing data.
+ *
+ * Side effects:
+ * - Prevents default form submission.
+ * - Reads values from form inputs and builds updated listing object.
+ * - Sends update to API via `updateListing`.
+ * - On success, shows alert and redirects to the listing detail page.
+ * - On failure, shows error alert.
+ *
+ * @listens form#submit
+ */
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
 

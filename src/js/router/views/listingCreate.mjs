@@ -12,5 +12,4 @@ const form = document.forms.createListing;
 form.addEventListener('submit', onCreateListing);
 
 // Initialize the media gallery
-
 setupMediaGallery('imageInputs', 'imagePreview', 'addImage');

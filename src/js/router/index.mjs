@@ -1,5 +1,19 @@
-// This function controls which JavaScript file is loaded on which page
-// In order to add additional pages, you will need to implement them below
+// src/js/router/index.mjs
+
+/**
+ * Resolve the current pathname to a view and dynamically import its module.
+ *
+ * Behavior:
+ * - Uses `import()` to lazy-load the view for the given pathname.
+ * - Falls back to the Not Found view when no case matches.
+ *
+ * @async
+ * @param {string} [pathname=window.location.pathname] - Current location pathname.
+ * @returns {Promise<void>}
+ * @example
+ * // On navigation change
+ * router('/profile/');
+ */
 export default async function router(pathname = window.location.pathname) {
   switch (pathname) {
     case '/':

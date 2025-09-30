@@ -20,6 +20,22 @@ if (query) {
   fetchAndDisplaySearchResults(query);
 }
 
+/**
+ * Fetch listings that match a given search query and render them to the page.
+ *
+ * Side effects:
+ * - Replaces `#listings-container` with a skeleton, then result cards or an empty-state message.
+ * - Logs errors to the console and shows a user-friendly message on failure.
+ *
+ * Behavior:
+ * - Calls the listings API with a fixed page size (24), page 1, no category, and optional active-only flag (false here).
+ * - Filters out listings with invalid images using `filterValidImageListings`.
+ * - Renders a responsive card for each listing including seller, image, title, short description, bid count, and end date.
+ *
+ * @async
+ * @param {string} query - Free-text search string from the URL or input field.
+ * @returns {Promise<void>}
+ */
 async function fetchAndDisplaySearchResults(query) {
   try {
     listingsContainer.innerHTML = generateSkeleton('listings');
@@ -85,11 +101,17 @@ async function fetchAndDisplaySearchResults(query) {
   }
 }
 
-// Add event listener for the search button
-const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('search-button');
-
-// Function to handle search input and redirect to search page
+/**
+ * Wire a text input and button to perform a search redirect when triggered.
+ *
+ * Side effects:
+ * - Listens for Enter on the input and clicks on the button.
+ * - Navigates to `/search/?q=...` with the encoded query when invoked.
+ *
+ * @param {HTMLInputElement|null} inputElement - Input where the user types the query.
+ * @param {HTMLButtonElement|null} buttonElement - Button that triggers the search.
+ * @returns {void}
+ */
 export function handleSearchInput(inputElement, buttonElement) {
   const handleSearch = () => {
     const query = inputElement.value.trim();

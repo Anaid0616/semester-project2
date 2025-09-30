@@ -1,3 +1,20 @@
+/**
+ * Valid skeleton variants.
+ * @typedef {'profile'|'listings'} SkeletonType
+ */
+
+/**
+ * Generate a skeleton loader markup string for a given variant.
+ *
+ * Behavior:
+ * - Returns a Tailwind-styled HTML string for the requested `type`.
+ * - For unknown types, returns an empty string.
+ *
+ * Side effects: none (pure function).
+ *
+ * @param {SkeletonType|string} type - Which skeleton to render.
+ * @returns {string} HTML string ready to be assigned to `element.innerHTML`.
+ */
 export function generateSkeleton(type) {
   if (type === 'profile') {
     return `

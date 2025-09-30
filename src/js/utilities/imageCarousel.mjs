@@ -1,6 +1,18 @@
-// imageCarousel
+// src/js/utilities/imageCarousel.mjs
 
-// Function to render the image carousel HTML
+/**
+ * Render an image carousel markup string with a main image, prev/next buttons,
+ * and a row of clickable thumbnails.
+ *
+ * Behavior:
+ * - Uses the first image as the initial main image.
+ * - Thumbnails get `data-index` to identify the image.
+ * - ARIA labels are set on navigation buttons.
+ *
+ * @param {string[]} images - Array of image URLs (first item is initial image).
+ * @param {string[]} [alts=[]] - Optional alt texts aligned by index.
+ * @returns {string} HTML string for the carousel.
+ */
 export function renderImageCarousel(images, alts = []) {
   return `
       <div class="relative">
@@ -43,7 +55,25 @@ export function renderImageCarousel(images, alts = []) {
     `;
 }
 
-// Function to set up event listeners for the image carousel
+/**
+ * Attach interaction handlers to a rendered carousel markup.
+ *
+ * Behavior:
+ * - Maintains an internal `currentImageIndex`.
+ * - Next/Prev buttons cycle through images circularly.
+ * - Clicking a thumbnail activates that image and highlights its border.
+ *
+ * Side effects:
+ * - Mutates `#main-image` src and toggles `border-gray-800` on `.thumbnail`s.
+ * - Registers click handlers on nav buttons and thumbnails.
+ *
+ * Assumptions:
+ * - The markup from {@link renderImageCarousel} has already been inserted
+ * into the DOM and contains `#main-image`, `#prev-image`, `#next-image`, and `.thumbnail` elements.
+ *
+ * @param {string[]} images - Array of image URLs used by the carousel.
+ * @returns {void}
+ */
 export function setupImageCarouselListeners(images) {
   let currentImageIndex = 0;
 

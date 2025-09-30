@@ -1,3 +1,23 @@
+/**
+ * Initialize a media gallery: adds/removes URL inputs and keeps a live preview
+ * of all valid image URLs.
+ *
+ * Behavior:
+ * - Binds an "Add image" button to append URL inputs.
+ * - Each input has a remove button and updates the preview on type.
+ * - Preview only renders URLs matching a basic http(s) pattern.
+ *
+ * Side effects:
+ * - Mutates the DOM of the containers identified by `imageInputsId` and `imagePreviewId`.
+ * - Registers click/input event listeners.
+ * - Logs to console if expected elements are missing.
+ *
+ * @param {string} imageInputsId - ID of the container where URL inputs are appended.
+ * @param {string} imagePreviewId - ID of the container that shows image thumbnails.
+ * @param {string} addImageButtonClass - CSS class of the button that adds inputs.
+ * @returns {void}
+ */
+
 export function setupMediaGallery(
   imageInputsId,
   imagePreviewId,
@@ -12,7 +32,11 @@ export function setupMediaGallery(
     return;
   }
 
-  // Function to add a new image input field
+  /**
+   * Append a new image URL input row with a remove button and wire listeners.
+   *
+   * @returns {void}
+   */
   function addImageInput() {
     const div = document.createElement('div');
     div.classList.add('flex', 'gap-2', 'mb-2');
@@ -35,7 +59,12 @@ export function setupMediaGallery(
       .addEventListener('input', updateImagePreview);
   }
 
-  // Function to update the image preview
+  /**
+   * Rebuild the preview grid from all current `.image-url` inputs.
+   * Accepts http(s) URLs via a lightweight regex; logs a warning for invalid ones.
+   *
+   * @returns {void}
+   */
   function updateImagePreview() {
     imagePreview.innerHTML = '';
     const imageUrls = document.querySelectorAll('.image-url');

@@ -2,6 +2,27 @@ import { logout } from '../auth/logout.mjs';
 import { getUserName } from '../../utilities/getUserName.mjs';
 import { setupHamburgerMenu } from '../../utilities/hamburger.mjs';
 
+/**
+ * Load, inject, and initialize the shared header UI.
+ *
+ * Behavior:
+ * - Fetches `/shared/sharedHeader.html` and inserts it into the `<header>` tag.
+ * - Initializes hamburger menu.
+ * - Reads user data from localStorage to set profile name and avatar (desktop & mobile).
+ * - Sets up navigation visibility depending on auth state.
+ * - Enables sticky search bar behavior and mobile search dropdown.
+ * - Wires search inputs (desktop & mobile) to redirect to the search page on Enter/click.
+ *
+ * Side effects:
+ * - Mutates DOM under `<header>` and various `#header-...` elements.
+ * - Registers multiple event listeners (scroll, click, keypress).
+ *
+ * Error handling:
+ * - Logs network/DOM errors to the console and exits gracefully if structure is missing.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
 export async function loadSharedHeader() {
   try {
     // Fetch the shared header HTML file
@@ -51,7 +72,7 @@ export async function loadSharedHeader() {
 
     setupNavigation();
     setupStickySearchBar();
-    setupSearchDropdown(); // 👈 Add this to handle dropdown behavior
+    setupSearchDropdown();
 
     // Desktop Search Elements
     const headerSearchBarInput = document.querySelector(
@@ -108,7 +129,15 @@ export async function loadSharedHeader() {
   }
 }
 
-// Navigation logic
+/**
+ * Toggle nav visibility for logged-in vs logged-out states and bind logout.
+ *
+ * Behavior:
+ * - Shows/hides desktop & mobile nav groups based on presence of `localStorage.user`.
+ * - Attaches click handler to `#logout-button` if present.
+ *
+ * @returns {void}
+ */
 function setupNavigation() {
   const loggedInNav = document.getElementById('logged-in');
   const loggedOutNav = document.getElementById('logged-out');
@@ -131,7 +160,15 @@ function setupNavigation() {
   }
 }
 
-// Sticky Search Bar Logic
+/**
+ * Control sticky/visible behavior of the header search bar.
+ *
+ * Behavior:
+ * - On non-index pages, the header search bar is always visible.
+ * - On the index page, it becomes visible only after scrolling past the welcome section.
+ *
+ * @returns {void}
+ */
 function setupStickySearchBar() {
   const headerSearchBar = document.getElementById('header-search-bar');
   const isIndexPage =
@@ -154,7 +191,17 @@ function setupStickySearchBar() {
     });
   }
 }
-// Dropdown Search for Mobile
+
+/**
+ * Mobile search dropdown toggle and outside-click dismissal.
+ *
+ * Behavior:
+ * - Toggles visibility of `#mobile-search-bar` when the toggle button is clicked.
+ * - Focuses the input when opening; hides when clicking outside while on small screens.
+ * - No-ops with a console error if expected elements are missing.
+ *
+ * @returns {void}
+ */
 function setupSearchDropdown() {
   const searchButton = document.getElementById('mobile-search-toggle');
   const searchBar = document.getElementById('mobile-search-bar');

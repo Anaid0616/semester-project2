@@ -67,12 +67,27 @@ const currentPageDisplay = document.getElementById('current-page');
 const filterAllButton = document.getElementById('filter-all');
 const filterActiveButton = document.getElementById('filter-active');
 
-// Pagination & Filters
+// Pagination & Filters state
 let currentPage = 1;
-let selectedCategory = null;
+const selectedCategory = null;
 let showActiveOnly = false;
 
-// Fetch and display listings
+/**
+ * Fetch listings from API, apply filters, and render them to the DOM.
+ *
+ * Behavior:
+ * - Fetches listings with pagination, category, and active-only filter.
+ * - Ensures up to 24 valid listings by fetching extra pages if needed.
+ * - Filters out invalid images.
+ * - Sorts listings newest first.
+ * - Renders seller info, image, title, description, bid count, and end date.
+ *
+ * @async
+ * @param {number} [page=1] - Current page number.
+ * @param {string|null} [category=null] - Selected category filter.
+ * @param {boolean} [activeOnly=false] - Whether to show only active listings.
+ * @returns {Promise<void>}
+ */
 async function fetchAndDisplayListings(
   page = 1,
   category = null,
@@ -133,7 +148,7 @@ async function fetchAndDisplayListings(
         const mediaUrl = listing.media?.[0]?.url || '/images/placeholder.jpg';
         const title = listing.title || 'Untitled Listing';
         const description = listing.description
-          ? listing.description.substring(0, 100) + '...'
+          ? `${listing.description.slice(0, 100)}…`
           : 'No description provided.';
         const bidCount = listing._count?.bids || 0;
         const endsAt = new Date(listing.endsAt).toLocaleDateString();
@@ -215,7 +230,14 @@ filterActiveButton.addEventListener('click', () => {
   setActiveButtonStyle(filterActiveButton);
 });
 
-// Function to set active styles on the selected button
+/**
+ * Set visual style on the active filter button.
+ *
+ * Resets both buttons then applies active styles to the selected one.
+ *
+ * @param {HTMLElement} activeButton - The button to highlight.
+ * @returns {void}
+ */
 function setActiveButtonStyle(activeButton) {
   // Reset styles for both buttons
   [filterAllButton, filterActiveButton].forEach((button) => {
