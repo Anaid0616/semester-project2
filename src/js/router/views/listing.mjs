@@ -13,6 +13,7 @@ import {
   renderBidSection,
   setupBidEventListeners,
 } from '../../utilities/bidHandler.mjs';
+import { initNotifier, watchListing } from '../../utilities/notifier.mjs';
 
 loadSharedHeader();
 loadSharedFooter();
@@ -60,6 +61,19 @@ async function fetchAndRenderListing() {
     const { media, title, description, seller, created } = listing;
 
     const user = JSON.parse(localStorage.getItem('user'));
+    initNotifier(user?.name ?? null); // Initialize notifier with current user
+
+    // snapshot för watch:
+    const bids = listing.bids ?? [];
+    const highest = bids.length ? Math.max(...bids.map((b) => b.amount)) : 0;
+    const highestBid = bids.find((b) => b.amount === highest);
+    const highestBidder = highestBid?.bidderName ?? highestBid?.bidder?.name;
+
+    watchListing(listingId, {
+      highest,
+      highestBidder,
+      endsAt: listing.endsAt,
+    });
 
     const images =
       media.length > 0

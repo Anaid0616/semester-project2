@@ -139,30 +139,32 @@
           id="listings-container"
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto py-6"
         ></div>
-      </div>
+              <!-- Pagination Controls -->
+<div class="max-w-6xl mx-auto my-6 grid grid-cols-[1fr_auto_1fr] items-center">
+  <!-- (tom vänster-spacer) -->
+  <div></div>
 
-      <div class="flex justify-end">
-        <a href="#" aria-label="back to top" id="back-to-top">
-          <img src="./images/backtotop.png" alt="back to top icon" class="w-10 m-4" />
-        </a>
-      </div>
+  <!-- Pager (centrerad i mittenkolumnen) -->
+  <div class="flex items-center gap-3 justify-center">
+    <button id="prev-page"
+      class="inline-flex items-center justify-center h-9 px-4 rounded-sm bg-[#C5A880] text-black hover:bg-[#A88B6D] transition"
+      type="button" aria-label="prev-page">Prev</button>
 
-      <!-- Pagination Controls -->
-      <div class="text-center my-6">
-        <button id="prev-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitio rounded-sm"
-        type="button"
-        aria-label="prev-page">
-          Prev
-        </button>
-        <span id="current-page" class="px-4 py-2 bg-white border rounded-md"
-          >1</span
-        >
-        <button id="next-page" class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitiorounded-sm"
-        type="button"
-        aria-label="next-page">
-          Next
-        </button>
-      </div>
+    <span id="current-page"
+      class="inline-flex items-center justify-center h-9 px-3 rounded-md border bg-white">1</span>
+
+    <button id="next-page"
+      class="inline-flex items-center justify-center h-9 px-4 rounded-sm bg-[#C5A880] text-black hover:bg-[#A88B6D] transition"
+      type="button" aria-label="next-page">Next</button>
+  </div>
+
+  <!-- Back to top (höger) -->
+  <a href="#" id="back-to-top" aria-label="Back to top"
+     class="justify-self-end inline-flex items-center">
+    <img src="./images/backtotop.png" alt="Back to top" class="w-10" />
+  </a>
+</div>
+
     </main>
 
 <footer></footer>

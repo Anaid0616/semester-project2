@@ -1,5 +1,6 @@
 import { showAlert } from './alert.mjs';
 import { placeBid } from '../api/listing/placeBid';
+import { watchListing } from '../utilities/notifier.mjs';
 
 /**
  * Renders the bidding section including the bid form and bid list.
@@ -91,7 +92,11 @@ export function renderBidSection(
                : '<p class="text-md text-gray-600">End date not available</p>'
            }
             <p class="text-l my-2 font-semibold text-gray-700">Bids: ${bidCount}</p>
-            <p class="text-lg my-2 font-semibold text-gray-800">Highest Bid: $${highestBid} by ${highestBidder}</p>
+          <p class="text-lg my-2 font-semibold text-gray-800">
+ Highest Bid:
+ <span class="js-highest-amount" data-amount="${highestBid}">$${highestBid}</span>
+  by ${highestBidder}
+ </p>
          
         </div>
         
@@ -125,12 +130,8 @@ export function setupBidEventListeners(listingId, fetchAndRenderListing) {
     const bidAmount = parseFloat(document.getElementById('bid-amount').value);
 
     // Get the current highest bid from the DOM
-    const highestBidElement = document.querySelector(
-      '.text-lg.font-semibold.text-gray-800'
-    );
-    const highestBid = parseFloat(
-      highestBidElement?.textContent.replace(/[^0-9.]/g, '') || '0'
-    );
+    const highestAmountEl = document.querySelector('.js-highest-amount');
+    const highestBid = Number(highestAmountEl?.dataset.amount ?? 0);
 
     if (isNaN(bidAmount) || bidAmount <= 0) {
       showAlert('error', 'Please enter a valid positive bid amount.');
@@ -144,13 +145,28 @@ export function setupBidEventListeners(listingId, fetchAndRenderListing) {
       );
       return;
     }
-
     try {
-      await placeBid(listingId, bidAmount);
-      showAlert('success', 'Bid placed successfully!');
+      // User notifier to watch this listing
+      const res = await placeBid(listingId, bidAmount);
+      const updated = res?.data;
 
-      // Call the function from listing.mjs to refresh the data
-      await fetchAndRenderListing();
+      // Build new snapshot data
+      const bids = updated?.bids ?? [];
+      const newHighest = bids.length
+        ? Math.max(...bids.map((b) => b.amount))
+        : bidAmount;
+      const top = bids.find((b) => b.amount === newHighest);
+      const highestBidder = top?.bidderName ?? top?.bidder?.name;
+
+      // Update notifier snapshot
+      watchListing(listingId, {
+        highest: newHighest,
+        highestBidder,
+        endsAt: updated?.endsAt, // can be undefined
+      });
+
+      showAlert('success', 'Bid placed successfully!');
+      await fetchAndRenderListing(); // refresh UI
     } catch (error) {
       console.error('Failed to place bid:', error);
       showAlert('error', 'Failed to place bid. Please try again.');

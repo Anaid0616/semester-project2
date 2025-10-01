@@ -96,7 +96,8 @@ export async function fetchAndDisplayProfile() {
          }
       </div>
       </div>
-    `;
+
+`;
 
     const updateProfileButton = document.getElementById(
       'update-profile-button'

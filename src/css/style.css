@@ -1,6 +1,60 @@
-@import url('reset.css');
-@import url('global.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Lato', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  #header-search-bar {
+    @apply opacity-0 pointer-events-none;
+  }
+
+  #header-search-bar.visible {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* global.css (or any loaded stylesheet) */
+  .h-scroller {
+    display: flex;
+    gap: 1rem; /* space between cards */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding-bottom: 0.25rem; /* a little space so hidden scrollbar won't clip */
+  }
+
+  .h-card {
+    scroll-snap-align: start;
+    flex: 0 0 auto; /* don't shrink; keep width */
+  }
+
+  .h-scroller.no-scrollbar {
+    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .h-scroller.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+  }
+}

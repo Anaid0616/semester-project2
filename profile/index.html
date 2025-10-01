@@ -91,33 +91,35 @@
         </div>
 
         <!-- Listing Section -->
-        <div class="mt-10">
-          <h2 class="text-2xl font-semibold border-b pb-2">Listings</h2>
+        <div class="mt-10" id="profile-listings-block">
+          <h2 class="text-2xl font-semibold border-b pb-2">My Listings</h2>
+
           <div
             id="listings-container"
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4"
-          >
-            <!-- Listings will be inserted here dynamically -->
+          ></div>
+
+          <!-- Pagination (PROFILE) -->
+          <div id="profile-pager" class="text-center my-6">
+            <button
+              id="profile-prev-page"
+              class="inline-flex items-center justify-center h-9 px-4 ..."
+            >
+              Prev.
+            </button>
+            <span
+              id="profile-current-page"
+              class="inline-flex items-center justify-center h-9 px-3 rounded-md border bg-white"
+              >1</span
+            >
+            <button
+              id="profile-next-page"
+              class="inline-flex items-center justify-center h-9 px-4 ..."
+            >
+              Next
+            </button>
           </div>
         </div>
-      </div>
-
-      <div class="text-center my-6">
-        <button
-          class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transition rounded-sm"
-          type="button"
-          aria-label="prev-page"
-        >
-          Prev.
-        </button>
-        <span class="px-4 py-2 bg-white border rounded-md">1</span>
-        <button
-          class="px-4 py-2 bg-[#C5A880] text-black hover:bg-[#A88B6D] transitio rounded-sm"
-          type="button"
-          aria-label="next-page"
-        >
-          Next
-        </button>
       </div>
     </main>
 
