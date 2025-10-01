@@ -155,7 +155,7 @@ async function fetchAndDisplayListings(
             </div>
 
             <a href="/listing/?id=${listing.id}" class="block hover:opacity-90" aria-label="Go Listing">
-              <img src="${mediaUrl}" alt="${title}" class="w-full h-52 object-cover rounded-sm"/>
+              <img src="${mediaUrl}" alt="${title}" class="aspect-square object-cover rounded-sm"/>
               <div class="p-2">
                 <h3 class="text-xl font-semibold mb-2 truncate overflow-hidden whitespace-nowrap">${title}</h3>
                 <p class="text-gray-600 truncate overflow-hidden whitespace-nowrap">${description}</p>

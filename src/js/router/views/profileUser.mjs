@@ -73,7 +73,7 @@ export async function fetchAndDisplayProfile() {
         profileData.avatar?.url || '/images/placeholder.jpg'
       }" alt="${
       profileData.name || 'User Avatar'
-    }"class="w-40 h-40 sm:w-48 sm:h-48 aspect-square rounded-sm object-cover" />
+    }"class="w-36 h-36 sm:w-40 sm:h-40 aspect-square rounded-sm object-cover" />
 
       <div>
         <h1 id="user-name" class="text-2xl font-semibold">${

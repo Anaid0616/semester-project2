@@ -1,6 +1,7 @@
 import { generateSkeleton } from '../../utilities/skeletonLoader.mjs';
 import { readProfileBids } from '../../api/profile/readBids.mjs';
 import { readProfileWins } from '../../api/profile/readWins.mjs';
+import { readListing } from '../../api/listing/read.mjs';
 
 /**
  * Build a compact horizontal card for a listing (HTML string only).
@@ -14,33 +15,29 @@ import { readProfileWins } from '../../api/profile/readWins.mjs';
  * @param {{bids?: number}} [listing._count] - Counts (e.g., bids).
  * @returns {string} HTML string for one card.
  */
-export function cardHtml(listing) {
+export function cardHtml(listing, opts = {}) {
+  const { bidCount } = opts;
   const mediaUrl = listing.media?.[0]?.url ?? '/images/placeholder.jpg';
   const alt = listing.media?.[0]?.alt ?? listing.title ?? 'Listing image';
   const title = listing.title ?? 'Untitled Listing';
   const endsAt = listing.endsAt
     ? new Date(listing.endsAt).toLocaleDateString()
     : '';
-  const bidCount = listing._count?.bids ?? 0;
+
+  const count =
+    bidCount ??
+    listing._count?.bids ??
+    (Array.isArray(listing.bids) ? listing.bids.length : 0) ??
+    0;
 
   return `
     <a href="/listing/?id=${listing.id}"
-       class="h-card flex-none w-64 bg-white border border-gray-200 ring-1 ring-gray-100 shadow-sm rounded-sm overflow-hidden hover:shadow-md transition"
+       class="h-card flex-none p-4 w-64 bg-white border border-gray-200 ring-1 ring-gray-100 shadow-sm rounded-sm overflow-hidden hover:shadow transition"
        aria-label="Go to Listing">
-
-      <!-- Image with an inner frame (not edge-to-edge) -->
-      <div class="px-3 pt-3">
-        <div class="rounded-sm overflow-hidden border border-gray-200">
-          <!-- Keep a stable aspect so rows look even -->
-          <img src="${mediaUrl}" alt="${alt}"
-               class="block w-full aspect-[4/3] object-cover" />
-        </div>
-      </div>
-
-      <!-- Text -->
-      <div class="p-3 pt-2">
+      <img src="${mediaUrl}" alt="${alt}" class="aspect-square object-cover" />
+      <div class="p-3">
         <h3 class="font-semibold leading-6 line-clamp-2 min-h-12">${title}</h3>
-        <p class="text-sm text-gray-600 mt-1">Bids: ${bidCount}</p>
+        <p class="text-sm text-gray-600 mt-1">Bids: ${count}</p>
         ${
           endsAt
             ? `<p class="text-sm text-gray-600 mt-0.5">Ends: ${endsAt}</p>`
@@ -50,7 +47,6 @@ export function cardHtml(listing) {
     </a>
   `;
 }
-
 /**
  * Attach Prev/Next behavior to a horizontal scroller.
  *
@@ -132,7 +128,8 @@ export async function renderMyBidsSection(userName) {
   host.innerHTML = generateSkeleton('listings');
 
   try {
-    const res = await readProfileBids(userName, true); // _listings=true
+    // 1) Which listings did the user bid on?
+    const res = await readProfileBids(userName, true);
     const bids = res?.data ?? [];
 
     if (!bids.length) {
@@ -142,30 +139,49 @@ export async function renderMyBidsSection(userName) {
       return;
     }
 
-    const cards = bids
-      .map((b) => b?.listing)
+    // 2) Dedupe listing IDs (some users bid multiple times on the same listing)
+    const ids = Array.from(
+      new Set(bids.map((b) => b?.listing?.id || b?.listingId).filter(Boolean))
+    );
+
+    // 3) Fetch detail for each listing to get _count.bids
+    const details = await Promise.all(
+      ids.map(async (id) => {
+        try {
+          const detail = await readListing(id); // returns { data, meta }
+          return detail?.data;
+        } catch {
+          return null;
+        }
+      })
+    );
+
+    // 4) Build cards (skip any nulls)
+    const cards = details
       .filter(Boolean)
-      .sort((a, b) => new Date(b?.created ?? 0) - new Date(a?.created ?? 0))
-      .map(cardHtml)
+      .map((l) => {
+        const bidCount =
+          l._count?.bids ?? (Array.isArray(l.bids) ? l.bids.length : 0);
+        return cardHtml(l, { bidCount });
+      })
       .join('');
 
+    // 5) Horizontal scroller + arrows
     host.innerHTML = `
       <div class="relative">
-        <!-- Scroller -->
         <div id="bids-scroller"
              class="h-scroller no-scrollbar flex overflow-x-auto gap-4 snap-x snap-mandatory scroll-smooth pb-2">
           ${cards}
         </div>
 
-        <!-- Overlay arrows -->
         <button id="bids-prev" type="button"
-          class="absolute left-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-6 rounded-full
-                 bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+          class="absolute left-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-8 rounded-full
+                 bg-white/85 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
           aria-label="Scroll left">‹</button>
 
         <button id="bids-next" type="button"
-          class="absolute right-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-6 rounded-full
-                 bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+          class="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-8 rounded-full
+                 bg-white/85 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
           aria-label="Scroll right">›</button>
       </div>
     `;
@@ -184,7 +200,6 @@ export async function renderMyBidsSection(userName) {
     section.hidden = false;
   }
 }
-
 /**
  * Render the "My Wins" section as a horizontal scroller.
  *
@@ -228,12 +243,12 @@ export async function renderMyWinsSection(userName) {
         </div>
 
         <button id="wins-prev" type="button"
-          class="absolute left-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-6 rounded-full
+          class="absolute left-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-8 rounded-full
                  bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
           aria-label="Scroll left">‹</button>
 
         <button id="wins-next" type="button"
-          class="absolute right-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-6 rounded-full
+          class="absolute right-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-8 rounded-full
                  bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
           aria-label="Scroll right">›</button>
       </div>
