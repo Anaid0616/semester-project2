@@ -1,5 +1,5 @@
 import { logout } from '../auth/logout.mjs';
-import { getUserName } from '../../utilities/getUserName.mjs';
+
 import { setupHamburgerMenu } from '../../utilities/hamburger.mjs';
 
 /**

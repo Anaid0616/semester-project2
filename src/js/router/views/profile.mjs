@@ -73,7 +73,7 @@ async function fetchAndDisplayUserListings(page = 1) {
     if (!username) throw new Error('Username is undefined.');
 
     if (userListingsContainer) {
-      userListingsContainer.innerHTML = generateSkeleton('listings');
+      userListingsContainer.innerHTML = generateSkeleton('profileListings');
     }
 
     // --- Fetch listings for this profile (paged) ---
@@ -133,7 +133,7 @@ async function fetchAndDisplayUserListings(page = 1) {
       profilePager.update({ page, totalPages });
     }
 
-    // --- Ensure Bids/Wins sections exist **below the pager** (once) ---
+    // ---  Bids/Wins ---
     if (!document.getElementById('section-my-bids')) {
       listingsBlock.insertAdjacentHTML(
         'beforeend',

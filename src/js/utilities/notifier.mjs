@@ -103,8 +103,7 @@ async function pollAll() {
       const ended = new Date(endsAt).getTime() <= now;
       if (ended && highest > 0 && highestBidder === userName) {
         showAlert('success', 'You won a watched auction! 🎉');
-        // valfritt: unwatch efter vinst
-        // unwatchListing(listingId);
+        unwatchListing(listingId);
       }
 
       // 3) Ending soon
@@ -122,8 +121,6 @@ async function pollAll() {
         endsAt,
       });
       persist();
-    } catch (e) {
-      // ignore
-    }
+    } catch (e) {}
   }
 }

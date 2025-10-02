@@ -33,10 +33,15 @@ export function createPagination({ prevEl, nextEl, currentEl, onChange }) {
     current.textContent = String(state.page);
     prev.disabled = state.page <= 1;
     next.disabled = state.page >= state.totalPages;
+
     // hide entire pagination if only one page
-    const container = current.parentElement;
-    if (container && container.id) {
-      container.style.display = state.totalPages > 1 ? '' : 'none';
+    const bar =
+      current.closest('#profile-pager, #home-pager') || current.parentElement;
+    if (bar) {
+      bar.classList.add('min-h-[40px]');
+      const hide = state.totalPages <= 1;
+      bar.classList.toggle('invisible', hide);
+      bar.classList.toggle('pointer-events-none', hide);
     }
   }
 

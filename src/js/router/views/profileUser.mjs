@@ -46,7 +46,8 @@ export async function fetchAndDisplayProfile() {
     const profileContainer = document.querySelector('#profile-container');
 
     // Inject skeleton loader before fetching the data
-    profileContainer.innerHTML = generateSkeleton('profile');
+    profileContainer.innerHTML = generateSkeleton('profileInfo');
+    profileContainer.style.visibility = 'visible';
 
     // Get username from URL or localStorage
     const urlParams = new URLSearchParams(window.location.search);

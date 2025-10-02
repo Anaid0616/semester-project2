@@ -34,7 +34,9 @@ export function cardHtml(listing, opts = {}) {
     <a href="/listing/?id=${listing.id}"
        class="h-card flex-none p-4 w-64 bg-white border border-gray-200 ring-1 ring-gray-100 shadow-sm rounded-sm overflow-hidden hover:shadow transition"
        aria-label="Go to Listing">
-      <img src="${mediaUrl}" alt="${alt}" class="aspect-square object-cover" />
+     <img src="${mediaUrl}" alt="${alt}"
+   width="256" height="256" loading="lazy" decoding="async"
+     class="aspect-square object-cover" />
       <div class="p-3">
         <h3 class="font-semibold leading-6 line-clamp-2 min-h-12">${title}</h3>
         <p class="text-sm text-gray-600 mt-1">Bids: ${count}</p>
@@ -125,7 +127,7 @@ export async function renderMyBidsSection(userName) {
   const section = document.getElementById('section-my-bids');
   if (!host || !section) return;
 
-  host.innerHTML = generateSkeleton('listings');
+  host.innerHTML = generateSkeleton('profileHScroller');
 
   try {
     // 1) Which listings did the user bid on?
@@ -176,12 +178,12 @@ export async function renderMyBidsSection(userName) {
 
         <button id="bids-prev" type="button"
           class="absolute left-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-8 rounded-full
-                 bg-white/85 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+                 bg-[#C5A880] bg-opacity-80 shadow-md hover:bg-opacity-100 transition"
           aria-label="Scroll left">‹</button>
 
         <button id="bids-next" type="button"
           class="absolute right-1 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-10 w-8 rounded-full
-                 bg-white/85 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+                 bg-[#C5A880] bg-opacity-80 shadow-md hover:bg-opacity-100 transition"
           aria-label="Scroll right">›</button>
       </div>
     `;
@@ -244,12 +246,12 @@ export async function renderMyWinsSection(userName) {
 
         <button id="wins-prev" type="button"
           class="absolute left-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-8 rounded-full
-                 bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+                 bg-[#C5A880] bg-opacity-80 shadow-md hover:bg-opacity-100 transition"
           aria-label="Scroll left">‹</button>
 
         <button id="wins-next" type="button"
           class="absolute right-1 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-10 w-8 rounded-full
-                 bg-white/80 backdrop-blur border border-gray-200 shadow hover:bg-white transition"
+             bg-[#C5A880] bg-opacity-80 shadow-md hover:bg-opacity-100 transition"
           aria-label="Scroll right">›</button>
       </div>
     `;

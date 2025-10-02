@@ -108,7 +108,7 @@ async function fetchAndRenderListing() {
                     </a>
                 </div>
     
-                <h1 class="text-2xl font-semibold text-gray-900 border-t border-gray-300 pt-4 space-y-2">
+                <h1 class="text-2xl font-semibold text-gray-900 border-t border-gray-300 pt-4 space-y-2 font-sans">
                     ${title || 'No Title'}
                 </h1>
 

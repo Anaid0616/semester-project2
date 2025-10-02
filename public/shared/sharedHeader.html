@@ -153,9 +153,13 @@
     >
       <img
         id="mobile-profile-icon"
-        src="/images/placeholder.jpg"
-        alt="Profile Icon"
-        class="w-6 h-6 rounded-full border border-gray-300"
+        src="${avatarUrl || '/images/placeholder.jpg'}"
+        alt="${user?.name || 'Profile'}"
+        width="24"
+        height="24"
+        loading="eager"
+        decoding="async"
+        class="w-6 h-6 aspect-square rounded-full object-cover border border-gray-300"
       />
     </a>
   </div>

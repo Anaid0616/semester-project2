@@ -19,11 +19,16 @@ loadSharedFooter();
 /* ---------------- Welcome text ---------------- */
 const welcomeText = document.getElementById('welcome-text');
 if (welcomeText) {
-  const userName = getUserName();
-  welcomeText.textContent =
-    userName && userName !== 'undefined' ? `Welcome, ${userName}!` : 'Welcome!';
-} else {
-  console.error('Could not find the #welcome-text element in the DOM.');
+  const raw = getUserName?.() ?? '';
+  const userName = String(raw).trim();
+
+  const text =
+    !userName || /^guest$/i.test(userName) || userName === 'undefined'
+      ? 'Welcome!'
+      : `Welcome, ${userName}!`;
+
+  welcomeText.textContent = text;
+  welcomeText.classList.remove('invisible'); // reveal after we set it
 }
 
 /* ---------------- Search on index ---------------- */
