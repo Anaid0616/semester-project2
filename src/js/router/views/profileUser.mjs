@@ -77,7 +77,7 @@ export async function fetchAndDisplayProfile() {
     }"class="w-36 h-36 sm:w-40 sm:h-40 aspect-square rounded-sm object-cover" />
 
       <div>
-        <h1 id="user-name" class="text-2xl font-semibold">${
+        <h1 id="user-name" class="text-2xl font-semibold font-sans">${
           profileData.name || 'Unknown User'
         }</h1>
            <p id="user-credit" class="text-l font-semibold mt-2">
