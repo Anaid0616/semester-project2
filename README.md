@@ -2,7 +2,7 @@
 
 **Diana Bergelin**
 
-![Auction House](https://github.com/user-attachments/assets/5522c6f4-9d97-4ba1-b0b7-22ad311fa0da)
+![Auction House](https://github.com/user-attachments/assets/95de28ed-1af9-4a2d-ba93-7cc1a6fa6970)
 
 ## Auction Website
 
